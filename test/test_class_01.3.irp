@@ -1,0 +1,82 @@
+------Original IR Tree------
+T_FuncDecl(String("main"),
+  NULL,
+  T_Seq(
+    T_Move(
+      T_Temp(Temp_namedtemp(100,T_int))/*T_int*/,
+      T_Mem(
+        T_Temp(Temp_namedtemp(101,T_int))/*T_int*/
+      , T_int)/*T_int*/
+    ),
+    T_Seq(
+      T_Move(
+        T_Temp(Temp_namedtemp(100,T_int))/*T_int*/,
+        T_Mem(
+          T_Binop(T_plus,
+            T_Temp(Temp_namedtemp(101,T_int))/*T_int*/,
+            T_IntConst(8)/*T_int*/
+          )/*T_int*/
+        , T_int)/*T_int*/
+      ),
+      T_Seq(
+        T_Move(
+          T_Temp(Temp_namedtemp(100,T_int))/*T_int*/,
+          T_Mem(
+            T_Temp(Temp_namedtemp(102,T_int))/*T_int*/
+          , T_int)/*T_int*/
+        ),
+        T_Seq(
+          T_Move(
+            T_Temp(Temp_namedtemp(100,T_int))/*T_int*/,
+            T_Mem(
+              T_Binop(T_plus,
+                T_Temp(Temp_namedtemp(102,T_int))/*T_int*/,
+                T_IntConst(8)/*T_int*/
+              )/*T_int*/
+            , T_int)/*T_int*/
+          ),
+          T_Seq(
+            T_Move(
+              T_Temp(Temp_namedtemp(100,T_int))/*T_int*/,
+              T_Mem(
+                T_Temp(Temp_namedtemp(103,T_int))/*T_int*/
+              , T_int)/*T_int*/
+            ),
+            T_Seq(
+              T_Move(
+                T_Temp(Temp_namedtemp(100,T_int))/*T_int*/,
+                T_Mem(
+                  T_Binop(T_plus,
+                    T_Temp(Temp_namedtemp(103,T_int))/*T_int*/,
+                    T_IntConst(8)/*T_int*/
+                  )/*T_int*/
+                , T_int)/*T_int*/
+              ),
+              T_Seq(
+                T_Move(
+                  T_Temp(Temp_namedtemp(100,T_int))/*T_int*/,
+                  T_Mem(
+                    T_Binop(T_plus,
+                      T_Temp(Temp_namedtemp(103,T_int))/*T_int*/,
+                      T_IntConst(16)/*T_int*/
+                    )/*T_int*/
+                  , T_int)/*T_int*/
+                ),
+                T_Move(
+                  T_Temp(Temp_namedtemp(100,T_int))/*T_int*/,
+                  T_Mem(
+                    T_Binop(T_plus,
+                      T_Temp(Temp_namedtemp(103,T_int))/*T_int*/,
+                      T_IntConst(24)/*T_int*/
+                    )/*T_int*/
+                  , T_int)/*T_int*/
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+)
+

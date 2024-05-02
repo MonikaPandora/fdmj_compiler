@@ -1,0 +1,43 @@
+-----Function main------
+
+
+------Linearized IR Tree------
+  Move t101:int, Mem(Binop(T_plus, t100:int, 8:int):int):int.m1 t100:int, 2:int:int
+  Return t101:int
+
+
+------Basic Blocks------
+For Label=C1
+ C1:
+  Move t101:int, Mem(Binop(T_plus, t100:int, 8:int):int):int.m1 t100:int, 2:int:int
+  Return t101:int
+
+
+------Canonical IR Tree------
+ C1:
+  Move t101:int, Mem(Binop(T_plus, t100:int, 8:int):int):int.m1 t100:int, 2:int:int
+  Return t101:int
+ C0:
+  Return -1:int
+
+
+-----Function c1$m1------
+
+
+------Linearized IR Tree------
+  Return 1:int
+
+
+------Basic Blocks------
+For Label=C3
+ C3:
+  Return 1:int
+
+
+------Canonical IR Tree------
+ C3:
+  Return 1:int
+ C2:
+  Return -1:int
+
+

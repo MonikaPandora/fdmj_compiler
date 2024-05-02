@@ -1,0 +1,26 @@
+public int main() {
+    int[] b;
+    float x=1.1;
+    class c1 c;
+    putnum(10.2);
+    b[]={x,2};
+    c = new c1();
+    c.m(1);
+    return new c0().m(1);
+}
+
+public class c0 {
+    int a;
+    int b;
+    class c1 varc;
+    public float m(int x){
+        return 1;
+    }
+}
+
+public class c1 extends c0{
+    int[] t;
+    public float m(int x) {
+        return x;
+    }
+}

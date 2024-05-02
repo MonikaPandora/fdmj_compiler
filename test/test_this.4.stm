@@ -1,0 +1,226 @@
+-----Function main------
+
+
+------Linearized IR Tree------
+  Move t103:int, malloc 32:int:int
+  Move Mem(Binop(T_plus, t103:int, 8:int):int):int, 2:int
+  Move Mem(t103:int):int, 1:int
+  Move Mem(Binop(T_plus, t103:int, 16:int):int):int, c1$m2:int
+  Move Mem(Binop(T_plus, t103:int, 24:int):int):int, c1$m1:int
+  Move t100:int, t103:int
+  Move t104:int, Mem(Binop(T_plus, t100:int, 24:int):int):int.m1 t100:int, 1:int:int
+  Move t102:int, t104:int
+  Move t105:int, malloc 56:int:int
+  Move Mem(t105:int):int, 1:int
+  Move Mem(Binop(T_plus, t105:int, 8:int):int):int, 2:int
+  Move Mem(Binop(T_plus, t105:int, 40:int):int):int, 6:int
+  Move Mem(Binop(T_plus, t105:int, 32:int):int):int, 5:int
+  Move Mem(Binop(T_plus, t105:int, 16:int):int):int, c3$m2:int
+  Move Mem(Binop(T_plus, t105:int, 48:int):int):int, c3$m4:int
+  Move Mem(Binop(T_plus, t105:int, 24:int):int):int, c3$m1:int
+  Move t100:int, t105:int
+  Move t106:int, Mem(Binop(T_plus, t100:int, 16:int):int):int.m2 t100:int, Mem(Binop(T_plus, t100:int, 8:int):int):int:int
+  Move t102:int, t106:int
+  Move t107:int, Mem(Binop(T_plus, t100:int, 24:int):int):int.m1 t100:int, Mem(t101:int):int:int
+  Move t102:int, t107:int
+  Move t108:int, Mem(Binop(T_plus, t101:int, 16:int):int):int.m3 t101:int:int
+  Return t108:int
+
+
+------Basic Blocks------
+For Label=C1
+ C1:
+  Move t103:int, malloc 32:int:int
+  Move Mem(Binop(T_plus, t103:int, 8:int):int):int, 2:int
+  Move Mem(t103:int):int, 1:int
+  Move Mem(Binop(T_plus, t103:int, 16:int):int):int, c1$m2:int
+  Move Mem(Binop(T_plus, t103:int, 24:int):int):int, c1$m1:int
+  Move t100:int, t103:int
+  Move t104:int, Mem(Binop(T_plus, t100:int, 24:int):int):int.m1 t100:int, 1:int:int
+  Move t102:int, t104:int
+  Move t105:int, malloc 56:int:int
+  Move Mem(t105:int):int, 1:int
+  Move Mem(Binop(T_plus, t105:int, 8:int):int):int, 2:int
+  Move Mem(Binop(T_plus, t105:int, 40:int):int):int, 6:int
+  Move Mem(Binop(T_plus, t105:int, 32:int):int):int, 5:int
+  Move Mem(Binop(T_plus, t105:int, 16:int):int):int, c3$m2:int
+  Move Mem(Binop(T_plus, t105:int, 48:int):int):int, c3$m4:int
+  Move Mem(Binop(T_plus, t105:int, 24:int):int):int, c3$m1:int
+  Move t100:int, t105:int
+  Move t106:int, Mem(Binop(T_plus, t100:int, 16:int):int):int.m2 t100:int, Mem(Binop(T_plus, t100:int, 8:int):int):int:int
+  Move t102:int, t106:int
+  Move t107:int, Mem(Binop(T_plus, t100:int, 24:int):int):int.m1 t100:int, Mem(t101:int):int:int
+  Move t102:int, t107:int
+  Move t108:int, Mem(Binop(T_plus, t101:int, 16:int):int):int.m3 t101:int:int
+  Return t108:int
+
+
+------Canonical IR Tree------
+ C1:
+  Move t103:int, malloc 32:int:int
+  Move Mem(Binop(T_plus, t103:int, 8:int):int):int, 2:int
+  Move Mem(t103:int):int, 1:int
+  Move Mem(Binop(T_plus, t103:int, 16:int):int):int, c1$m2:int
+  Move Mem(Binop(T_plus, t103:int, 24:int):int):int, c1$m1:int
+  Move t100:int, t103:int
+  Move t104:int, Mem(Binop(T_plus, t100:int, 24:int):int):int.m1 t100:int, 1:int:int
+  Move t102:int, t104:int
+  Move t105:int, malloc 56:int:int
+  Move Mem(t105:int):int, 1:int
+  Move Mem(Binop(T_plus, t105:int, 8:int):int):int, 2:int
+  Move Mem(Binop(T_plus, t105:int, 40:int):int):int, 6:int
+  Move Mem(Binop(T_plus, t105:int, 32:int):int):int, 5:int
+  Move Mem(Binop(T_plus, t105:int, 16:int):int):int, c3$m2:int
+  Move Mem(Binop(T_plus, t105:int, 48:int):int):int, c3$m4:int
+  Move Mem(Binop(T_plus, t105:int, 24:int):int):int, c3$m1:int
+  Move t100:int, t105:int
+  Move t106:int, Mem(Binop(T_plus, t100:int, 16:int):int):int.m2 t100:int, Mem(Binop(T_plus, t100:int, 8:int):int):int:int
+  Move t102:int, t106:int
+  Move t107:int, Mem(Binop(T_plus, t100:int, 24:int):int):int.m1 t100:int, Mem(t101:int):int:int
+  Move t102:int, t107:int
+  Move t108:int, Mem(Binop(T_plus, t101:int, 16:int):int):int.m3 t101:int:int
+  Return t108:int
+ C0:
+  Return -1:int
+
+
+-----Function c3$m2------
+
+
+------Linearized IR Tree------
+  Return Binop(T_plus, Mem(Binop(T_plus, t99:int, 8:int):int):int, t100:int):int
+
+
+------Basic Blocks------
+For Label=C3
+ C3:
+  Return Binop(T_plus, Mem(Binop(T_plus, t99:int, 8:int):int):int, t100:int):int
+
+
+------Canonical IR Tree------
+ C3:
+  Return Binop(T_plus, Mem(Binop(T_plus, t99:int, 8:int):int):int, t100:int):int
+ C2:
+  Return -1:int
+
+
+-----Function c3$m4------
+
+
+------Linearized IR Tree------
+  Return Binop(T_plus, Mem(Binop(T_plus, t99:int, 8:int):int):int, Mem(Binop(T_plus, t99:int, 32:int):int):int):int
+
+
+------Basic Blocks------
+For Label=C5
+ C5:
+  Return Binop(T_plus, Mem(Binop(T_plus, t99:int, 8:int):int):int, Mem(Binop(T_plus, t99:int, 32:int):int):int):int
+
+
+------Canonical IR Tree------
+ C5:
+  Return Binop(T_plus, Mem(Binop(T_plus, t99:int, 8:int):int):int, Mem(Binop(T_plus, t99:int, 32:int):int):int):int
+ C4:
+  Return -1:int
+
+
+-----Function c3$m1------
+
+
+------Linearized IR Tree------
+  Return Binop(T_plus, Binop(T_plus, Mem(t99:int):int, Mem(Binop(T_plus, t99:int, 8:int):int):int):int, t100:int):int
+
+
+------Basic Blocks------
+For Label=C7
+ C7:
+  Return Binop(T_plus, Binop(T_plus, Mem(t99:int):int, Mem(Binop(T_plus, t99:int, 8:int):int):int):int, t100:int):int
+
+
+------Canonical IR Tree------
+ C7:
+  Return Binop(T_plus, Binop(T_plus, Mem(t99:int):int, Mem(Binop(T_plus, t99:int, 8:int):int):int):int, t100:int):int
+ C6:
+  Return -1:int
+
+
+-----Function c2$m3------
+
+
+------Linearized IR Tree------
+  Return Mem(Binop(T_plus, t99:int, 8:int):int):int
+
+
+------Basic Blocks------
+For Label=C9
+ C9:
+  Return Mem(Binop(T_plus, t99:int, 8:int):int):int
+
+
+------Canonical IR Tree------
+ C9:
+  Return Mem(Binop(T_plus, t99:int, 8:int):int):int
+ C8:
+  Return -1:int
+
+
+-----Function c2$m1------
+
+
+------Linearized IR Tree------
+  Return Mem(t99:int):int
+
+
+------Basic Blocks------
+For Label=C11
+ C11:
+  Return Mem(t99:int):int
+
+
+------Canonical IR Tree------
+ C11:
+  Return Mem(t99:int):int
+ C10:
+  Return -1:int
+
+
+-----Function c1$m2------
+
+
+------Linearized IR Tree------
+  Return Binop(T_plus, Mem(Binop(T_plus, t99:int, 8:int):int):int, t100:int):int
+
+
+------Basic Blocks------
+For Label=C13
+ C13:
+  Return Binop(T_plus, Mem(Binop(T_plus, t99:int, 8:int):int):int, t100:int):int
+
+
+------Canonical IR Tree------
+ C13:
+  Return Binop(T_plus, Mem(Binop(T_plus, t99:int, 8:int):int):int, t100:int):int
+ C12:
+  Return -1:int
+
+
+-----Function c1$m1------
+
+
+------Linearized IR Tree------
+  Return Binop(T_plus, Mem(t99:int):int, t100:int):int
+
+
+------Basic Blocks------
+For Label=C15
+ C15:
+  Return Binop(T_plus, Mem(t99:int):int, t100:int):int
+
+
+------Canonical IR Tree------
+ C15:
+  Return Binop(T_plus, Mem(t99:int):int, t100:int):int
+ C14:
+  Return -1:int
+
+

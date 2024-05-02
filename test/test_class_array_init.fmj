@@ -1,0 +1,10 @@
+public int main(){
+    return new c2().a[0];
+}
+
+public class c2 {
+    int[] a = {1, 2, 3};
+    //public int m2(){
+      //  return 1;
+    //}
+}
