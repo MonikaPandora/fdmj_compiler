@@ -1,23 +1,16 @@
-RM       = rm -rf
-CLANG    = clang-14
-LLVMLINK = llvm-link-14
-LLI      = lli-14
-ARMCC    = arm-linux-gnueabihf-gcc
-QEMU     = qemu-arm
+RM = rm -rf
 
 BUILD_DIR = "$(CURDIR)/build"
-MAIN_EXE  = "$(BUILD_DIR)/tools/main"
-FMJ2AST   = "$(CURDIR)/../tools/fmj2ast"
-AST2IRP   = "$(CURDIR)/../tools/ast2irp"
+SRC_DIR   = "$(CURDIR)/src"
 TEST_DIR  = "$(CURDIR)/test"
 
-MAKEFLAGS = --no-print-directory
-
-.PHONY: build clean veryclean rebuild test test-extra handin
+.PHONY: build clean veryclean rebuild compile run-llvm run-rpi
 
 build:
-	@cmake -G Ninja -B $(BUILD_DIR) -DCMAKE_BUILD_TYPE=Release; \
-	cd $(BUILD_DIR) && ninja
+	@cd $(SRC_DIR); \
+	cmake -G Ninja -B $(BUILD_DIR) -DCMAKE_BUILD_TYPE=Release; \
+	cd $(BUILD_DIR) && ninja; \
+	cd $(CURDIR)
 
 clean:
 	@find $(TEST_DIR) -type f \( \
@@ -33,46 +26,29 @@ veryclean: clean
 
 rebuild: veryclean build
 
-test: clean
+compile:
 	@cd $(TEST_DIR); \
 	for file in $$(ls .); do \
 		if [ "$${file##*.}" = "fmj" ]; then \
-			echo "[$${file%%.*}]"; \
-			$(FMJ2AST) "$${file%%.*}" && \
-			$(MAIN_EXE) "$${file%%.*}"; \
+			echo "Compiling [$${file%%.*}]"; \
 		fi \
 	done; \
 	cd $(CURDIR)
 
-test-extra: clean
-	@cd $(TEST_DIR)/extra; \
-	for file in $$(ls .); do \
-		if [ "$${file##*.}" = "fmj" ]; then \
-			echo "[$${file%%.*}]"; \
-			$(FMJ2AST) "$${file%%.*}" && \
-			$(MAIN_EXE) "$${file%%.*}"; \
-		fi \
-	done; \
-	cd $(CURDIR)
-
-.PHONY: ast2irp
-ast2irp: clean
+run-llvm:
 	@cd $(TEST_DIR); \
 	for file in $$(ls .); do \
 		if [ "$${file##*.}" = "fmj" ]; then \
-			echo "[$${file%%.*}]"; \
-			$(FMJ2AST) "$${file%%.*}" && \
-			$(AST2IRP) "$${file%%.*}"; \
+			echo "Run on llvm for [$${file%%.*}]"; \
 		fi \
 	done; \
 	cd $(CURDIR)
 
-handin:
-	@if [ ! -f docs/report.pdf ]; then \
-		echo "请先在docs文件夹下攥写报告, 并转换为'report.pdf'"; \
-		exit 1; \
-	fi; \
-	echo "请输入'学号-姓名' (例如: 12345678910-某个人)"; \
-	read filename; \
-	zip -q -r "docs/$$filename-hw8.zip" \
-	  docs/report.pdf include lib
+run-rpi:
+	@cd $(TEST_DIR); \
+	for file in $$(ls .); do \
+		if [ "$${file##*.}" = "fmj" ]; then \
+			echo "Run on arm for [$${file%%.*}]"; \
+		fi \
+	done; \
+	cd $(CURDIR)
