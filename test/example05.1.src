@@ -1,5 +1,0 @@
-public int main () {
-int[] b;
-float x=1.100000;
-b[]={x, 2};
-}

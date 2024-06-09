@@ -1,51 +1,29 @@
-public int main(){
-    class c1 c;
-    class c2 d;
-    class c3 e;
-    d = c.m1();
-    c = d.m1();
-    e = e.m3();
-    c.m1();
-    c.m2();
-    d.m1();
-    e.m1();
-    e.m2();
-    e.m3();
-    c = d.c;
-    d = c.c;
-    e = new c3();
-    c = new c3().m3();
-    c = new c3().m2();
-    d = new c1().m1();
-    c = new c2().m1();
-    e = new c3().m3();
-    new c3().m3();
-    new c3().m2();
-    new c1().m1();
-    new c2().m1();
-    new c3().m3();
+// test calculate
+public int main() {
+    int a = 1024;
+    int b = 32;
+    int ans;
+    float c;
+    b = a / b;
+    putnum(b);
+    putch(10);
+    putnum(a + 5 - 3 * 0);
+    putch(10);
+    b = ({a = - b + a;} b * b);
+    putnum(a);
+    putch(10);
+    putnum(b);
+    putch(10);
+    c = b + 1.2 - a * 5.6 / 7;
+    putnum(c);
+    putch(10);
+    return 0;
 }
 
-public class c1{
-    class c2 c;
-    public class c2 m1(){
-        return this.c;
-    }
-
-    public class c1 m2(){
-        return this.m1().m1();
-    }
-}
-
-public class c2{
-    class c1 c;
-    public class c1 m1(){
-        return new c3();
-    }
-}
-
-public class c3 extends c1{
-    public class c3 m3(){
-        return this;
-    }
-}
+/*
+32 
+1029
+992
+1024
+231.600000
+*/

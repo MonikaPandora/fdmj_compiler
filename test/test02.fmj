@@ -1,11 +1,28 @@
-public int main(){
-    int a;
-    class c1 b;
-    return ({a = a + 1;} b).m1();
+// test comments
+public int main() 
+/*{
+    putnum(32);
+    return 0;
+}*/
+{
+    /*
+    putnum(16);
+    return 0;
+    *///putnum(8);
+    putnum(4);//putnum(2);
+    putch(10);
+    //return -1;
+    starttime();
+    putnum(getnum());
+    putch(10);
+    stoptime();
+    return 0;
 }
 
-public class c1 {
-    public int m1(){
-        return 1;
-    }
-}
+/*
+input: 
+2
+output:
+4
+2.000000
+*/
