@@ -1,9 +1,0 @@
-public int main () {
-putnum(4);
-putch(10);
-starttime();
-putnum(getnum());
-putch(10);
-stoptime();
-return 0;
-}

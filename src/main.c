@@ -99,7 +99,6 @@ int main(int argc, const char * argv[]) {
     fclose(stdout);
 
     T_stm s = fdl->head->stm;
-
      // canonicalize
     T_stmList sl = C_linearize(s);
     
@@ -119,6 +118,7 @@ int main(int argc, const char * argv[]) {
     fprintf(stdout, "\n\n");
     fflush(stdout);
     fclose(stdout);
+
     sl = C_traceSchedule(b);
     freopen(file_stm, "a", stdout);
     fprintf(stdout, "------Canonical IR Tree------\n");
@@ -129,7 +129,7 @@ int main(int argc, const char * argv[]) {
 
     // llvm instruction selection
     // First making the head of the function, then the body, then the epilog
-
+    b = C_basicBlocks(sl);
     AS_instrList prologil = llvmprolog(fdl->head->name, fdl->head->args, fdl->head->ret_type); //add the prolog of the function
     AS_blockList bodybl = NULL; //making an empty body
 
