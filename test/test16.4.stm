@@ -1,0 +1,71 @@
+------Linearized IR Tree------
+  Move t101:int, getch :int
+  putch t101:int:int
+  putch 10:int:int
+  putint t101:int:int
+  putch 10:int:int
+  Move t105:float, getfloat :float
+  Move t100:int,   Cast(t105:float):int
+  putint t100:int:int
+  putch 10:int:int
+  Move t104:int, malloc 168:int:int
+  Move Mem(t104:int):int, 20:int
+  Move t104:int, Binop(T_plus, t104:int, 8:int):int
+  Move t103:int, t104:int
+  Move t102:int, getarray t103:int:int
+  putint t102:int:int
+  putch 10:int:int
+  putarray t102:int, t103:int:int
+  putch 10:int:int
+  Return 0:int
+
+
+------Basic Blocks------
+For Label=C1
+ C1:
+  Move t101:int, getch :int
+  putch t101:int:int
+  putch 10:int:int
+  putint t101:int:int
+  putch 10:int:int
+  Move t105:float, getfloat :float
+  Move t100:int,   Cast(t105:float):int
+  putint t100:int:int
+  putch 10:int:int
+  Move t104:int, malloc 168:int:int
+  Move Mem(t104:int):int, 20:int
+  Move t104:int, Binop(T_plus, t104:int, 8:int):int
+  Move t103:int, t104:int
+  Move t102:int, getarray t103:int:int
+  putint t102:int:int
+  putch 10:int:int
+  putarray t102:int, t103:int:int
+  putch 10:int:int
+  Return 0:int
+
+
+------Canonical IR Tree------
+ C1:
+  Move t101:int, getch :int
+  putch t101:int:int
+  putch 10:int:int
+  putint t101:int:int
+  putch 10:int:int
+  Move t105:float, getfloat :float
+  Move t100:int,   Cast(t105:float):int
+  putint t100:int:int
+  putch 10:int:int
+  Move t104:int, malloc 168:int:int
+  Move Mem(t104:int):int, 20:int
+  Move t104:int, Binop(T_plus, t104:int, 8:int):int
+  Move t103:int, t104:int
+  Move t102:int, getarray t103:int:int
+  putint t102:int:int
+  putch 10:int:int
+  putarray t102:int, t103:int:int
+  putch 10:int:int
+  Return 0:int
+ C0:
+  Return -1:int
+
+

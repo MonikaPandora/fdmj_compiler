@@ -1,0 +1,56 @@
+
+------For function ----- main
+
+------Basic Block Graph---------
+C5 (0): 
+------~Final traced AS instructions ---------
+define i64 @main() {
+C5:
+%100 = add i64 13, 0
+%104 = call i64* @malloc(i64 8)
+%101 = ptrtoint i64* %104 to i64
+%105 = inttoptr i64 %101 to i64*
+%106 = ptrtoint i64* @fib$f to i64
+store i64 %106, i64* %105, align 8
+%102 = add i64 %101, 0
+%107 = inttoptr i64 %102 to i64*
+%103 = call i64 %107(i64 %102, i64 %100)
+call void @putint(i64 %103)
+call void @putch(i64 10)
+ret i64 0
+C4:
+ret i64 -1
+}
+
+
+------For function ----- fib$f
+
+------Basic Block Graph---------
+C7 (0): 
+------~Final traced AS instructions ---------
+define i64 @fib$f(i64 %99, i64 %100) {
+C7:
+%109 = icmp eq i64 %100, 0
+br i1 %109, label %L1, label %L0
+L0:
+%110 = icmp eq i64 %100, 1
+br i1 %110, label %L1, label %L2
+L2:
+%111 = inttoptr i64 %99 to i64*
+%112 = sub i64 %100, 1
+%101 = call i64 %111(i64 %99, i64 %112)
+%108 = add i64 %101, 0
+%113 = inttoptr i64 %99 to i64*
+%114 = sub i64 %100, 2
+%102 = call i64 %113(i64 %99, i64 %114)
+%115 = add i64 %108, %102
+ret i64 %115
+L1:
+ret i64 %100
+C8:
+L3:
+br label %C6
+C6:
+ret i64 -1
+}
+

@@ -212,14 +212,15 @@ T_funcDecl Tr_MainMethod(Tr_exp vdl, Tr_exp sl){
   if(vdl && sl)p->stm = T_Seq(unNx(vdl), unNx(sl));
   else if(vdl)p->stm = unNx(vdl);
   else p->stm = unNx(sl);
+  p->ret_type = T_int;
   return p;
 }
 
-T_funcDecl Tr_ClassMethod(string name, Temp_tempList paras, Tr_exp vdl, Tr_exp sl){
+T_funcDecl Tr_ClassMethod(string name, Temp_tempList paras, Tr_exp vdl, Tr_exp sl, T_type ret_type){
   T_stm stms = unNx(vdl);
   if(!stms)stms = unNx(sl);
   else if(sl)stms = unNx(Sequence(stms, unNx(sl)));
-  return T_FuncDecl(name, paras, stms);
+  return T_FuncDecl(name, paras, stms, ret_type);
 }
 
 // stms

@@ -27,7 +27,7 @@ struct Tr_expList_ {
 T_funcDeclList Tr_FuncDeclList(T_funcDecl fd, T_funcDeclList fdl);
 // T_funcDeclList Tr_ChainFuncDeclList(T_funcDeclList first, T_funcDeclList second);
 T_funcDecl Tr_MainMethod(Tr_exp vdl, Tr_exp sl);
-T_funcDecl Tr_ClassMethod(string name, Temp_tempList paras, Tr_exp vdl, Tr_exp sl);
+T_funcDecl Tr_ClassMethod(string name, Temp_tempList paras, Tr_exp vdl, Tr_exp sl, T_type ret_type);
 
 // stms
 Tr_exp Tr_StmList(Tr_exp head, Tr_exp tail);

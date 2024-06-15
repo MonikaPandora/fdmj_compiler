@@ -1,0 +1,53 @@
+------Linearized IR Tree------
+  Move t111:int, malloc 32:int:int
+  Move t108:int, Binop(T_plus, t111:int, 8:int):int
+  Move Mem(Binop(T_minus, t108:int, -8:int):int):int, 3:int
+  Move Mem(t108:int):int, 19.500000:float
+  Move Mem(Binop(T_plus, t108:int, 8:int):int):float, 5.500000:float
+  Move Mem(Binop(T_plus, t108:int, 16:int):int):float, 2.700000:float
+  Move t110:int, malloc 32:int:int
+  Move t102:int, Binop(T_plus, t110:int, 8:int):int
+  Move Mem(Binop(T_minus, t102:int, -8:int):int):int, 3:int
+  Move Mem(t102:int):int, 2024:int
+  Move Mem(Binop(T_plus, t102:int, 8:int):int):int, 5:int
+  Move Mem(Binop(T_plus, t102:int, 16:int):int):int, 22:int
+  Return 0:int
+
+
+------Basic Blocks------
+For Label=C1
+ C1:
+  Move t111:int, malloc 32:int:int
+  Move t108:int, Binop(T_plus, t111:int, 8:int):int
+  Move Mem(Binop(T_minus, t108:int, -8:int):int):int, 3:int
+  Move Mem(t108:int):int, 19.500000:float
+  Move Mem(Binop(T_plus, t108:int, 8:int):int):float, 5.500000:float
+  Move Mem(Binop(T_plus, t108:int, 16:int):int):float, 2.700000:float
+  Move t110:int, malloc 32:int:int
+  Move t102:int, Binop(T_plus, t110:int, 8:int):int
+  Move Mem(Binop(T_minus, t102:int, -8:int):int):int, 3:int
+  Move Mem(t102:int):int, 2024:int
+  Move Mem(Binop(T_plus, t102:int, 8:int):int):int, 5:int
+  Move Mem(Binop(T_plus, t102:int, 16:int):int):int, 22:int
+  Return 0:int
+
+
+------Canonical IR Tree------
+ C1:
+  Move t111:int, malloc 32:int:int
+  Move t108:int, Binop(T_plus, t111:int, 8:int):int
+  Move Mem(Binop(T_minus, t108:int, -8:int):int):int, 3:int
+  Move Mem(t108:int):int, 19.500000:float
+  Move Mem(Binop(T_plus, t108:int, 8:int):int):float, 5.500000:float
+  Move Mem(Binop(T_plus, t108:int, 16:int):int):float, 2.700000:float
+  Move t110:int, malloc 32:int:int
+  Move t102:int, Binop(T_plus, t110:int, 8:int):int
+  Move Mem(Binop(T_minus, t102:int, -8:int):int):int, 3:int
+  Move Mem(t102:int):int, 2024:int
+  Move Mem(Binop(T_plus, t102:int, 8:int):int):int, 5:int
+  Move Mem(Binop(T_plus, t102:int, 16:int):int):int, 22:int
+  Return 0:int
+ C0:
+  Return -1:int
+
+

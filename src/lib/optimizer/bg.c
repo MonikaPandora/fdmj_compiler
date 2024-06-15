@@ -1,5 +1,8 @@
 #include "bg.h"
 
+#define __DEBUG
+#undef __DEBUG
+
 static S_table benv; // table of label -> block
 static G_graph bg; // graph of basic blocks
 
@@ -83,6 +86,15 @@ G_nodeList Create_bg(AS_blockList bl) {
       // if the succ label doesn't have a block, assume it's the "exit label",
       // then this doesn't form an edge in the bg graph
       if (succ) bg_addEdge(l->head, succ); // enter basic block edge
+#ifdef __DEBUG
+      if (succ) {
+        fprintf(stderr, "block %s found its successor blocks %s\n", Temp_labelstring(l->head->label), Temp_labelstring(tl->head));
+        fflush(stderr);
+      } else {
+        fprintf(stderr, "block %s doesn't find any successor\n", Temp_labelstring(l->head->label));
+        fflush(stderr);
+      }
+#endif
       tl = tl->tail;
     }
   }

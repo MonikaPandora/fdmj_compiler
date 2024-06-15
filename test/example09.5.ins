@@ -1,0 +1,68 @@
+
+------For function ----- main
+
+------Basic Block Graph---------
+C4 (0): 
+------~Final traced AS instructions ---------
+define i64 @main() {
+C4:
+br label %L1
+L1:
+%103 = add i64 0, 0
+L2:
+%104 = sitofp i64 %103 to double
+%106 = call i64* @malloc(i64 24)
+%100 = ptrtoint i64* %106 to i64
+%107 = inttoptr i64 %100 to i64*
+store double 1.000000, i64* %107, align 8
+%108 = add i64 %100, 16
+%109 = inttoptr i64 %108 to i64*
+store double 1.000000, i64* %109, align 8
+%110 = inttoptr i64 %100 to i64*
+%111 = ptrtoint i64* @c1$m to i64
+store i64 %111, i64* %110, align 8
+%101 = add i64 %100, 0
+%112 = inttoptr i64 %101 to i64*
+%113 = add i64 1, 0
+%114 = add i64 2, 0
+%115 = add i64 3, 0
+%102 = call double %112(i64 %101, i64 %113, i64 %114, i64 %115)
+%117 = fmul double %104, %102
+%116 = fptosi double %117 to i64
+ret i64 %116
+L0:
+%103 = add i64 1, 0
+br label %L2
+C3:
+ret i64 -1
+}
+
+
+------For function ----- c1$m
+
+------Basic Block Graph---------
+C6 (0): 
+------~Final traced AS instructions ---------
+define double @c1$m(i64 %99, i64 %100, i64 %101, double %102) {
+C6:
+%144 = inttoptr i64 %99 to i64*
+%143 = load double, i64* %144, align 8
+%142 = fadd double %143, %102
+ret double %142
+C5:
+ret i64 -1
+}
+
+
+------For function ----- c0$m
+
+------Basic Block Graph---------
+C8 (0): 
+------~Final traced AS instructions ---------
+define double @c0$m(i64 %99, i64 %100, i64 %101, double %102) {
+C8:
+ret double %102
+C7:
+ret i64 -1
+}
+

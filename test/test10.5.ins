@@ -1,0 +1,49 @@
+
+------For function ----- main
+
+------Basic Block Graph---------
+C4 (0): 
+------~Final traced AS instructions ---------
+define i64 @main() {
+C4:
+%101 = add i64 0, 0
+%103 = call i64* @malloc(i64 128)
+%102 = ptrtoint i64* %103 to i64
+%104 = inttoptr i64 %102 to i64*
+store i64 15, i64* %104, align 8
+%102 = add i64 %102, 8
+%100 = add i64 %102, 0
+%105 = add i64 %100, 0
+%106 = inttoptr i64 %105 to i64*
+store i64 1, i64* %106, align 8
+L0:
+%107 = icmp slt i64 %101, 10
+br i1 %107, label %L2, label %L1
+L1:
+%109 = add i64 %100, 80
+%110 = inttoptr i64 %109 to i64*
+%108 = load i64, i64* %110, align 8
+call void @putint(i64 %108)
+call void @putch(i64 10)
+ret i64 0
+L2:
+%101 = add i64 %101, 1
+%112 = mul i64 %101, 8
+%111 = add i64 %100, %112
+%113 = inttoptr i64 %111 to i64*
+%119 = sub i64 %101, 1
+%118 = mul i64 %119, 8
+%117 = add i64 %100, %118
+%120 = inttoptr i64 %117 to i64*
+%116 = load i64, i64* %120, align 8
+%122 = mul i64 4, %101
+%121 = sub i64 %122, 2
+%115 = mul i64 %116, %121
+%123 = add i64 %101, 1
+%114 = sdiv i64 %115, %123
+store i64 %114, i64* %113, align 8
+br label %L0
+C3:
+ret i64 -1
+}
+

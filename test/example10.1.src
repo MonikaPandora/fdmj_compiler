@@ -1,0 +1,8 @@
+public int main () {
+return new c().m(1);
+}
+public class c {
+public float m(float a) {
+return a;
+}
+}

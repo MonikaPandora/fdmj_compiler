@@ -1,0 +1,44 @@
+------Linearized IR Tree------
+  Move t104:int, malloc 56:int:int
+  Move t103:int, Binop(T_plus, t104:int, 8:int):int
+  Move Mem(Binop(T_minus, t103:int, -8:int):int):int, 6:int
+  Move Mem(t103:int):int, 1.300000:float
+  Move Mem(Binop(T_plus, t103:int, 8:int):int):float, 0.300000:float
+  Move Mem(Binop(T_plus, t103:int, 16:int):int):float, 0.300000:float
+  Move Mem(Binop(T_plus, t103:int, 24:int):int):float, 0.000000:float
+  Move Mem(Binop(T_plus, t103:int, 32:int):int):float, 0.100000:float
+  Move Mem(Binop(T_plus, t103:int, 40:int):int):float, 666.000000:float
+  Return 0:int
+
+
+------Basic Blocks------
+For Label=C1
+ C1:
+  Move t104:int, malloc 56:int:int
+  Move t103:int, Binop(T_plus, t104:int, 8:int):int
+  Move Mem(Binop(T_minus, t103:int, -8:int):int):int, 6:int
+  Move Mem(t103:int):int, 1.300000:float
+  Move Mem(Binop(T_plus, t103:int, 8:int):int):float, 0.300000:float
+  Move Mem(Binop(T_plus, t103:int, 16:int):int):float, 0.300000:float
+  Move Mem(Binop(T_plus, t103:int, 24:int):int):float, 0.000000:float
+  Move Mem(Binop(T_plus, t103:int, 32:int):int):float, 0.100000:float
+  Move Mem(Binop(T_plus, t103:int, 40:int):int):float, 666.000000:float
+  Return 0:int
+
+
+------Canonical IR Tree------
+ C1:
+  Move t104:int, malloc 56:int:int
+  Move t103:int, Binop(T_plus, t104:int, 8:int):int
+  Move Mem(Binop(T_minus, t103:int, -8:int):int):int, 6:int
+  Move Mem(t103:int):int, 1.300000:float
+  Move Mem(Binop(T_plus, t103:int, 8:int):int):float, 0.300000:float
+  Move Mem(Binop(T_plus, t103:int, 16:int):int):float, 0.300000:float
+  Move Mem(Binop(T_plus, t103:int, 24:int):int):float, 0.000000:float
+  Move Mem(Binop(T_plus, t103:int, 32:int):int):float, 0.100000:float
+  Move Mem(Binop(T_plus, t103:int, 40:int):int):float, 666.000000:float
+  Return 0:int
+ C0:
+  Return -1:int
+
+

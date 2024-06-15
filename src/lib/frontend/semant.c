@@ -408,7 +408,7 @@ static Temp_temp insert_vtbl(FILE* out, A_varDecl vd, S_table venv){
         }
         else {
           //for method varibles
-          ret = Temp_newtemp(T_float);
+          ret = Temp_newtemp(T_int);
           S_enter(venv, S_Symbol(vd->v), E_VarEntry(vd, Ty_Array(Ty_Float()), ret));
           if(vd->elist)seqBufPush(Tr_floatArrInit(ret, transA_ExpList(out, vd->elist)));
         }
@@ -901,7 +901,8 @@ static T_funcDecl transA_ClassMethod(FILE* out, A_methodDecl mtd){
     S_name(S_link(cur_cls, S_Symbol(mtd->id))),
     parameters,
     vals,
-    stms
+    stms,
+    mtd->t->t == A_intType ? T_int : T_float
   );
 }
 

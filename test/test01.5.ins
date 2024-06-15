@@ -1,0 +1,41 @@
+
+------For function ----- main
+
+------Basic Block Graph---------
+C1 (0): 
+------~Final traced AS instructions ---------
+define i64 @main() {
+C1:
+%112 = call i64* @malloc(i64 32)
+%111 = ptrtoint i64* %112 to i64
+%108 = add i64 %111, 8
+%113 = sub i64 %108, -8
+%114 = inttoptr i64 %113 to i64*
+store i64 3, i64* %114, align 8
+%115 = inttoptr i64 %108 to i64*
+store double 19.500000, i64* %115, align 8
+%116 = add i64 %108, 8
+%117 = inttoptr i64 %116 to i64*
+store double 5.500000, i64* %117, align 8
+%118 = add i64 %108, 16
+%119 = inttoptr i64 %118 to i64*
+store double 2.700000, i64* %119, align 8
+%120 = call i64* @malloc(i64 32)
+%110 = ptrtoint i64* %120 to i64
+%102 = add i64 %110, 8
+%121 = sub i64 %102, -8
+%122 = inttoptr i64 %121 to i64*
+store i64 3, i64* %122, align 8
+%123 = inttoptr i64 %102 to i64*
+store i64 2024, i64* %123, align 8
+%124 = add i64 %102, 8
+%125 = inttoptr i64 %124 to i64*
+store i64 5, i64* %125, align 8
+%126 = add i64 %102, 16
+%127 = inttoptr i64 %126 to i64*
+store i64 22, i64* %127, align 8
+ret i64 0
+C0:
+ret i64 -1
+}
+

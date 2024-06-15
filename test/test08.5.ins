@@ -1,0 +1,96 @@
+
+------For function ----- main
+
+------Basic Block Graph---------
+C1 (0): 
+------~Final traced AS instructions ---------
+define i64 @main() {
+C1:
+%108 = call i64* @malloc(i64 24)
+%107 = ptrtoint i64* %108 to i64
+%100 = add i64 %107, 8
+%109 = sub i64 %100, -8
+%110 = inttoptr i64 %109 to i64*
+store i64 2, i64* %110, align 8
+%111 = inttoptr i64 %100 to i64*
+store i64 1, i64* %111, align 8
+%112 = add i64 %100, 8
+%113 = inttoptr i64 %112 to i64*
+store i64 2, i64* %113, align 8
+%114 = call i64* @malloc(i64 16)
+%103 = ptrtoint i64* %114 to i64
+%115 = inttoptr i64 %103 to i64*
+%116 = ptrtoint i64* @c1$m to i64
+store i64 %116, i64* %115, align 8
+%101 = add i64 %103, 0
+%117 = inttoptr i64 %101 to i64*
+store i64 5, i64* %117, align 8
+%118 = inttoptr i64 %101 to i64*
+%119 = add i64 233, 0
+%104 = call i64 %118(i64 %101, i64 %101, i64 %100, i64 %119)
+call void @putint(i64 %104)
+call void @putch(i64 10)
+%120 = call i64* @malloc(i64 24)
+%105 = ptrtoint i64* %120 to i64
+%121 = inttoptr i64 %105 to i64*
+%122 = ptrtoint i64* @d1$m1_m2 to i64
+store i64 %122, i64* %121, align 8
+%123 = inttoptr i64 %105 to i64*
+%124 = ptrtoint i64* @d1_m1$m2 to i64
+store i64 %124, i64* %123, align 8
+%102 = add i64 %105, 0
+%125 = inttoptr i64 %102 to i64*
+%106 = call i64 %125(i64 %102)
+call void @putint(i64 %106)
+call void @putch(i64 10)
+ret i64 0
+C0:
+ret i64 -1
+}
+
+
+------For function ----- d1_m1$m2
+
+------Basic Block Graph---------
+C3 (0): 
+------~Final traced AS instructions ---------
+define i64 @d1_m1$m2(i64 %99) {
+C3:
+ret i64 300
+C2:
+ret i64 -1
+}
+
+
+------For function ----- d1$m1_m2
+
+------Basic Block Graph---------
+C5 (0): 
+------~Final traced AS instructions ---------
+define i64 @d1$m1_m2(i64 %99) {
+C5:
+ret i64 200
+C4:
+ret i64 -1
+}
+
+
+------For function ----- c1$m
+
+------Basic Block Graph---------
+C7 (0): 
+------~Final traced AS instructions ---------
+define i64 @c1$m(i64 %99, i64 %100, i64 %101, i64 %102) {
+C7:
+%129 = inttoptr i64 %100 to i64*
+%128 = load i64, i64* %129, align 8
+%131 = add i64 %101, 8
+%132 = inttoptr i64 %131 to i64*
+%130 = load i64, i64* %132, align 8
+%127 = add i64 %128, %130
+%126 = add i64 %127, %102
+ret i64 %126
+C6:
+ret i64 -1
+}
+

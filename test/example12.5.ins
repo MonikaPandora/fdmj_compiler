@@ -1,0 +1,26 @@
+
+------For function ----- main
+
+------Basic Block Graph---------
+C4 (0): 
+------~Final traced AS instructions ---------
+define i64 @main() {
+C4:
+%104 = add i64 1, 0
+%103 = sitofp i64 %104 to double
+%102 = fmul double %103, 1.900000
+%106 = add i64 0, 0
+%105 = sitofp i64 %106 to double
+%101 = fcmp one double %102, %105
+br i1 %101, label %L1, label %L0
+L0:
+%100 = add i64 1, 0
+L2:
+ret i64 %100
+L1:
+%100 = add i64 0, 0
+br label %L2
+C3:
+ret i64 -1
+}
+

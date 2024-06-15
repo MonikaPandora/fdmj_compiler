@@ -1,0 +1,180 @@
+------Linearized IR Tree------
+  Move t100:int, 1:int
+  Move t101:int, 3:int
+ L0:
+  Cjump T_ne, 0:int, 0:int, L2, L1
+ L2:
+  putint 3:int:int
+  Jump L0
+ L1:
+ L3:
+  Cjump T_lt, t100:int, 10:int, L16, L4
+ L16:
+  Cjump T_lt, t100:int, 4:int, L6, L5
+ L5:
+  Cjump T_gt, t100:int, 7:int, L6, L8
+ L6:
+  Cjump T_ne, t100:int, 3:int, L7, L8
+ L7:
+  Move t101:int, Binop(T_mul, t101:int, 3:int):int
+  Jump L9
+ L8:
+  Move t101:int, Binop(T_plus, 1:int, t101:int):int
+ L9:
+  Cjump T_eq, t100:int, 5:int, L10, L11
+ L10:
+  Move t101:int, Binop(T_minus, 0:int, 1:int):int
+ L11:
+  Cjump T_eq, t100:int, 3:int, L12, L13
+ L12:
+  Move t100:int, Binop(T_plus, t100:int, 1:int):int
+  Jump L3
+ L13:
+  Cjump T_eq, t100:int, 8:int, L14, L15
+ L14:
+  Jump L4
+ L15:
+  putint t100:int:int
+  putch 32:int:int
+  putint t101:int:int
+  putch 10:int:int
+  Move t100:int, Binop(T_plus, t100:int, 1:int):int
+  Jump L3
+ L4:
+ L17:
+  Cjump T_ne, Binop(T_minus, t100:int, 8:int):int, 0:int, L17, L18
+ L18:
+  putch 10:int:int
+  Return 0:int
+
+
+------Basic Blocks------
+For Label=C20
+ C20:
+  Move t100:int, 1:int
+  Move t101:int, 3:int
+  Jump L0
+For Label=L0
+ L0:
+  Cjump T_ne, 0:int, 0:int, L2, L1
+For Label=L2
+ L2:
+  putint 3:int:int
+  Jump L0
+For Label=L1
+ L1:
+  Jump L3
+For Label=L3
+ L3:
+  Cjump T_lt, t100:int, 10:int, L16, L4
+For Label=L16
+ L16:
+  Cjump T_lt, t100:int, 4:int, L6, L5
+For Label=L5
+ L5:
+  Cjump T_gt, t100:int, 7:int, L6, L8
+For Label=L6
+ L6:
+  Cjump T_ne, t100:int, 3:int, L7, L8
+For Label=L7
+ L7:
+  Move t101:int, Binop(T_mul, t101:int, 3:int):int
+  Jump L9
+For Label=L8
+ L8:
+  Move t101:int, Binop(T_plus, 1:int, t101:int):int
+  Jump L9
+For Label=L9
+ L9:
+  Cjump T_eq, t100:int, 5:int, L10, L11
+For Label=L10
+ L10:
+  Move t101:int, Binop(T_minus, 0:int, 1:int):int
+  Jump L11
+For Label=L11
+ L11:
+  Cjump T_eq, t100:int, 3:int, L12, L13
+For Label=L12
+ L12:
+  Move t100:int, Binop(T_plus, t100:int, 1:int):int
+  Jump L3
+For Label=L13
+ L13:
+  Cjump T_eq, t100:int, 8:int, L14, L15
+For Label=L14
+ L14:
+  Jump L4
+For Label=L15
+ L15:
+  putint t100:int:int
+  putch 32:int:int
+  putint t101:int:int
+  putch 10:int:int
+  Move t100:int, Binop(T_plus, t100:int, 1:int):int
+  Jump L3
+For Label=L4
+ L4:
+  Jump L17
+For Label=L17
+ L17:
+  Cjump T_ne, Binop(T_minus, t100:int, 8:int):int, 0:int, L17, L18
+For Label=L18
+ L18:
+  putch 10:int:int
+  Return 0:int
+
+
+------Canonical IR Tree------
+ C20:
+  Move t100:int, 1:int
+  Move t101:int, 3:int
+ L0:
+  Cjump T_ne, 0:int, 0:int, L2, L1
+ L1:
+ L3:
+  Cjump T_lt, t100:int, 10:int, L16, L4
+ L4:
+ L17:
+  Cjump T_ne, Binop(T_minus, t100:int, 8:int):int, 0:int, L17, L18
+ L18:
+  putch 10:int:int
+  Return 0:int
+ L2:
+  putint 3:int:int
+  Jump L0
+ L16:
+  Cjump T_lt, t100:int, 4:int, L6, L5
+ L5:
+  Cjump T_gt, t100:int, 7:int, L6, L8
+ L8:
+  Move t101:int, Binop(T_plus, 1:int, t101:int):int
+ L9:
+  Cjump T_eq, t100:int, 5:int, L10, L11
+ L11:
+  Cjump T_eq, t100:int, 3:int, L12, L13
+ L13:
+  Cjump T_eq, t100:int, 8:int, L14, L15
+ L15:
+  putint t100:int:int
+  putch 32:int:int
+  putint t101:int:int
+  putch 10:int:int
+  Move t100:int, Binop(T_plus, t100:int, 1:int):int
+  Jump L3
+ L6:
+  Cjump T_eq, t100:int, 3:int, L8, L7
+ L7:
+  Move t101:int, Binop(T_mul, t101:int, 3:int):int
+  Jump L9
+ L10:
+  Move t101:int, Binop(T_minus, 0:int, 1:int):int
+  Jump L11
+ L12:
+  Move t100:int, Binop(T_plus, t100:int, 1:int):int
+  Jump L3
+ L14:
+  Jump L4
+ C19:
+  Return -1:int
+
+

@@ -1,0 +1,103 @@
+------Linearized IR Tree------
+  Move t100:int, malloc 8:int:int
+  Move Mem(t100:int):int, c$m:int
+  Move t101:int, t100:int
+  Move t102:float, t101:int.m t101:int, 1:int:float
+  Return   Cast(t102:float):int
+
+
+------Basic Blocks------
+For Label=C4
+ C4:
+  Move t100:int, malloc 8:int:int
+  Move Mem(t100:int):int, c$m:int
+  Move t101:int, t100:int
+  Move t102:float, t101:int.m t101:int, 1:int:float
+  Return   Cast(t102:float):int
+
+
+------Canonical IR Tree------
+ C4:
+  Move t100:int, malloc 8:int:int
+  Move Mem(t100:int):int, c$m:int
+  Move t101:int, t100:int
+  Move t102:float, t101:int.m t101:int, 1:int:float
+  Return   Cast(t102:float):int
+ C3:
+  Return -1:int
+
+
+------Linearized IR Tree------
+  Cjump T_gt, t100:float,   Cast(t101:int):float, L0, L1
+ L0:
+  Move t103:int, 1:int
+  Jump L2
+ L1:
+  Move t103:int, 0:int
+ L2:
+  Move t102:int, t103:int
+  Move t104:int, malloc 8:int:int
+  Move Mem(t104:int):int, c$m:int
+  Move t105:int, t104:int
+  Move t106:float, t105:int.m t105:int, 1:int:float
+  Return   Cast(t106:float):int
+
+
+------Basic Blocks------
+For Label=C6
+ C6:
+  Cjump T_gt, t100:float,   Cast(t101:int):float, L0, L1
+For Label=L0
+ L0:
+  Move t103:int, 1:int
+  Jump L2
+For Label=L1
+ L1:
+  Move t103:int, 0:int
+  Jump L2
+For Label=L2
+ L2:
+  Move t102:int, t103:int
+  Move t104:int, malloc 8:int:int
+  Move Mem(t104:int):int, c$m:int
+  Move t105:int, t104:int
+  Move t106:float, t105:int.m t105:int, 1:int:float
+  Return   Cast(t106:float):int
+
+
+------Canonical IR Tree------
+ C6:
+  Cjump T_gt, t100:float,   Cast(t101:int):float, L0, L1
+ L1:
+  Move t103:int, 0:int
+ L2:
+  Move t102:int, t103:int
+  Move t104:int, malloc 8:int:int
+  Move Mem(t104:int):int, c$m:int
+  Move t105:int, t104:int
+  Move t106:float, t105:int.m t105:int, 1:int:float
+  Return   Cast(t106:float):int
+ L0:
+  Move t103:int, 1:int
+  Jump L2
+ C5:
+  Return -1:int
+
+
+------Linearized IR Tree------
+  Return t100:float
+
+
+------Basic Blocks------
+For Label=C8
+ C8:
+  Return t100:float
+
+
+------Canonical IR Tree------
+ C8:
+  Return t100:float
+ C7:
+  Return -1:int
+
+

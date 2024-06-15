@@ -21,8 +21,7 @@ static FILE *outfile;
 Temp_temp Temp_newtemp(T_type type) {
   if (!temp_table) temp_table = S_empty();
   char r[16];
-  if(type == T_int)sprintf(r, "r%d", temps);
-  else sprintf(r, "s%d", temps);
+  sprintf(r, "%d", temps);
   Temp_temp p = S_look(temp_table, S_Symbol(String(r)));
   if (p) {
     p->type = type; // reuse
@@ -43,8 +42,8 @@ void Temp_resettemp() {
 
 Temp_temp Temp_namedtemp(int name, T_type type) {
   if (!temp_table) temp_table = S_empty();
-  char r[17];
-  sprintf(r, "%s%d", type == T_int ? "r" : "s", name);
+  char r[16];
+  sprintf(r, "%d", name);
   Temp_temp p = S_look(temp_table, S_Symbol(String(r)));
   if (p) {
     p->type = type; // reuse

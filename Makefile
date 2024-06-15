@@ -1,8 +1,17 @@
-RM = rm -rf
+RM       = rm -rf
+CLANG    = clang-14
+LLVMLINK = llvm-link-14
+LLI      = lli-14
+ARMCC    = arm-linux-gnueabihf-gcc
+QEMU     = qemu-arm
 
 BUILD_DIR = "$(CURDIR)/build"
 SRC_DIR   = "$(CURDIR)/src"
 TEST_DIR  = "$(CURDIR)/test"
+
+MAIN_EXE  = "$(BUILD_DIR)/main"
+
+MAKEFLAGS = --no-print-directory
 
 .PHONY: build clean veryclean rebuild compile run-llvm run-rpi
 
@@ -26,16 +35,17 @@ veryclean: clean
 
 rebuild: veryclean build
 
-compile:
+compile: clean
 	@cd $(TEST_DIR); \
 	for file in $$(ls .); do \
 		if [ "$${file##*.}" = "fmj" ]; then \
 			echo "Compiling [$${file%%.*}]"; \
+			$(MAIN_EXE) "$${file%%.*}" < "$${file%%.*}".fmj; \
 		fi \
 	done; \
 	cd $(CURDIR)
 
-run-llvm:
+run-llvm: clean
 	@cd $(TEST_DIR); \
 	for file in $$(ls .); do \
 		if [ "$${file##*.}" = "fmj" ]; then \
@@ -44,7 +54,7 @@ run-llvm:
 	done; \
 	cd $(CURDIR)
 
-run-rpi:
+run-rpi: clean
 	@cd $(TEST_DIR); \
 	for file in $$(ls .); do \
 		if [ "$${file##*.}" = "fmj" ]; then \

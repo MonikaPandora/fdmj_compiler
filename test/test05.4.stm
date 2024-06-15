@@ -1,0 +1,210 @@
+------Linearized IR Tree------
+  Cjump T_ne, 1:int, 0:int, L1, L0
+ L0:
+  putint 1:int:int
+  Cjump T_ne, 1:int, 0:int, L1, L2
+ L1:
+  putint 2:int:int
+ L2:
+  Cjump T_ne, 0:int, 0:int, L4, L3
+ L3:
+  putint 3:int:int
+  Cjump T_ne, 0:int, 0:int, L4, L5
+ L4:
+  putint 4:int:int
+ L5:
+  Cjump T_ne, 1:int, 0:int, L6, L8
+ L6:
+  putint 5:int:int
+  Cjump T_ne, 1:int, 0:int, L7, L8
+ L7:
+  putint 6:int:int
+ L8:
+  Cjump T_ne, 0:int, 0:int, L9, L11
+ L9:
+  putint 7:int:int
+  Cjump T_ne, 1:int, 0:int, L10, L11
+ L10:
+  putint 8:int:int
+ L11:
+  Cjump T_ne, 1:int, 0:int, L13, L16
+ L13:
+  Cjump T_ne, 0:int, 0:int, L14, L12
+ L12:
+  putint 9:int:int
+  Cjump T_ne, 0:int, 0:int, L14, L16
+ L14:
+  putint 10:int:int
+  Cjump T_ne, 1:int, 0:int, L15, L16
+ L15:
+  putint 11:int:int
+ L16:
+  Cjump T_ne, 0:int, 0:int, L20, L18
+ L18:
+  Cjump T_ne, 1:int, 0:int, L17, L19
+ L17:
+  putint 12:int:int
+  Cjump T_ne, 0:int, 0:int, L20, L19
+ L19:
+  putint 13:int:int
+  Cjump T_ne, 1:int, 0:int, L20, L21
+ L20:
+  putint 14:int:int
+ L21:
+  putch 10:int:int
+  Return 0:int
+
+
+------Basic Blocks------
+For Label=C23
+ C23:
+  Cjump T_ne, 1:int, 0:int, L1, L0
+For Label=L0
+ L0:
+  putint 1:int:int
+  Cjump T_ne, 1:int, 0:int, L1, L2
+For Label=L1
+ L1:
+  putint 2:int:int
+  Jump L2
+For Label=L2
+ L2:
+  Cjump T_ne, 0:int, 0:int, L4, L3
+For Label=L3
+ L3:
+  putint 3:int:int
+  Cjump T_ne, 0:int, 0:int, L4, L5
+For Label=L4
+ L4:
+  putint 4:int:int
+  Jump L5
+For Label=L5
+ L5:
+  Cjump T_ne, 1:int, 0:int, L6, L8
+For Label=L6
+ L6:
+  putint 5:int:int
+  Cjump T_ne, 1:int, 0:int, L7, L8
+For Label=L7
+ L7:
+  putint 6:int:int
+  Jump L8
+For Label=L8
+ L8:
+  Cjump T_ne, 0:int, 0:int, L9, L11
+For Label=L9
+ L9:
+  putint 7:int:int
+  Cjump T_ne, 1:int, 0:int, L10, L11
+For Label=L10
+ L10:
+  putint 8:int:int
+  Jump L11
+For Label=L11
+ L11:
+  Cjump T_ne, 1:int, 0:int, L13, L16
+For Label=L13
+ L13:
+  Cjump T_ne, 0:int, 0:int, L14, L12
+For Label=L12
+ L12:
+  putint 9:int:int
+  Cjump T_ne, 0:int, 0:int, L14, L16
+For Label=L14
+ L14:
+  putint 10:int:int
+  Cjump T_ne, 1:int, 0:int, L15, L16
+For Label=L15
+ L15:
+  putint 11:int:int
+  Jump L16
+For Label=L16
+ L16:
+  Cjump T_ne, 0:int, 0:int, L20, L18
+For Label=L18
+ L18:
+  Cjump T_ne, 1:int, 0:int, L17, L19
+For Label=L17
+ L17:
+  putint 12:int:int
+  Cjump T_ne, 0:int, 0:int, L20, L19
+For Label=L19
+ L19:
+  putint 13:int:int
+  Cjump T_ne, 1:int, 0:int, L20, L21
+For Label=L20
+ L20:
+  putint 14:int:int
+  Jump L21
+For Label=L21
+ L21:
+  putch 10:int:int
+  Return 0:int
+
+
+------Canonical IR Tree------
+ C23:
+  Cjump T_ne, 1:int, 0:int, L1, L0
+ L0:
+  putint 1:int:int
+  Cjump T_ne, 1:int, 0:int, L1, L2
+ L2:
+  Cjump T_ne, 0:int, 0:int, L4, L3
+ L3:
+  putint 3:int:int
+  Cjump T_ne, 0:int, 0:int, L4, L5
+ L5:
+  Cjump T_ne, 1:int, 0:int, L6, L8
+ L8:
+  Cjump T_ne, 0:int, 0:int, L9, L11
+ L11:
+  Cjump T_ne, 1:int, 0:int, L13, L16
+ L16:
+  Cjump T_ne, 0:int, 0:int, L20, L18
+ L18:
+  Cjump T_ne, 1:int, 0:int, L17, L19
+ L19:
+  putint 13:int:int
+  Cjump T_ne, 1:int, 0:int, L20, L21
+ L21:
+  putch 10:int:int
+  Return 0:int
+ L1:
+  putint 2:int:int
+  Jump L2
+ L4:
+  putint 4:int:int
+  Jump L5
+ L6:
+  putint 5:int:int
+  Cjump T_eq, 1:int, 0:int, L8, L7
+ L7:
+  putint 6:int:int
+  Jump L8
+ L9:
+  putint 7:int:int
+  Cjump T_eq, 1:int, 0:int, L11, L10
+ L10:
+  putint 8:int:int
+  Jump L11
+ L13:
+  Cjump T_ne, 0:int, 0:int, L14, L12
+ L12:
+  putint 9:int:int
+  Cjump T_eq, 0:int, 0:int, L16, L14
+ L14:
+  putint 10:int:int
+  Cjump T_eq, 1:int, 0:int, L16, L15
+ L15:
+  putint 11:int:int
+  Jump L16
+ L17:
+  putint 12:int:int
+  Cjump T_eq, 0:int, 0:int, L19, L20
+ L20:
+  putint 14:int:int
+  Jump L21
+ C22:
+  Return -1:int
+
+
