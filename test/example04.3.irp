@@ -1,0 +1,58 @@
+------Original IR Tree------
+T_FuncDecl(String("main"),
+  NULL,
+  T_Seq(
+    T_Seq(
+      T_Move(
+        T_Temp(Temp_namedtemp(100,T_int))/*T_int*/,
+        T_Binop(T_plus,
+          T_ExtCall(String("malloc"),
+            T_ExpList(
+              T_IntConst(24)/*T_int*/,
+              NULL)
+          ,T_int)/*T_int*/,
+          T_IntConst(8)/*T_int*/
+        )/*T_int*/
+      ),
+      T_Seq(
+        T_Move(
+          T_Mem(
+            T_Binop(T_minus,
+              T_Temp(Temp_namedtemp(100,T_int))/*T_int*/,
+              T_IntConst(-8)/*T_int*/
+            )/*T_int*/
+          , T_int)/*T_int*/,
+          T_IntConst(2)/*T_int*/
+        ),
+        T_Seq(
+          T_Move(
+            T_Mem(
+              T_Temp(Temp_namedtemp(100,T_int))/*T_int*/
+            , T_int)/*T_int*/,
+            T_FloatConst(1.000000)/*T_float*/
+          ),
+          T_Move(
+            T_Mem(
+              T_Binop(T_plus,
+                T_Temp(Temp_namedtemp(100,T_int))/*T_int*/,
+                T_IntConst(8)/*T_int*/
+              )/*T_int*/
+            , T_float)/*T_float*/,
+            T_FloatConst(2.000000)/*T_float*/
+          )
+        )
+      )
+    ),
+    T_Return(
+      T_Cast(
+        T_Mem(
+          T_Binop(T_plus,
+            T_Temp(Temp_namedtemp(100,T_int))/*T_int*/,
+            T_IntConst(0)/*T_int*/
+          )/*T_int*/
+        , T_float)/*T_float*/
+      ,T_int)/*T_int*/
+    )
+  )
+)
+

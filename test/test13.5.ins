@@ -1,0 +1,110 @@
+
+------For function ----- main
+
+------Basic Block Graph---------
+C10 (0): 
+------~Final traced AS instructions ---------
+define i64 @main() {
+C10:
+%108 = call i64* @malloc(i64 80)
+%107 = ptrtoint i64* %108 to i64
+%100 = add i64 %107, 8
+%109 = sub i64 %100, -8
+%110 = inttoptr i64 %109 to i64*
+store i64 9, i64* %110, align 8
+%111 = inttoptr i64 %100 to i64*
+store i64 0, i64* %111, align 8
+%112 = add i64 %100, 8
+%113 = inttoptr i64 %112 to i64*
+store i64 0, i64* %113, align 8
+%114 = add i64 %100, 16
+%115 = inttoptr i64 %114 to i64*
+store i64 1, i64* %115, align 8
+%116 = add i64 %100, 24
+%117 = inttoptr i64 %116 to i64*
+store i64 1, i64* %117, align 8
+%118 = add i64 %100, 32
+%119 = inttoptr i64 %118 to i64*
+store i64 2, i64* %119, align 8
+%120 = add i64 %100, 40
+%121 = inttoptr i64 %120 to i64*
+store i64 2, i64* %121, align 8
+%122 = add i64 %100, 48
+%123 = inttoptr i64 %122 to i64*
+store i64 5, i64* %123, align 8
+%124 = add i64 %100, 56
+%125 = inttoptr i64 %124 to i64*
+store i64 5, i64* %125, align 8
+%126 = add i64 %100, 64
+%127 = inttoptr i64 %126 to i64*
+store i64 3, i64* %127, align 8
+%102 = add i64 7, 0
+%103 = add i64 8, 0
+%104 = add i64 1, 0
+%128 = sub i64 %100, -8
+%129 = inttoptr i64 %128 to i64*
+%105 = load i64, i64* %129, align 8
+%130 = call i64* @malloc(i64 168)
+%106 = ptrtoint i64* %130 to i64
+%131 = inttoptr i64 %106 to i64*
+store i64 20, i64* %131, align 8
+%106 = add i64 %106, 8
+%101 = add i64 %106, 0
+%132 = add i64 %101, 0
+%133 = inttoptr i64 %132 to i64*
+store i64 0, i64* %133, align 8
+L0:
+%134 = icmp slt i64 %104, %105
+br i1 %134, label %L2, label %L1
+L1:
+L3:
+%135 = icmp ne i64 %102, %103
+br i1 %135, label %L8, label %L4
+L4:
+call void @putint(i64 %102)
+call void @putch(i64 10)
+ret i64 0
+L2:
+%137 = mul i64 %104, 8
+%136 = add i64 %101, %137
+%138 = inttoptr i64 %136 to i64*
+%145 = mul i64 %104, 8
+%144 = add i64 %100, %145
+%146 = inttoptr i64 %144 to i64*
+%143 = load i64, i64* %146, align 8
+%142 = mul i64 %143, 8
+%141 = add i64 %101, %142
+%147 = inttoptr i64 %141 to i64*
+%140 = load i64, i64* %147, align 8
+%139 = add i64 %140, 1
+store i64 %139, i64* %138, align 8
+%104 = add i64 %104, 1
+br label %L0
+L8:
+%151 = mul i64 %102, 8
+%150 = add i64 %101, %151
+%152 = inttoptr i64 %150 to i64*
+%149 = load i64, i64* %152, align 8
+%155 = mul i64 %103, 8
+%154 = add i64 %101, %155
+%156 = inttoptr i64 %154 to i64*
+%153 = load i64, i64* %156, align 8
+%148 = icmp slt i64 %149, %153
+br i1 %148, label %L5, label %L6
+L6:
+%158 = mul i64 %102, 8
+%157 = add i64 %100, %158
+%159 = inttoptr i64 %157 to i64*
+%102 = load i64, i64* %159, align 8
+L7:
+br label %L3
+L5:
+%161 = mul i64 %103, 8
+%160 = add i64 %100, %161
+%162 = inttoptr i64 %160 to i64*
+%103 = load i64, i64* %162, align 8
+br label %L7
+C9:
+ret i64 -1
+}
+

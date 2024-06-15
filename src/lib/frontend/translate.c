@@ -311,7 +311,6 @@ Tr_exp Tr_ArrayInit(Tr_exp arr, Tr_expList init, T_type type){
   T_exp a = unEx(arr);
   T_stm mlc = T_Move(a, NULL);
   T_stm len = T_Move(T_Mem(T_Binop(T_minus, a, T_IntConst(-SEM_ARCH_SIZE)), T_int), NULL);
-  seqBufClear();
   seqBufPush(Tr_Nx(mlc));
   seqBufPush(Tr_Nx(len));
   unsigned count = 0;
@@ -340,7 +339,7 @@ Tr_exp Tr_CallStm(string meth, Tr_exp clazz, Tr_exp thiz, Tr_expList el, T_type 
     it->tail = T_ExpList(unEx(el->head), NULL), it = it->tail;
     el = el->tail;
   }
-  T_exp meth_addr = offset ? T_Mem(T_Binop(T_plus, unEx(clazz), T_IntConst(offset)), T_int) : unEx(clazz);
+  T_exp meth_addr = offset ? T_Mem(T_Binop(T_plus, unEx(clazz), T_IntConst(offset)), T_int) : T_Mem(unEx(clazz), T_int);
   return Tr_Ex(T_Call(
     meth,
     meth_addr,
@@ -462,7 +461,7 @@ Tr_exp Tr_CallExp(string meth, Tr_exp clazz, Tr_exp thiz, Tr_expList el, T_type 
     it->tail = T_ExpList(unEx(el->head), NULL), it = it->tail;
     el = el->tail;
   }
-  T_exp meth_addr = offset ? T_Mem(T_Binop(T_plus, unEx(clazz), T_IntConst(offset)), T_int) : unEx(clazz);
+  T_exp meth_addr = offset ? T_Mem(T_Binop(T_plus, unEx(clazz), T_IntConst(offset)), T_int) : T_Mem(unEx(clazz), T_int);
   Temp_temp t = Temp_newtemp(type);
   return Tr_Ex(
     T_Eseq(
@@ -507,7 +506,7 @@ Tr_exp Tr_NumConst(float num, T_type type){
 
 Tr_exp Tr_LengthExp(Tr_exp arr){
   return Tr_Ex(
-    T_Mem(T_Binop(T_minus, unEx(arr), T_IntConst(SEM_ARCH_SIZE)), T_int)
+    T_Mem(T_Binop(T_minus, unEx(arr), T_IntConst(-SEM_ARCH_SIZE)), T_int)
   );
 }
 
