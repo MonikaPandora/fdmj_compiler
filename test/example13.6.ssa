@@ -1,0 +1,22 @@
+define i64 @main() {
+L0:
+br label %L2
+L1:
+ret i64 0
+L2:
+br label %L1
+}
+
+declare void @starttime()
+declare void @stoptime()
+declare i64* @malloc(i64)
+declare void @putch(i64)
+declare void @putint(i64)
+declare void @putfloat(double)
+declare i64 @getint()
+declare float @getfloat()
+declare i64* @getarray(i64)
+declare i64 @getch(i64)
+declare i64* @getfarray(i64)
+declare void @putarray(i64, i64*)
+declare void @putfarray(i64, i64*)

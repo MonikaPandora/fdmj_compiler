@@ -1,0 +1,33 @@
+define i64 @main() {
+C1:
+%s110 = fadd double 1.100000, 0.0
+%r111 = call i64* @malloc(i64 24)
+%r112 = ptrtoint i64* %r111 to i64
+%r113 = add i64 %r112, 8
+%r114 = sub i64 %r113, 8
+%r115 = inttoptr i64 %r114 to i64*
+store i64 2, i64* %r115, align 8
+%r116 = inttoptr i64 %r113 to i64*
+%r117 = fptosi double %s110 to i64
+store i64 %r117, i64* %r116, align 8
+%r118 = add i64 %r113, 8
+%r119 = inttoptr i64 %r118 to i64*
+store i64 2, i64* %r119, align 8
+br label %C0
+C0:
+ret i64 -1
+}
+
+declare void @starttime()
+declare void @stoptime()
+declare i64* @malloc(i64)
+declare void @putch(i64)
+declare void @putint(i64)
+declare void @putfloat(double)
+declare i64 @getint()
+declare float @getfloat()
+declare i64* @getarray(i64)
+declare i64 @getch(i64)
+declare i64* @getfarray(i64)
+declare void @putarray(i64, i64*)
+declare void @putfarray(i64, i64*)

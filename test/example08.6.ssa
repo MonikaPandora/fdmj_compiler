@@ -1,0 +1,49 @@
+define i64 @main() {
+C4:
+br label %L1
+L1:
+%r120 = add i64 0, 0
+br label %L2
+L2:
+%s121 = sitofp i64 %r120 to double
+%r122 = call i64* @malloc(i64 24)
+%r123 = ptrtoint i64* %r122 to i64
+%r124 = inttoptr i64 %r123 to i64*
+store double 1.000000, i64* %r124, align 8
+%r125 = add i64 %r123, 16
+%r126 = inttoptr i64 %r125 to i64*
+store double 1.000000, i64* %r126, align 8
+%r127 = inttoptr i64 %r123 to i64*
+%r128 = ptrtoint i64* @c0$m to i64
+store i64 %r128, i64* %r127, align 8
+%r129 = add i64 %r123, 0
+%r130 = inttoptr i64 %r129 to i64*
+%r131 = load i64, i64* %r130, align 8
+%r132 = inttoptr i64 %r131 to i64*
+%r133 = add i64 1, 0
+%r134 = add i64 2, 0
+%r135 = add i64 3, 0
+%s136 = call double %r132(i64 %r129, i64 %r133, i64 %r134, i64 %r135)
+%s137 = fmul double %s121, %s136
+%r138 = fptosi double %s137 to i64
+ret i64 %r138
+}
+
+define double @c0$m(i64 %r99, i64 %r100, i64 %r101, double %s102) {
+C7:
+ret double %s102
+}
+
+declare void @starttime()
+declare void @stoptime()
+declare i64* @malloc(i64)
+declare void @putch(i64)
+declare void @putint(i64)
+declare void @putfloat(double)
+declare i64 @getint()
+declare float @getfloat()
+declare i64* @getarray(i64)
+declare i64 @getch(i64)
+declare i64* @getfarray(i64)
+declare void @putarray(i64, i64*)
+declare void @putfarray(i64, i64*)

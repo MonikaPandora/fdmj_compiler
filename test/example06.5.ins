@@ -1,0 +1,85 @@
+
+------For function ----- main
+
+------Basic Block Graph---------
+C1 (0): 
+------~Final traced LLVM instructions ---------
+define i64 @main() {
+C1:
+%r101 = call i64* @malloc(i64 8)
+%r100 = ptrtoint i64* %r101 to i64
+%r102 = inttoptr i64 %r100 to i64*
+store double 1.000000, i64* %r102, align 8
+%r105 = inttoptr i64 %r100 to i64*
+%s104 = load double, i64* %r105, align 8
+%r103 = fptosi double %s104 to i64
+ret i64 %r103
+}
+
+------Flow Graph------
+[         C1:; d: s: ]  (0): 1 
+[%r101 = call i64* @malloc(i64 8); d: 101; s: ]  (1): 2 
+[%r100 = ptrtoint i64* %r101 to i64; d: 100; s: 101]  (2): 3 
+[%r102 = inttoptr i64 %r100 to i64*; d: 102; s: 100]  (3): 4 
+[store double 1.000000, i64* %r102, align 8; d: s: 102]  (4): 5 
+[%r105 = inttoptr i64 %r100 to i64*; d: 105; s: 100]  (5): 6 
+[%s104 = load double, i64* %r105, align 8; d: 104; s: 105]  (6): 7 
+[%r103 = fptosi double %s104 to i64; d: 103; s: 104]  (7): 8 
+[ret i64 %r103; d: s: 103]  (8): 
+
+/* ------Liveness Graph------*/
+Number of iterations=5
+----------------------
+ (0): 1 
+def=
+use=
+In=
+Out=
+----------------------
+ (1): 2 
+def=101, 
+use=
+In=
+Out=101, 
+----------------------
+ (2): 3 
+def=100, 
+use=101, 
+In=101, 
+Out=100, 
+----------------------
+ (3): 4 
+def=102, 
+use=100, 
+In=100, 
+Out=102, 100, 
+----------------------
+ (4): 5 
+def=
+use=102, 
+In=100, 102, 
+Out=100, 
+----------------------
+ (5): 6 
+def=105, 
+use=100, 
+In=100, 
+Out=105, 
+----------------------
+ (6): 7 
+def=104, 
+use=105, 
+In=105, 
+Out=104, 
+----------------------
+ (7): 8 
+def=103, 
+use=104, 
+In=104, 
+Out=103, 
+----------------------
+ (8): 
+def=
+use=103, 
+In=103, 
+Out=

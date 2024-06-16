@@ -1,0 +1,85 @@
+
+------For function ----- main
+
+------Basic Block Graph---------
+C1 (0): 
+------~Final traced LLVM instructions ---------
+define i64 @main() {
+C1:
+call void @putint(i64 4)
+call void @putch(i64 10)
+call void @starttime()
+%s100 = call double @getfloat()
+call void @putfloat(double %s100)
+call void @putch(i64 10)
+call void @stoptime()
+ret i64 0
+}
+
+------Flow Graph------
+[         C1:; d: s: ]  (0): 1 
+[call void @putint(i64 4); d: s: ]  (1): 2 
+[call void @putch(i64 10); d: s: ]  (2): 3 
+[call void @starttime(); d: s: ]  (3): 4 
+[%s100 = call double @getfloat(); d: 100; s: ]  (4): 5 
+[call void @putfloat(double %s100); d: s: 100]  (5): 6 
+[call void @putch(i64 10); d: s: ]  (6): 7 
+[call void @stoptime(); d: s: ]  (7): 8 
+[   ret i64 0; d: s: ]  (8): 
+
+/* ------Liveness Graph------*/
+Number of iterations=3
+----------------------
+ (0): 1 
+def=
+use=
+In=
+Out=
+----------------------
+ (1): 2 
+def=
+use=
+In=
+Out=
+----------------------
+ (2): 3 
+def=
+use=
+In=
+Out=
+----------------------
+ (3): 4 
+def=
+use=
+In=
+Out=
+----------------------
+ (4): 5 
+def=100, 
+use=
+In=
+Out=100, 
+----------------------
+ (5): 6 
+def=
+use=100, 
+In=100, 
+Out=
+----------------------
+ (6): 7 
+def=
+use=
+In=
+Out=
+----------------------
+ (7): 8 
+def=
+use=
+In=
+Out=
+----------------------
+ (8): 
+def=
+use=
+In=
+Out=

@@ -1,0 +1,89 @@
+------Linearized IR Tree------
+  Move t101:int, malloc 16:int:int
+  Move Mem(t101:int):int, c2$m2:int
+  Move Mem(t101:int):int, c2$m:int
+  Move t100:int, t101:int
+  Move t102:int, Mem(t100:int):int.m t100:int:int
+  putint t102:int:int
+  putch 10:int:int
+  Return 0:int
+
+
+------Basic Blocks------
+For Label=C1
+ C1:
+  Move t101:int, malloc 16:int:int
+  Move Mem(t101:int):int, c2$m2:int
+  Move Mem(t101:int):int, c2$m:int
+  Move t100:int, t101:int
+  Move t102:int, Mem(t100:int):int.m t100:int:int
+  putint t102:int:int
+  putch 10:int:int
+  Return 0:int
+
+
+------Canonical IR Tree------
+ C1:
+  Move t101:int, malloc 16:int:int
+  Move Mem(t101:int):int, c2$m2:int
+  Move Mem(t101:int):int, c2$m:int
+  Move t100:int, t101:int
+  Move t102:int, Mem(t100:int):int.m t100:int:int
+  putint t102:int:int
+  putch 10:int:int
+  Return 0:int
+ C0:
+  Return -1:int
+
+
+------Linearized IR Tree------
+  Return 400:int
+
+
+------Basic Blocks------
+For Label=C4
+ C4:
+  Return 400:int
+
+
+------Canonical IR Tree------
+ C4:
+  Return 400:int
+ C3:
+  Return -1:int
+
+
+------Linearized IR Tree------
+  Return 300:int
+
+
+------Basic Blocks------
+For Label=C7
+ C7:
+  Return 300:int
+
+
+------Canonical IR Tree------
+ C7:
+  Return 300:int
+ C6:
+  Return -1:int
+
+
+------Linearized IR Tree------
+  Return 200:int
+
+
+------Basic Blocks------
+For Label=C10
+ C10:
+  Return 200:int
+
+
+------Canonical IR Tree------
+ C10:
+  Return 200:int
+ C9:
+  Return -1:int
+
+

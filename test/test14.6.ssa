@@ -1,0 +1,97 @@
+define i64 @main() {
+C7:
+%r146 = call i64* @malloc(i64 104)
+%r147 = ptrtoint i64* %r146 to i64
+%r148 = add i64 %r147, 8
+%r149 = sub i64 %r148, 8
+%r150 = inttoptr i64 %r149 to i64*
+store i64 12, i64* %r150, align 8
+%r151 = inttoptr i64 %r148 to i64*
+store i64 0, i64* %r151, align 8
+%r152 = add i64 %r148, 8
+%r153 = inttoptr i64 %r152 to i64*
+store i64 1, i64* %r153, align 8
+%r154 = add i64 %r148, 16
+%r155 = inttoptr i64 %r154 to i64*
+store i64 2, i64* %r155, align 8
+%r156 = add i64 %r148, 24
+%r157 = inttoptr i64 %r156 to i64*
+store i64 4, i64* %r157, align 8
+%r158 = add i64 %r148, 32
+%r159 = inttoptr i64 %r158 to i64*
+store i64 8, i64* %r159, align 8
+%r160 = add i64 %r148, 40
+%r161 = inttoptr i64 %r160 to i64*
+store i64 16, i64* %r161, align 8
+%r162 = add i64 %r148, 48
+%r163 = inttoptr i64 %r162 to i64*
+store i64 32, i64* %r163, align 8
+%r164 = add i64 %r148, 56
+%r165 = inttoptr i64 %r164 to i64*
+store i64 64, i64* %r165, align 8
+%r166 = add i64 %r148, 64
+%r167 = inttoptr i64 %r166 to i64*
+store i64 128, i64* %r167, align 8
+%r168 = add i64 %r148, 72
+%r169 = inttoptr i64 %r168 to i64*
+store i64 256, i64* %r169, align 8
+%r170 = add i64 %r148, 80
+%r171 = inttoptr i64 %r170 to i64*
+store i64 512, i64* %r171, align 8
+%r172 = add i64 %r148, 88
+%r173 = inttoptr i64 %r172 to i64*
+store i64 1024, i64* %r173, align 8
+%r174 = add i64 0, 0
+%r175 = add i64 200, 0
+%r176 = sub i64 %r148, 8
+%r177 = inttoptr i64 %r176 to i64*
+%r178 = load i64, i64* %r177, align 8
+%r179 = add i64 %r178, 0
+br label %L0
+L0:
+%r180 = phi i64 [%r195, %L4], [%r174, %C7]
+%r181 = phi i64 [%r196, %L4], [%r179, %C7]
+%r182 = icmp slt i64 %r180, %r181
+br i1 %r182, label %L5, label %L1
+L1:
+%r183 = mul i64 %r181, 8
+%r184 = add i64 %r148, %r183
+%r185 = inttoptr i64 %r184 to i64*
+%r186 = load i64, i64* %r185, align 8
+call void @putint(i64 %r186)
+call void @putch(i64 10)
+ret i64 0
+L5:
+%r187 = add i64 %r180, %r181
+%r188 = sdiv i64 %r187, 2
+%r189 = mul i64 %r188, 8
+%r190 = add i64 %r148, %r189
+%r191 = inttoptr i64 %r190 to i64*
+%r192 = load i64, i64* %r191, align 8
+%r193 = icmp slt i64 %r192, %r175
+br i1 %r193, label %L2, label %L3
+L3:
+%r194 = add i64 %r188, 0
+br label %L4
+L4:
+%r195 = phi i64 [%r197, %L2], [%r180, %L3]
+%r196 = phi i64 [%r181, %L2], [%r194, %L3]
+br label %L0
+L2:
+%r197 = add i64 %r188, 1
+br label %L4
+}
+
+declare void @starttime()
+declare void @stoptime()
+declare i64* @malloc(i64)
+declare void @putch(i64)
+declare void @putint(i64)
+declare void @putfloat(double)
+declare i64 @getint()
+declare float @getfloat()
+declare i64* @getarray(i64)
+declare i64 @getch(i64)
+declare i64* @getfarray(i64)
+declare void @putarray(i64, i64*)
+declare void @putfarray(i64, i64*)

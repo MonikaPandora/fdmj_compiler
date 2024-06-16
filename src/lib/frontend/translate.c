@@ -310,7 +310,7 @@ Tr_exp Tr_AssignStm(Tr_exp location, Tr_exp value){
 Tr_exp Tr_ArrayInit(Tr_exp arr, Tr_expList init, T_type type){
   T_exp a = unEx(arr);
   T_stm mlc = T_Move(a, NULL);
-  T_stm len = T_Move(T_Mem(T_Binop(T_minus, a, T_IntConst(-SEM_ARCH_SIZE)), T_int), NULL);
+  T_stm len = T_Move(T_Mem(T_Binop(T_minus, a, T_IntConst(SEM_ARCH_SIZE)), T_int), NULL);
   seqBufPush(Tr_Nx(mlc));
   seqBufPush(Tr_Nx(len));
   unsigned count = 0;
@@ -506,7 +506,7 @@ Tr_exp Tr_NumConst(float num, T_type type){
 
 Tr_exp Tr_LengthExp(Tr_exp arr){
   return Tr_Ex(
-    T_Mem(T_Binop(T_minus, unEx(arr), T_IntConst(-SEM_ARCH_SIZE)), T_int)
+    T_Mem(T_Binop(T_minus, unEx(arr), T_IntConst(SEM_ARCH_SIZE)), T_int)
   );
 }
 
@@ -554,7 +554,7 @@ Tr_exp Tr_NewArrExp(Tr_exp size){
         unNx(Sequence(
           T_Move(
             T_Temp(sz_t),
-            sz
+            smart_cast(sz, T_int)
           ),
           T_Move(
             T_Temp(alloc_sz_t),

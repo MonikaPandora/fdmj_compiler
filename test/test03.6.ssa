@@ -1,0 +1,45 @@
+define i64 @main() {
+C1:
+%r115 = add i64 1024, 0
+%r116 = add i64 32, 0
+%r117 = sdiv i64 %r115, %r116
+call void @putint(i64 %r117)
+call void @putch(i64 10)
+%r118 = add i64 %r115, 5
+%r119 = add 3, 0
+%r120 = sub i64 %r118, %r119
+call void @putint(i64 %r120)
+call void @putch(i64 10)
+%r121 = sub i64 0, %r117
+%r122 = add i64 %r121, %r115
+%r123 = mul i64 %r117, %r117
+call void @putint(i64 %r122)
+call void @putch(i64 10)
+call void @putint(i64 %r123)
+call void @putch(i64 10)
+%s124 = sitofp i64 %r123 to double
+%s125 = fadd double %s124, 1.200000
+%s126 = sitofp i64 %r122 to double
+%s127 = fmul double %s126, 5.600000
+%r128 = add i64 7, 0
+%s129 = sitofp i64 %r128 to double
+%s130 = fdiv double %s127, %s129
+%s131 = fsub double %s125, %s130
+call void @putfloat(double %s131)
+call void @putch(i64 10)
+ret i64 0
+}
+
+declare void @starttime()
+declare void @stoptime()
+declare i64* @malloc(i64)
+declare void @putch(i64)
+declare void @putint(i64)
+declare void @putfloat(double)
+declare i64 @getint()
+declare float @getfloat()
+declare i64* @getarray(i64)
+declare i64 @getch(i64)
+declare i64* @getfarray(i64)
+declare void @putarray(i64, i64*)
+declare void @putfarray(i64, i64*)

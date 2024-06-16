@@ -1,0 +1,205 @@
+
+------For function ----- main
+
+------Basic Block Graph---------
+C1 (0): 
+------~Final traced LLVM instructions ---------
+define i64 @main() {
+C1:
+%r101 = call i64 @getch()
+call void @putch(i64 %r101)
+call void @putch(i64 10)
+call void @putint(i64 %r101)
+call void @putch(i64 10)
+%s105 = call double @getfloat()
+%r100 = fptosi double %s105 to i64
+call void @putint(i64 %r100)
+call void @putch(i64 10)
+%r106 = call i64* @malloc(i64 168)
+%r104 = ptrtoint i64* %r106 to i64
+%r107 = inttoptr i64 %r104 to i64*
+store i64 20, i64* %r107, align 8
+%r104 = add i64 %r104, 8
+%r103 = add i64 %r104, 0
+%r108 = inttoptr i64 %r103 to i64*
+%r102 = call i64 @getarray(i64* %r108)
+call void @putint(i64 %r102)
+call void @putch(i64 10)
+%r109 = inttoptr i64 %r103 to i64*
+call void @putarray(i64 %r102, i64* %r109)
+call void @putch(i64 10)
+ret i64 0
+}
+
+------Flow Graph------
+[         C1:; d: s: ]  (0): 1 
+[%r101 = call i64 @getch(); d: 101; s: ]  (1): 2 
+[call void @putch(i64 %r101); d: s: 101]  (2): 3 
+[call void @putch(i64 10); d: s: ]  (3): 4 
+[call void @putint(i64 %r101); d: s: 101]  (4): 5 
+[call void @putch(i64 10); d: s: ]  (5): 6 
+[%s105 = call double @getfloat(); d: 105; s: ]  (6): 7 
+[%r100 = fptosi double %s105 to i64; d: 100; s: 105]  (7): 8 
+[call void @putint(i64 %r100); d: s: 100]  (8): 9 
+[call void @putch(i64 10); d: s: ]  (9): 10 
+[%r106 = call i64* @malloc(i64 168); d: 106; s: ]  (10): 11 
+[%r104 = ptrtoint i64* %r106 to i64; d: 104; s: 106]  (11): 12 
+[%r107 = inttoptr i64 %r104 to i64*; d: 107; s: 104]  (12): 13 
+[store i64 20, i64* %r107, align 8; d: s: 107]  (13): 14 
+[%r104 = add i64 %r104, 8; d: 104; s: 104]  (14): 15 
+[%r103 = add i64 %r104, 0; d: 103; s: 104]  (15): 16 
+[%r108 = inttoptr i64 %r103 to i64*; d: 108; s: 103]  (16): 17 
+[%r102 = call i64 @getarray(i64* %r108); d: 102; s: 108]  (17): 18 
+[call void @putint(i64 %r102); d: s: 102]  (18): 19 
+[call void @putch(i64 10); d: s: ]  (19): 20 
+[%r109 = inttoptr i64 %r103 to i64*; d: 109; s: 103]  (20): 21 
+[call void @putarray(i64 %r102, i64* %r109); d: s: 102, 109]  (21): 22 
+[call void @putch(i64 10); d: s: ]  (22): 23 
+[   ret i64 0; d: s: ]  (23): 
+
+/* ------Liveness Graph------*/
+Number of iterations=9
+----------------------
+ (0): 1 
+def=
+use=
+In=
+Out=
+----------------------
+ (1): 2 
+def=101, 
+use=
+In=
+Out=101, 
+----------------------
+ (2): 3 
+def=
+use=101, 
+In=101, 
+Out=101, 
+----------------------
+ (3): 4 
+def=
+use=
+In=101, 
+Out=101, 
+----------------------
+ (4): 5 
+def=
+use=101, 
+In=101, 
+Out=
+----------------------
+ (5): 6 
+def=
+use=
+In=
+Out=
+----------------------
+ (6): 7 
+def=105, 
+use=
+In=
+Out=105, 
+----------------------
+ (7): 8 
+def=100, 
+use=105, 
+In=105, 
+Out=100, 
+----------------------
+ (8): 9 
+def=
+use=100, 
+In=100, 
+Out=
+----------------------
+ (9): 10 
+def=
+use=
+In=
+Out=
+----------------------
+ (10): 11 
+def=106, 
+use=
+In=
+Out=106, 
+----------------------
+ (11): 12 
+def=104, 
+use=106, 
+In=106, 
+Out=104, 
+----------------------
+ (12): 13 
+def=107, 
+use=104, 
+In=104, 
+Out=107, 104, 
+----------------------
+ (13): 14 
+def=
+use=107, 
+In=104, 107, 
+Out=104, 
+----------------------
+ (14): 15 
+def=104, 
+use=104, 
+In=104, 
+Out=104, 
+----------------------
+ (15): 16 
+def=103, 
+use=104, 
+In=104, 
+Out=103, 
+----------------------
+ (16): 17 
+def=108, 
+use=103, 
+In=103, 
+Out=108, 103, 
+----------------------
+ (17): 18 
+def=102, 
+use=108, 
+In=103, 108, 
+Out=102, 103, 
+----------------------
+ (18): 19 
+def=
+use=102, 
+In=103, 102, 
+Out=102, 103, 
+----------------------
+ (19): 20 
+def=
+use=
+In=103, 102, 
+Out=103, 102, 
+----------------------
+ (20): 21 
+def=109, 
+use=103, 
+In=102, 103, 
+Out=109, 102, 
+----------------------
+ (21): 22 
+def=
+use=102, 109, 
+In=102, 109, 
+Out=
+----------------------
+ (22): 23 
+def=
+use=
+In=
+Out=
+----------------------
+ (23): 
+def=
+use=
+In=
+Out=

@@ -1,0 +1,65 @@
+------Linearized IR Tree------
+  Move t100:int, 1024:int
+  Move t101:int, 32:int
+  Move t101:int, Binop(T_div, t100:int, t101:int):int
+  putint t101:int:int
+  putch 10:int:int
+  putint Binop(T_minus, Binop(T_plus, t100:int, 5:int):int, Binop(T_mul, 3:int, 0:int):int):int:int
+  putch 10:int:int
+  Move t100:int, Binop(T_plus, Binop(T_minus, 0:int, t101:int):int, t100:int):int
+  Move t101:int, Binop(T_mul, t101:int, t101:int):int
+  putint t100:int:int
+  putch 10:int:int
+  putint t101:int:int
+  putch 10:int:int
+  Move t103:float, Binop(T_minus, Binop(T_plus,  Cast(t101:int):float, 1.200000:float):float, Binop(T_div, Binop(T_mul,  Cast(t100:int):float, 5.600000:float):float,  Cast(7:int):float):float):float
+  putfloat t103:float:int
+  putch 10:int:int
+  Return 0:int
+
+
+------Basic Blocks------
+For Label=C1
+ C1:
+  Move t100:int, 1024:int
+  Move t101:int, 32:int
+  Move t101:int, Binop(T_div, t100:int, t101:int):int
+  putint t101:int:int
+  putch 10:int:int
+  putint Binop(T_minus, Binop(T_plus, t100:int, 5:int):int, Binop(T_mul, 3:int, 0:int):int):int:int
+  putch 10:int:int
+  Move t100:int, Binop(T_plus, Binop(T_minus, 0:int, t101:int):int, t100:int):int
+  Move t101:int, Binop(T_mul, t101:int, t101:int):int
+  putint t100:int:int
+  putch 10:int:int
+  putint t101:int:int
+  putch 10:int:int
+  Move t103:float, Binop(T_minus, Binop(T_plus,  Cast(t101:int):float, 1.200000:float):float, Binop(T_div, Binop(T_mul,  Cast(t100:int):float, 5.600000:float):float,  Cast(7:int):float):float):float
+  putfloat t103:float:int
+  putch 10:int:int
+  Return 0:int
+
+
+------Canonical IR Tree------
+ C1:
+  Move t100:int, 1024:int
+  Move t101:int, 32:int
+  Move t101:int, Binop(T_div, t100:int, t101:int):int
+  putint t101:int:int
+  putch 10:int:int
+  putint Binop(T_minus, Binop(T_plus, t100:int, 5:int):int, Binop(T_mul, 3:int, 0:int):int):int:int
+  putch 10:int:int
+  Move t100:int, Binop(T_plus, Binop(T_minus, 0:int, t101:int):int, t100:int):int
+  Move t101:int, Binop(T_mul, t101:int, t101:int):int
+  putint t100:int:int
+  putch 10:int:int
+  putint t101:int:int
+  putch 10:int:int
+  Move t103:float, Binop(T_minus, Binop(T_plus,  Cast(t101:int):float, 1.200000:float):float, Binop(T_div, Binop(T_mul,  Cast(t100:int):float, 5.600000:float):float,  Cast(7:int):float):float):float
+  putfloat t103:float:int
+  putch 10:int:int
+  Return 0:int
+ C0:
+  Return -1:int
+
+

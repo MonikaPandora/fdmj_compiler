@@ -1,0 +1,373 @@
+
+------For function ----- main
+
+------Basic Block Graph---------
+C23 (0): 10 
+L2 (1): 2 
+L3 (2): 3 
+L5 (3): 11 
+L8 (4): 5 
+L11 (5): 13 
+L16 (6): 7 
+L18 (7): 15 
+L19 (8): 16 
+L21 (9): 
+L1 (10): 1 
+L6 (11): 12 
+L7 (12): 4 
+L13 (13): 14 
+L12 (14): 6 
+L17 (15): 8 
+L20 (16): 9 
+------~Final traced LLVM instructions ---------
+define i64 @main() {
+C23:
+br label %L1
+L2:
+br label %L3
+L3:
+call void @putint(i64 3)
+br label %L5
+L5:
+br label %L6
+L8:
+br label %L11
+L11:
+br label %L13
+L16:
+br label %L18
+L18:
+br label %L17
+L19:
+call void @putint(i64 13)
+br label %L20
+L21:
+call void @putch(i64 10)
+ret i64 0
+L1:
+call void @putint(i64 2)
+br label %L2
+L6:
+call void @putint(i64 5)
+br label %L7
+L7:
+call void @putint(i64 6)
+br label %L8
+L13:
+br label %L12
+L12:
+call void @putint(i64 9)
+br label %L16
+L17:
+call void @putint(i64 12)
+br label %L19
+L20:
+call void @putint(i64 14)
+br label %L21
+}
+
+------Flow Graph------
+[        C23:; d: s: ]  (0): 1 
+[br label %L1; d: s: ]  (1): 23 
+[         L2:; d: s: ]  (2): 3 
+[br label %L3; d: s: ]  (3): 4 
+[         L3:; d: s: ]  (4): 5 
+[call void @putint(i64 3); d: s: ]  (5): 6 
+[br label %L5; d: s: ]  (6): 7 
+[         L5:; d: s: ]  (7): 8 
+[br label %L6; d: s: ]  (8): 26 
+[         L8:; d: s: ]  (9): 10 
+[br label %L11; d: s: ]  (10): 11 
+[        L11:; d: s: ]  (11): 12 
+[br label %L13; d: s: ]  (12): 32 
+[        L16:; d: s: ]  (13): 14 
+[br label %L18; d: s: ]  (14): 15 
+[        L18:; d: s: ]  (15): 16 
+[br label %L17; d: s: ]  (16): 37 
+[        L19:; d: s: ]  (17): 18 
+[call void @putint(i64 13); d: s: ]  (18): 19 
+[br label %L20; d: s: ]  (19): 40 
+[        L21:; d: s: ]  (20): 21 
+[call void @putch(i64 10); d: s: ]  (21): 22 
+[   ret i64 0; d: s: ]  (22): 23 
+[         L1:; d: s: ]  (23): 24 
+[call void @putint(i64 2); d: s: ]  (24): 25 
+[br label %L2; d: s: ]  (25): 2 
+[         L6:; d: s: ]  (26): 27 
+[call void @putint(i64 5); d: s: ]  (27): 28 
+[br label %L7; d: s: ]  (28): 29 
+[         L7:; d: s: ]  (29): 30 
+[call void @putint(i64 6); d: s: ]  (30): 31 
+[br label %L8; d: s: ]  (31): 9 
+[        L13:; d: s: ]  (32): 33 
+[br label %L12; d: s: ]  (33): 34 
+[        L12:; d: s: ]  (34): 35 
+[call void @putint(i64 9); d: s: ]  (35): 36 
+[br label %L16; d: s: ]  (36): 13 
+[        L17:; d: s: ]  (37): 38 
+[call void @putint(i64 12); d: s: ]  (38): 39 
+[br label %L19; d: s: ]  (39): 17 
+[        L20:; d: s: ]  (40): 41 
+[call void @putint(i64 14); d: s: ]  (41): 42 
+[br label %L21; d: s: ]  (42): 20 
+
+/* ------Liveness Graph------*/
+Number of iterations=1
+----------------------
+ (0): 1 
+def=
+use=
+In=
+Out=
+----------------------
+ (1): 23 
+def=
+use=
+In=
+Out=
+----------------------
+ (2): 3 
+def=
+use=
+In=
+Out=
+----------------------
+ (3): 4 
+def=
+use=
+In=
+Out=
+----------------------
+ (4): 5 
+def=
+use=
+In=
+Out=
+----------------------
+ (5): 6 
+def=
+use=
+In=
+Out=
+----------------------
+ (6): 7 
+def=
+use=
+In=
+Out=
+----------------------
+ (7): 8 
+def=
+use=
+In=
+Out=
+----------------------
+ (8): 26 
+def=
+use=
+In=
+Out=
+----------------------
+ (9): 10 
+def=
+use=
+In=
+Out=
+----------------------
+ (10): 11 
+def=
+use=
+In=
+Out=
+----------------------
+ (11): 12 
+def=
+use=
+In=
+Out=
+----------------------
+ (12): 32 
+def=
+use=
+In=
+Out=
+----------------------
+ (13): 14 
+def=
+use=
+In=
+Out=
+----------------------
+ (14): 15 
+def=
+use=
+In=
+Out=
+----------------------
+ (15): 16 
+def=
+use=
+In=
+Out=
+----------------------
+ (16): 37 
+def=
+use=
+In=
+Out=
+----------------------
+ (17): 18 
+def=
+use=
+In=
+Out=
+----------------------
+ (18): 19 
+def=
+use=
+In=
+Out=
+----------------------
+ (19): 40 
+def=
+use=
+In=
+Out=
+----------------------
+ (20): 21 
+def=
+use=
+In=
+Out=
+----------------------
+ (21): 22 
+def=
+use=
+In=
+Out=
+----------------------
+ (22): 23 
+def=
+use=
+In=
+Out=
+----------------------
+ (23): 24 
+def=
+use=
+In=
+Out=
+----------------------
+ (24): 25 
+def=
+use=
+In=
+Out=
+----------------------
+ (25): 2 
+def=
+use=
+In=
+Out=
+----------------------
+ (26): 27 
+def=
+use=
+In=
+Out=
+----------------------
+ (27): 28 
+def=
+use=
+In=
+Out=
+----------------------
+ (28): 29 
+def=
+use=
+In=
+Out=
+----------------------
+ (29): 30 
+def=
+use=
+In=
+Out=
+----------------------
+ (30): 31 
+def=
+use=
+In=
+Out=
+----------------------
+ (31): 9 
+def=
+use=
+In=
+Out=
+----------------------
+ (32): 33 
+def=
+use=
+In=
+Out=
+----------------------
+ (33): 34 
+def=
+use=
+In=
+Out=
+----------------------
+ (34): 35 
+def=
+use=
+In=
+Out=
+----------------------
+ (35): 36 
+def=
+use=
+In=
+Out=
+----------------------
+ (36): 13 
+def=
+use=
+In=
+Out=
+----------------------
+ (37): 38 
+def=
+use=
+In=
+Out=
+----------------------
+ (38): 39 
+def=
+use=
+In=
+Out=
+----------------------
+ (39): 17 
+def=
+use=
+In=
+Out=
+----------------------
+ (40): 41 
+def=
+use=
+In=
+Out=
+----------------------
+ (41): 42 
+def=
+use=
+In=
+Out=
+----------------------
+ (42): 20 
+def=
+use=
+In=
+Out=

@@ -1,0 +1,141 @@
+define i64 @main() {
+C13:
+%r130 = call i64* @malloc(i64 24)
+%r131 = ptrtoint i64* %r130 to i64
+%r132 = add i64 %r131, 8
+%r133 = inttoptr i64 %r132 to i64*
+store i64 0, i64* %r133, align 8
+%r134 = call i64* @malloc(i64 56)
+%r135 = ptrtoint i64* %r134 to i64
+%r136 = add i64 %r135, 8
+%r137 = sub i64 %r136, -8
+%r138 = inttoptr i64 %r137 to i64*
+store i64 6, i64* %r138, align 8
+%r139 = inttoptr i64 %r136 to i64*
+store i64 0, i64* %r139, align 8
+%r140 = add i64 %r136, 8
+%r141 = inttoptr i64 %r140 to i64*
+store i64 0, i64* %r141, align 8
+%r142 = add i64 %r136, 16
+%r143 = inttoptr i64 %r142 to i64*
+store i64 0, i64* %r143, align 8
+%r144 = add i64 %r136, 24
+%r145 = inttoptr i64 %r144 to i64*
+store i64 0, i64* %r145, align 8
+%r146 = add i64 %r136, 32
+%r147 = inttoptr i64 %r146 to i64*
+store i64 0, i64* %r147, align 8
+%r148 = add i64 %r136, 40
+%r149 = inttoptr i64 %r148 to i64*
+store i64 0, i64* %r149, align 8
+%r150 = inttoptr i64 %r131 to i64*
+store i64 %r136, i64* %r150, align 8
+%r151 = inttoptr i64 %r131 to i64*
+%r152 = ptrtoint i64* @c$dfs to i64
+store i64 %r152, i64* %r151, align 8
+%r153 = add i64 %r131, 0
+%r154 = inttoptr i64 %r153 to i64*
+%r155 = load i64, i64* %r154, align 8
+%r156 = inttoptr i64 %r155 to i64*
+%r157 = add i64 8, 0
+%r158 = add i64 3, 0
+%r159 = call i64 %r156(i64 %r153, i64 %r157, i64 %r158)
+ret i64 0
+}
+
+define i64 @c$dfs(i64 %r99, i64 %r100, i64 %r101) {
+C16:
+%r202 = add i64 0, 0
+%r203 = icmp eq i64 %r100, 0
+br i1 %r203, label %L0, label %L5
+L5:
+%r204 = icmp sle i64 %r100, 0
+br i1 %r204, label %L7, label %L6
+L6:
+%r205 = icmp eq i64 %r101, 0
+br i1 %r205, label %L7, label %L8
+L8:
+%r206 = add i64 %r99, 8
+%r207 = inttoptr i64 %r206 to i64*
+%r208 = add i64 %r99, 8
+%r209 = inttoptr i64 %r208 to i64*
+%r210 = load i64, i64* %r209, align 8
+%r211 = add i64 %r210, 1
+store i64 %r211, i64* %r207, align 8
+%r212 = add i64 1, 0
+br label %L9
+L9:
+%r213 = phi i64 [%r236, %L11], [%r212, %L8]
+%r214 = icmp sle i64 %r213, %r100
+br i1 %r214, label %L11, label %L10
+L10:
+%r215 = add i64 %r99, 8
+%r216 = inttoptr i64 %r215 to i64*
+%r217 = add i64 %r99, 8
+%r218 = inttoptr i64 %r217 to i64*
+%r219 = load i64, i64* %r218, align 8
+%r220 = sub i64 %r219, 1
+store i64 %r220, i64* %r216, align 8
+ret i64 0
+L0:
+%r237 = icmp ne i64 %r101, 0
+br i1 %r237, label %L5, label %L4
+L4:
+br label %L1
+L1:
+%r238 = phi i64 [%r249, %L3], [%r202, %L4]
+%r239 = add i64 %r99, 8
+%r240 = inttoptr i64 %r239 to i64*
+%r241 = load i64, i64* %r240, align 8
+%r242 = icmp slt i64 %r238, %r241
+br i1 %r242, label %L3, label %L2
+L2:
+call void @putch(i64 10)
+ret i64 0
+L3:
+%r243 = inttoptr i64 %r99 to i64*
+%r244 = load i64, i64* %r243, align 8
+%r245 = mul i64 %r238, 8
+%r246 = add i64 %r244, %r245
+%r247 = inttoptr i64 %r246 to i64*
+%r248 = load i64, i64* %r247, align 8
+call void @putint(i64 %r248)
+call void @putch(i64 32)
+%r249 = add i64 %r238, 1
+br label %L1
+L7:
+ret i64 0
+L11:
+%r221 = inttoptr i64 %r99 to i64*
+%r222 = load i64, i64* %r221, align 8
+%r223 = add i64 %r99, 8
+%r224 = inttoptr i64 %r223 to i64*
+%r225 = load i64, i64* %r224, align 8
+%r226 = sub i64 %r225, 1
+%r227 = mul i64 %r226, 8
+%r228 = add i64 %r222, %r227
+%r229 = inttoptr i64 %r228 to i64*
+store i64 %r213, i64* %r229, align 8
+%r230 = inttoptr i64 %r99 to i64*
+%r231 = load i64, i64* %r230, align 8
+%r232 = inttoptr i64 %r231 to i64*
+%r233 = sub i64 %r100, %r213
+%r234 = sub i64 %r101, 1
+%r235 = call i64 %r232(i64 %r99, i64 %r233, i64 %r234)
+%r236 = add i64 %r213, 1
+br label %L9
+}
+
+declare void @starttime()
+declare void @stoptime()
+declare i64* @malloc(i64)
+declare void @putch(i64)
+declare void @putint(i64)
+declare void @putfloat(double)
+declare i64 @getint()
+declare float @getfloat()
+declare i64* @getarray(i64)
+declare i64 @getch(i64)
+declare i64* @getfarray(i64)
+declare void @putarray(i64, i64*)
+declare void @putfarray(i64, i64*)

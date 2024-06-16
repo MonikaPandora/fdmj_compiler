@@ -1,0 +1,34 @@
+------Linearized IR Tree------
+  Move t101:float, 1.100000:float
+  Move t102:int, malloc 24:int:int
+  Move t100:int, Binop(T_plus, t102:int, 8:int):int
+  Move Mem(Binop(T_minus, t100:int, 8:int):int):int, 2:int
+  Move Mem(t100:int):int,   Cast(t101:float):int
+  Move Mem(Binop(T_plus, t100:int, 8:int):int):int, 2:int
+
+
+------Basic Blocks------
+For Label=C1
+ C1:
+  Move t101:float, 1.100000:float
+  Move t102:int, malloc 24:int:int
+  Move t100:int, Binop(T_plus, t102:int, 8:int):int
+  Move Mem(Binop(T_minus, t100:int, 8:int):int):int, 2:int
+  Move Mem(t100:int):int,   Cast(t101:float):int
+  Move Mem(Binop(T_plus, t100:int, 8:int):int):int, 2:int
+  Jump C0
+
+
+------Canonical IR Tree------
+ C1:
+  Move t101:float, 1.100000:float
+  Move t102:int, malloc 24:int:int
+  Move t100:int, Binop(T_plus, t102:int, 8:int):int
+  Move Mem(Binop(T_minus, t100:int, 8:int):int):int, 2:int
+  Move Mem(t100:int):int,   Cast(t101:float):int
+  Move Mem(Binop(T_plus, t100:int, 8:int):int):int, 2:int
+  Jump C0
+ C0:
+  Return -1:int
+
+

@@ -1,0 +1,78 @@
+define i64 @main() {
+C1:
+%r147 = add i64 233, 0
+%r148 = call i64* @malloc(i64 16)
+%r149 = ptrtoint i64* %r148 to i64
+%r150 = add i64 %r149, 8
+%r151 = sub i64 %r150, 8
+%r152 = inttoptr i64 %r151 to i64*
+store i64 1, i64* %r152, align 8
+%r153 = inttoptr i64 %r150 to i64*
+store i64 1975, i64* %r153, align 8
+%r154 = call i64* @malloc(i64 32)
+%r155 = ptrtoint i64* %r154 to i64
+%r156 = add i64 %r155, 8
+%r157 = sub i64 %r156, 8
+%r158 = inttoptr i64 %r157 to i64*
+store i64 3, i64* %r158, align 8
+%r159 = inttoptr i64 %r156 to i64*
+store i64 1905, i64* %r159, align 8
+%r160 = add i64 %r156, 8
+%r161 = inttoptr i64 %r160 to i64*
+store i64 5, i64* %r161, align 8
+%r162 = add i64 %r156, 16
+%r163 = inttoptr i64 %r162 to i64*
+store i64 27, i64* %r163, align 8
+%s164 = fadd double 1.000000, 0.0
+%r165 = call i64* @malloc(i64 16)
+%r166 = ptrtoint i64* %r165 to i64
+%r167 = add i64 %r166, 8
+%r168 = sub i64 %r167, 8
+%r169 = inttoptr i64 %r168 to i64*
+store i64 1, i64* %r169, align 8
+%r170 = inttoptr i64 %r167 to i64*
+store double 19.750000, i64* %r170, align 8
+%r171 = call i64* @malloc(i64 32)
+%r172 = ptrtoint i64* %r171 to i64
+%r173 = add i64 %r172, 8
+%r174 = sub i64 %r173, 8
+%r175 = inttoptr i64 %r174 to i64*
+store i64 3, i64* %r175, align 8
+%r176 = inttoptr i64 %r173 to i64*
+store double 19.500000, i64* %r176, align 8
+%r177 = add i64 %r173, 8
+%r178 = inttoptr i64 %r177 to i64*
+store double 5.500000, i64* %r178, align 8
+%r179 = add i64 %r173, 16
+%r180 = inttoptr i64 %r179 to i64*
+store double 2.700000, i64* %r180, align 8
+%r181 = call i64* @malloc(i64 32)
+%r182 = ptrtoint i64* %r181 to i64
+%r183 = add i64 %r182, 8
+%r184 = sub i64 %r183, 8
+%r185 = inttoptr i64 %r184 to i64*
+store i64 3, i64* %r185, align 8
+%r186 = inttoptr i64 %r183 to i64*
+store i64 2024, i64* %r186, align 8
+%r187 = add i64 %r183, 8
+%r188 = inttoptr i64 %r187 to i64*
+store i64 5, i64* %r188, align 8
+%r189 = add i64 %r183, 16
+%r190 = inttoptr i64 %r189 to i64*
+store i64 22, i64* %r190, align 8
+ret i64 0
+}
+
+declare void @starttime()
+declare void @stoptime()
+declare i64* @malloc(i64)
+declare void @putch(i64)
+declare void @putint(i64)
+declare void @putfloat(double)
+declare i64 @getint()
+declare float @getfloat()
+declare i64* @getarray(i64)
+declare i64 @getch(i64)
+declare i64* @getfarray(i64)
+declare void @putarray(i64, i64*)
+declare void @putfarray(i64, i64*)

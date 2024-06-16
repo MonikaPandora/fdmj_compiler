@@ -1,0 +1,96 @@
+------Linearized IR Tree------
+  Move t100:int, 13:int
+  Move t101:int, malloc 8:int:int
+  Move Mem(t101:int):int, fib$f:int
+  Move t102:int, t101:int
+  Move t103:int, Mem(t102:int):int.f t102:int, t100:int:int
+  putint t103:int:int
+  putch 10:int:int
+  Return 0:int
+
+
+------Basic Blocks------
+For Label=C5
+ C5:
+  Move t100:int, 13:int
+  Move t101:int, malloc 8:int:int
+  Move Mem(t101:int):int, fib$f:int
+  Move t102:int, t101:int
+  Move t103:int, Mem(t102:int):int.f t102:int, t100:int:int
+  putint t103:int:int
+  putch 10:int:int
+  Return 0:int
+
+
+------Canonical IR Tree------
+ C5:
+  Move t100:int, 13:int
+  Move t101:int, malloc 8:int:int
+  Move Mem(t101:int):int, fib$f:int
+  Move t102:int, t101:int
+  Move t103:int, Mem(t102:int):int.f t102:int, t100:int:int
+  putint t103:int:int
+  putch 10:int:int
+  Return 0:int
+ C4:
+  Return -1:int
+
+
+------Linearized IR Tree------
+  Cjump T_eq, t100:int, 0:int, L1, L0
+ L0:
+  Cjump T_eq, t100:int, 1:int, L1, L2
+ L1:
+  Return t100:int
+  Jump L3
+ L2:
+  Move t101:int, Mem(t99:int):int.f t99:int, Binop(T_minus, t100:int, 1:int):int:int
+  Move t120:int, t101:int
+  Move t102:int, Mem(t99:int):int.f t99:int, Binop(T_minus, t100:int, 2:int):int:int
+  Return Binop(T_plus, t120:int, t102:int):int
+ L3:
+
+
+------Basic Blocks------
+For Label=C8
+ C8:
+  Cjump T_eq, t100:int, 0:int, L1, L0
+For Label=L0
+ L0:
+  Cjump T_eq, t100:int, 1:int, L1, L2
+For Label=L1
+ L1:
+  Return t100:int
+For Label=C9
+ C9:
+  Jump L3
+For Label=L2
+ L2:
+  Move t101:int, Mem(t99:int):int.f t99:int, Binop(T_minus, t100:int, 1:int):int:int
+  Move t120:int, t101:int
+  Move t102:int, Mem(t99:int):int.f t99:int, Binop(T_minus, t100:int, 2:int):int:int
+  Return Binop(T_plus, t120:int, t102:int):int
+For Label=L3
+ L3:
+  Jump C7
+
+
+------Canonical IR Tree------
+ C8:
+  Cjump T_eq, t100:int, 0:int, L1, L0
+ L0:
+  Cjump T_eq, t100:int, 1:int, L1, L2
+ L2:
+  Move t101:int, Mem(t99:int):int.f t99:int, Binop(T_minus, t100:int, 1:int):int:int
+  Move t120:int, t101:int
+  Move t102:int, Mem(t99:int):int.f t99:int, Binop(T_minus, t100:int, 2:int):int:int
+  Return Binop(T_plus, t120:int, t102:int):int
+ L1:
+  Return t100:int
+ C9:
+ L3:
+  Jump C7
+ C7:
+  Return -1:int
+
+

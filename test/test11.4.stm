@@ -1,0 +1,192 @@
+------Linearized IR Tree------
+  Move t101:int, malloc 24:int:int
+  Move Mem(Binop(T_plus, t101:int, 8:int):int):int, 0:int
+  Move t103:int, malloc 56:int:int
+  Move t102:int, Binop(T_plus, t103:int, 8:int):int
+  Move Mem(Binop(T_minus, t102:int, -8:int):int):int, 6:int
+  Move Mem(t102:int):int, 0:int
+  Move Mem(Binop(T_plus, t102:int, 8:int):int):int, 0:int
+  Move Mem(Binop(T_plus, t102:int, 16:int):int):int, 0:int
+  Move Mem(Binop(T_plus, t102:int, 24:int):int):int, 0:int
+  Move Mem(Binop(T_plus, t102:int, 32:int):int):int, 0:int
+  Move Mem(Binop(T_plus, t102:int, 40:int):int):int, 0:int
+  Move Mem(t101:int):int, t102:int
+  Move Mem(t101:int):int, c$dfs:int
+  Move t100:int, t101:int
+  Mem(t100:int):int.dfs t100:int, 8:int, 3:int:int
+  Return 0:int
+
+
+------Basic Blocks------
+For Label=C13
+ C13:
+  Move t101:int, malloc 24:int:int
+  Move Mem(Binop(T_plus, t101:int, 8:int):int):int, 0:int
+  Move t103:int, malloc 56:int:int
+  Move t102:int, Binop(T_plus, t103:int, 8:int):int
+  Move Mem(Binop(T_minus, t102:int, -8:int):int):int, 6:int
+  Move Mem(t102:int):int, 0:int
+  Move Mem(Binop(T_plus, t102:int, 8:int):int):int, 0:int
+  Move Mem(Binop(T_plus, t102:int, 16:int):int):int, 0:int
+  Move Mem(Binop(T_plus, t102:int, 24:int):int):int, 0:int
+  Move Mem(Binop(T_plus, t102:int, 32:int):int):int, 0:int
+  Move Mem(Binop(T_plus, t102:int, 40:int):int):int, 0:int
+  Move Mem(t101:int):int, t102:int
+  Move Mem(t101:int):int, c$dfs:int
+  Move t100:int, t101:int
+  Mem(t100:int):int.dfs t100:int, 8:int, 3:int:int
+  Return 0:int
+
+
+------Canonical IR Tree------
+ C13:
+  Move t101:int, malloc 24:int:int
+  Move Mem(Binop(T_plus, t101:int, 8:int):int):int, 0:int
+  Move t103:int, malloc 56:int:int
+  Move t102:int, Binop(T_plus, t103:int, 8:int):int
+  Move Mem(Binop(T_minus, t102:int, -8:int):int):int, 6:int
+  Move Mem(t102:int):int, 0:int
+  Move Mem(Binop(T_plus, t102:int, 8:int):int):int, 0:int
+  Move Mem(Binop(T_plus, t102:int, 16:int):int):int, 0:int
+  Move Mem(Binop(T_plus, t102:int, 24:int):int):int, 0:int
+  Move Mem(Binop(T_plus, t102:int, 32:int):int):int, 0:int
+  Move Mem(Binop(T_plus, t102:int, 40:int):int):int, 0:int
+  Move Mem(t101:int):int, t102:int
+  Move Mem(t101:int):int, c$dfs:int
+  Move t100:int, t101:int
+  Mem(t100:int):int.dfs t100:int, 8:int, 3:int:int
+  Return 0:int
+ C12:
+  Return -1:int
+
+
+------Linearized IR Tree------
+  Move t102:int, 0:int
+  Cjump T_eq, t100:int, 0:int, L0, L5
+ L0:
+  Cjump T_eq, t101:int, 0:int, L4, L5
+ L4:
+ L1:
+  Cjump T_lt, t102:int, Mem(Binop(T_plus, t99:int, 8:int):int):int, L3, L2
+ L3:
+  putint Mem(Binop(T_plus, Mem(t99:int):int, Binop(T_mul, t102:int, 8:int):int):int):int:int
+  putch 32:int:int
+  Move t102:int, Binop(T_plus, t102:int, 1:int):int
+  Jump L1
+ L2:
+  putch 10:int:int
+  Return 0:int
+ L5:
+  Cjump T_le, t100:int, 0:int, L7, L6
+ L6:
+  Cjump T_eq, t101:int, 0:int, L7, L8
+ L7:
+  Return 0:int
+ L8:
+  Move Mem(Binop(T_plus, t99:int, 8:int):int):int, Binop(T_plus, Mem(Binop(T_plus, t99:int, 8:int):int):int, 1:int):int
+  Move t102:int, 1:int
+ L9:
+  Cjump T_le, t102:int, t100:int, L11, L10
+ L11:
+  Move Mem(Binop(T_plus, Mem(t99:int):int, Binop(T_mul, Binop(T_minus, Mem(Binop(T_plus, t99:int, 8:int):int):int, 1:int):int, 8:int):int):int):int, t102:int
+  Mem(t99:int):int.dfs t99:int, Binop(T_minus, t100:int, t102:int):int, Binop(T_minus, t101:int, 1:int):int:int
+  Move t102:int, Binop(T_plus, t102:int, 1:int):int
+  Jump L9
+ L10:
+  Move Mem(Binop(T_plus, t99:int, 8:int):int):int, Binop(T_minus, Mem(Binop(T_plus, t99:int, 8:int):int):int, 1:int):int
+  Return 0:int
+
+
+------Basic Blocks------
+For Label=C16
+ C16:
+  Move t102:int, 0:int
+  Cjump T_eq, t100:int, 0:int, L0, L5
+For Label=L0
+ L0:
+  Cjump T_eq, t101:int, 0:int, L4, L5
+For Label=L4
+ L4:
+  Jump L1
+For Label=L1
+ L1:
+  Cjump T_lt, t102:int, Mem(Binop(T_plus, t99:int, 8:int):int):int, L3, L2
+For Label=L3
+ L3:
+  putint Mem(Binop(T_plus, Mem(t99:int):int, Binop(T_mul, t102:int, 8:int):int):int):int:int
+  putch 32:int:int
+  Move t102:int, Binop(T_plus, t102:int, 1:int):int
+  Jump L1
+For Label=L2
+ L2:
+  putch 10:int:int
+  Return 0:int
+For Label=L5
+ L5:
+  Cjump T_le, t100:int, 0:int, L7, L6
+For Label=L6
+ L6:
+  Cjump T_eq, t101:int, 0:int, L7, L8
+For Label=L7
+ L7:
+  Return 0:int
+For Label=L8
+ L8:
+  Move Mem(Binop(T_plus, t99:int, 8:int):int):int, Binop(T_plus, Mem(Binop(T_plus, t99:int, 8:int):int):int, 1:int):int
+  Move t102:int, 1:int
+  Jump L9
+For Label=L9
+ L9:
+  Cjump T_le, t102:int, t100:int, L11, L10
+For Label=L11
+ L11:
+  Move Mem(Binop(T_plus, Mem(t99:int):int, Binop(T_mul, Binop(T_minus, Mem(Binop(T_plus, t99:int, 8:int):int):int, 1:int):int, 8:int):int):int):int, t102:int
+  Mem(t99:int):int.dfs t99:int, Binop(T_minus, t100:int, t102:int):int, Binop(T_minus, t101:int, 1:int):int:int
+  Move t102:int, Binop(T_plus, t102:int, 1:int):int
+  Jump L9
+For Label=L10
+ L10:
+  Move Mem(Binop(T_plus, t99:int, 8:int):int):int, Binop(T_minus, Mem(Binop(T_plus, t99:int, 8:int):int):int, 1:int):int
+  Return 0:int
+
+
+------Canonical IR Tree------
+ C16:
+  Move t102:int, 0:int
+  Cjump T_eq, t100:int, 0:int, L0, L5
+ L5:
+  Cjump T_le, t100:int, 0:int, L7, L6
+ L6:
+  Cjump T_eq, t101:int, 0:int, L7, L8
+ L8:
+  Move Mem(Binop(T_plus, t99:int, 8:int):int):int, Binop(T_plus, Mem(Binop(T_plus, t99:int, 8:int):int):int, 1:int):int
+  Move t102:int, 1:int
+ L9:
+  Cjump T_le, t102:int, t100:int, L11, L10
+ L10:
+  Move Mem(Binop(T_plus, t99:int, 8:int):int):int, Binop(T_minus, Mem(Binop(T_plus, t99:int, 8:int):int):int, 1:int):int
+  Return 0:int
+ L0:
+  Cjump T_ne, t101:int, 0:int, L5, L4
+ L4:
+ L1:
+  Cjump T_lt, t102:int, Mem(Binop(T_plus, t99:int, 8:int):int):int, L3, L2
+ L2:
+  putch 10:int:int
+  Return 0:int
+ L3:
+  putint Mem(Binop(T_plus, Mem(t99:int):int, Binop(T_mul, t102:int, 8:int):int):int):int:int
+  putch 32:int:int
+  Move t102:int, Binop(T_plus, t102:int, 1:int):int
+  Jump L1
+ L7:
+  Return 0:int
+ L11:
+  Move Mem(Binop(T_plus, Mem(t99:int):int, Binop(T_mul, Binop(T_minus, Mem(Binop(T_plus, t99:int, 8:int):int):int, 1:int):int, 8:int):int):int):int, t102:int
+  Mem(t99:int):int.dfs t99:int, Binop(T_minus, t100:int, t102:int):int, Binop(T_minus, t101:int, 1:int):int:int
+  Move t102:int, Binop(T_plus, t102:int, 1:int):int
+  Jump L9
+ C15:
+  Return -1:int
+
+

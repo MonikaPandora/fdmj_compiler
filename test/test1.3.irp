@@ -1,0 +1,20 @@
+------Original IR Tree------
+T_FuncDecl(String("main"),
+  NULL,
+  NULL
+)
+
+------Original IR Tree------
+T_FuncDecl(String("c2$m1"),
+  Temp_TempList(Temp_namedtemp(99,T_int),
+    NULL),
+  NULL
+)
+
+------Original IR Tree------
+T_FuncDecl(String("c1$m1"),
+  Temp_TempList(Temp_namedtemp(99,T_int),
+    NULL),
+  NULL
+)
+
