@@ -50,6 +50,10 @@ run-llvm: clean
 	for file in $$(ls .); do \
 		if [ "$${file##*.}" = "fmj" ]; then \
 			echo "Run on llvm for [$${file%%.*}]"; \
+			$(MAIN_EXE) "$${file%%.*}" < "$${file%%.*}".fmj; \
+			$(LLVMLINK) --opaque-pointers "$${file%%.*}".6.ssa $(BUILD_DIR)/vendor/libsysy/libsysy64.ll -S -o "$${file%%.*}".ll && \
+			$(LLI) -opaque-pointers "$${file%%.*}".ll > "$${file%%.*}".output && \
+			echo $$?; \
 		fi \
 	done; \
 	cd $(CURDIR)

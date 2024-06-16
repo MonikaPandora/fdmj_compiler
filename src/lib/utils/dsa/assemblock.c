@@ -136,3 +136,42 @@ AS_instrList AS_traceSchedule(AS_blockList bl,
   prolog->tail = getNext(epilog, optimize);
   return ll;
 }
+
+AS_blockList instrList2BL(AS_instrList il) {
+    AS_instrList b = NULL;
+    AS_blockList bl = NULL;
+    AS_instrList til = il;
+
+    while (til) {
+      if (til->head->kind == I_LABEL) {
+        if (b) { //if we have a label but the current block is not empty, then we have to stop the block
+          Temp_label l = til->head->u.LABEL.label;
+          b = AS_splice(b, AS_InstrList(AS_Oper(String("br label `j0"), NULL, NULL, AS_Targets(Temp_LabelList(l, NULL))), NULL)); 
+                    //add a jump to the block to be stopped, only for LLVM IR
+          bl = AS_BlockSplice(bl, AS_BlockList(AS_Block(b), NULL)); //add the block to the block list
+
+          b = NULL; //start a new block
+        } 
+      }
+
+      assert(b||til->head->kind == I_LABEL);  //if not a label to start a block, something's wrong!
+
+      //now add the instruction to the block
+      b = AS_splice(b, AS_InstrList(til->head, NULL));
+
+      // if (til->head->kind == I_OPER && ((til->head->u.OPER.jumps && til->head->u.OPER.jumps->labels)||(
+      // !strcmp(til->head->u.OPER.assem,"ret i64 -1")||!strcmp(til->head->u.OPER.assem,"ret double -1.0")))) {
+      //     bl = AS_BlockSplice(bl, AS_BlockList(AS_Block(b), NULL)); //got a jump, stop a block
+      //     b = NULL; //and start a new block
+      // } 
+
+      if (til->head->kind == I_OPER && ((til->head->u.OPER.jumps && til->head->u.OPER.jumps->labels)||(
+      !strncmp(til->head->u.OPER.assem, "ret", 3)))) {
+          bl = AS_BlockSplice(bl, AS_BlockList(AS_Block(b), NULL)); //got a jump, stop a block
+          b = NULL; //and start a new block
+      } 
+
+      til = til->tail;
+    }
+    return bl;
+}

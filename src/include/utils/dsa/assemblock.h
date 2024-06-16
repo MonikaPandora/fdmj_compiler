@@ -26,4 +26,5 @@ AS_block AS_Block(AS_instrList instrs);
 AS_instrList AS_traceSchedule(AS_blockList bl,
                 AS_instrList prolog, AS_instrList epilog, bool optimize);
 
+AS_blockList instrList2BL(AS_instrList il);
 #endif

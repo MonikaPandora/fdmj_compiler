@@ -43,51 +43,6 @@ static void print_to_ssa_file(string file_ssa, AS_instrList il) {
     fclose(stdout);
 }
 
-static AS_blockList instrList2BL(AS_instrList il) {
-    AS_instrList b = NULL;
-    AS_blockList bl = NULL;
-    AS_instrList til = il;
-
-    while (til) {
-      if (til->head->kind == I_LABEL) {
-        if (b) { //if we have a label but the current block is not empty, then we have to stop the block
-          Temp_label l = til->head->u.LABEL.label;
-          b = AS_splice(b, AS_InstrList(AS_Oper(String("br label `j0"), NULL, NULL, AS_Targets(Temp_LabelList(l, NULL))), NULL)); 
-                    //add a jump to the block to be stopped, only for LLVM IR
-          bl = AS_BlockSplice(bl, AS_BlockList(AS_Block(b), NULL)); //add the block to the block list
-#ifdef __DEBUG
-          fprintf(stderr, "1----Start a new Block %s\n", Temp_labelstring(l)); fflush(stderr);
-#endif
-          b = NULL; //start a new block
-        } 
-      }
-
-      assert(b||til->head->kind == I_LABEL);  //if not a label to start a block, something's wrong!
-
-#ifdef __DEBUG
-      if (!b && til->head->kind == I_LABEL)
-          fprintf(stderr, "2----Start a new Block %s\n", Temp_labelstring(til->head->u.LABEL.label)); fflush(stderr);
-#endif
-
-      //now add the instruction to the block
-      b = AS_splice(b, AS_InstrList(til->head, NULL));
-
-      if (til->head->kind == I_OPER && ((til->head->u.OPER.jumps && til->head->u.OPER.jumps->labels)||(
-      !strcmp(til->head->u.OPER.assem,"ret i64 -1")||!strcmp(til->head->u.OPER.assem,"ret double -1.0")))) {
-#ifdef __DEBUG
-          fprintf(stderr, "----Got a jump, ending the block for label = %s\n", Temp_labelstring(b->head->u.LABEL.label)); fflush(stderr);
-#endif
-          bl = AS_BlockSplice(bl, AS_BlockList(AS_Block(b), NULL)); //got a jump, stop a block
-          b = NULL; //and start a new block
-      } 
-      til = til->tail;
-    }
-#ifdef __DEBUG
-    fprintf(stderr, "----Processed all instructions\n"); fflush(stderr);
-#endif
-    return bl;
-}
-
 int main(int argc, const char * argv[]) {
   if (argc != 2) {
     fprintf(stdout, "Usage: %s fmjFilename\n", argv[0]);
