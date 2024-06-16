@@ -14,6 +14,9 @@
 #include "bg.h"
 #include "llvmgen.h"
 
+#include "ssa.h"
+#include "regalloc.h"
+
 #include "print_src.h"
 #include "print_ast.h"
 #include "print_stm.h"
@@ -32,6 +35,58 @@ extern int yyparse();
 //     printf("  -r  --rpi      compiles to the RPi code after register allocation(with arch_size=4)\n");
 //     printf("  -?  --help     this message\n");
 // }
+
+
+static void print_to_ssa_file(string file_ssa, AS_instrList il) {
+    freopen(file_ssa, "a", stdout);
+    AS_printInstrList(stdout, il, Temp_name());
+    fclose(stdout);
+}
+
+static AS_blockList instrList2BL(AS_instrList il) {
+    AS_instrList b = NULL;
+    AS_blockList bl = NULL;
+    AS_instrList til = il;
+
+    while (til) {
+      if (til->head->kind == I_LABEL) {
+        if (b) { //if we have a label but the current block is not empty, then we have to stop the block
+          Temp_label l = til->head->u.LABEL.label;
+          b = AS_splice(b, AS_InstrList(AS_Oper(String("br label `j0"), NULL, NULL, AS_Targets(Temp_LabelList(l, NULL))), NULL)); 
+                    //add a jump to the block to be stopped, only for LLVM IR
+          bl = AS_BlockSplice(bl, AS_BlockList(AS_Block(b), NULL)); //add the block to the block list
+#ifdef __DEBUG
+          fprintf(stderr, "1----Start a new Block %s\n", Temp_labelstring(l)); fflush(stderr);
+#endif
+          b = NULL; //start a new block
+        } 
+      }
+
+      assert(b||til->head->kind == I_LABEL);  //if not a label to start a block, something's wrong!
+
+#ifdef __DEBUG
+      if (!b && til->head->kind == I_LABEL)
+          fprintf(stderr, "2----Start a new Block %s\n", Temp_labelstring(til->head->u.LABEL.label)); fflush(stderr);
+#endif
+
+      //now add the instruction to the block
+      b = AS_splice(b, AS_InstrList(til->head, NULL));
+
+      if (til->head->kind == I_OPER && ((til->head->u.OPER.jumps && til->head->u.OPER.jumps->labels)||(
+      !strcmp(til->head->u.OPER.assem,"ret i64 -1")||!strcmp(til->head->u.OPER.assem,"ret double -1.0")))) {
+#ifdef __DEBUG
+          fprintf(stderr, "----Got a jump, ending the block for label = %s\n", Temp_labelstring(b->head->u.LABEL.label)); fflush(stderr);
+#endif
+          bl = AS_BlockSplice(bl, AS_BlockList(AS_Block(b), NULL)); //got a jump, stop a block
+          b = NULL; //and start a new block
+      } 
+      til = til->tail;
+    }
+#ifdef __DEBUG
+    fprintf(stderr, "----Processed all instructions\n"); fflush(stderr);
+#endif
+    return bl;
+}
 
 int main(int argc, const char * argv[]) {
   if (argc != 2) {
@@ -59,16 +114,16 @@ int main(int argc, const char * argv[]) {
   sprintf(file_stm, "%s.4.stm", file);
   string file_ins = checked_malloc(IR_MAXLEN);
   sprintf(file_ins, "%s.5.ins", file);
-  string file_insxml = checked_malloc(IR_MAXLEN);
-  sprintf(file_insxml, "%s.6.ins", file);
-  string file_cfg= checked_malloc(IR_MAXLEN);
-  sprintf(file_cfg, "%s.7.cfg", file);
+  // string file_insxml = checked_malloc(IR_MAXLEN);
+  // sprintf(file_insxml, "%s.6.ins", file);
+  // string file_cfg= checked_malloc(IR_MAXLEN);
+  // sprintf(file_cfg, "%s.7.cfg", file);
   string file_ssa= checked_malloc(IR_MAXLEN);
-  sprintf(file_ssa, "%s.8.ssa", file);
+  sprintf(file_ssa, "%s.6.ssa", file);
   string file_arm= checked_malloc(IR_MAXLEN);
-  sprintf(file_arm, "%s.9.arm", file);
+  sprintf(file_arm, "%s.7.arm", file);
   string file_rpi= checked_malloc(IR_MAXLEN);
-  sprintf(file_rpi, "%s.10.s", file);
+  sprintf(file_rpi, "%s.8.s", file);
 
   // lex & parse
   yyparse();
@@ -139,7 +194,6 @@ int main(int argc, const char * argv[]) {
       // the instruction selection function
       AS_instrList bil = llvmbody(sll->head);
 
-
       //making the list of AS instructions into a block of AS instructions
       AS_blockList bbl = AS_BlockList(AS_Block(bil), NULL);
       //putting the block into the list of blocks
@@ -156,11 +210,48 @@ int main(int argc, const char * argv[]) {
     fprintf(stdout, "\n------For function ----- %s\n\n", fdl->head->name); 
     fprintf(stdout, "------Basic Block Graph---------\n");
     Show_bg(stdout, bg);
+
+
     //put all the blocks into one AS list
     AS_instrList il = AS_traceSchedule(bodybl, prologil, epilogil, FALSE);
 
-    printf("------~Final traced AS instructions ---------\n");
+    printf("------~Final traced LLVM instructions ---------\n");
     AS_printInstrList(stdout, il, Temp_name());
+
+    // body ins list
+    AS_instrList bodyil = prologil->tail;
+    if(bodyil == epilogil)bodyil = NULL;
+    else {
+      prologil->tail = NULL;
+      AS_instrList i = bodyil;
+      while(i->tail != epilogil)i = i->tail;
+      i->tail = NULL;
+    }
+
+    // flow graph
+    G_graph fg = FG_AssemFlowGraph(bodyil);
+    freopen(file_ins, "a", stdout);
+    fprintf(stdout, "------Flow Graph------\n");
+    fflush(stdout);
+    G_show(stdout, G_nodes(fg), (void*)FG_show);
+    fprintf(stdout, "\n");
+    fflush(stdout);
+    fclose(stdout);
+
+    // data flow analysis
+    G_nodeList lg = Liveness(G_nodes(fg));
+    freopen(file_ins, "a", stdout);
+    fprintf(stdout, "/* ------Liveness Graph------*/\n");
+    Show_Liveness(stdout, lg);
+    fflush(stdout);
+    fclose(stdout);
+
+    // do ssa
+    bg = Create_bg(instrList2BL(bodyil));
+    AS_instrList bodyil_in_SSA = AS_instrList_to_SSA(bodyil, lg, bg);
+    //print the AS_instrList to the ssa file`
+    AS_instrList finalssa = AS_splice(AS_InstrList(prologil->head, bodyil_in_SSA), AS_InstrList(epilogil->head, NULL));
+    print_to_ssa_file(file_ssa, finalssa);
 
     fdl = fdl->tail;
   }
