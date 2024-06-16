@@ -45,7 +45,7 @@ compile: clean
 	done; \
 	cd $(CURDIR)
 
-run-llvm: clean
+run-llvm: rebuild
 	@cd $(TEST_DIR); \
 	for file in $$(ls .); do \
 		if [ "$${file##*.}" = "fmj" ]; then \
@@ -58,7 +58,7 @@ run-llvm: clean
 	done; \
 	cd $(CURDIR)
 
-run-rpi: clean
+run-rpi: rebuild
 	@cd $(TEST_DIR); \
 	for file in $$(ls .); do \
 		if [ "$${file##*.}" = "fmj" ]; then \

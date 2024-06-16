@@ -211,5 +211,22 @@ int main(int argc, const char * argv[]) {
     fdl = fdl->tail;
   }
 
+  // print the runtime functions for the 8.ssa file
+  freopen(file_ssa, "a", stdout);
+  fprintf(stdout, "declare void @starttime()\n");
+  fprintf(stdout, "declare void @stoptime()\n");
+  fprintf(stdout, "declare i64* @malloc(i64)\n");
+  fprintf(stdout, "declare void @putch(i64)\n");
+  fprintf(stdout, "declare void @putint(i64)\n");
+  fprintf(stdout, "declare void @putfloat(double)\n");
+  fprintf(stdout, "declare i64 @getint()\n");
+  fprintf(stdout, "declare float @getfloat()\n");
+  fprintf(stdout, "declare i64* @getarray(i64)\n");
+  fprintf(stdout, "declare i64 @getch(i64)\n");
+  fprintf(stdout, "declare i64* @getfarray(i64)\n");
+  fprintf(stdout, "declare void @putarray(i64, i64*)\n");
+  fprintf(stdout, "declare void @putfarray(i64, i64*)\n");
+  fclose(stdout);
+  
   return 0;
 }

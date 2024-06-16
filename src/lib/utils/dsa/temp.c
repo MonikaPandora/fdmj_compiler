@@ -13,26 +13,30 @@
 #include "temp.h"
 #include "table.h"
 
-static S_table temp_table = NULL;
+static S_table int_temp_table = NULL;
+static S_table float_temp_table = NULL;
 static int temps = 100;
 static int labels = 0;
 static FILE *outfile;
 
 Temp_temp Temp_newtemp(T_type type) {
-  if (!temp_table) temp_table = S_empty();
+  if (!int_temp_table) int_temp_table = S_empty();
+  if (!float_temp_table) float_temp_table = S_empty();
+  // char r[16];
+  // sprintf(r, "%d", temps);
+  // Temp_temp p = S_look(type == T_int ? int_temp_table : float_temp_table, S_Symbol(String(r)));
+  // if (p) {
+  //   p->type = type; // reuse
+  //   temps++;
+  //   return p;
+  // }
   char r[16];
   sprintf(r, "%d", temps);
-  Temp_temp p = S_look(temp_table, S_Symbol(String(r)));
-  if (p) {
-    p->type = type; // reuse
-    temps++;
-    return p;
-  }
-  p = (Temp_temp) checked_malloc(sizeof (*p));
+  Temp_temp p = (Temp_temp) checked_malloc(sizeof (*p));
   p->num = temps++;
   p->type = type;
   Temp_enter(Temp_name(), p, String(r));
-  S_enter(temp_table, S_Symbol(String(r)), p);
+  S_enter(type == T_int ? int_temp_table : float_temp_table, S_Symbol(String(r)), p);
   return p;
 }
 
@@ -41,21 +45,20 @@ void Temp_resettemp() {
 }
 
 Temp_temp Temp_namedtemp(int name, T_type type) {
-  if (!temp_table) temp_table = S_empty();
+  if (!int_temp_table) int_temp_table = S_empty();
+  if (!float_temp_table) float_temp_table = S_empty();
   char r[16];
   sprintf(r, "%d", name);
-  Temp_temp p = S_look(temp_table, S_Symbol(String(r)));
-  if (p) {
-    p->type = type; // reuse
-    return p;
-  }
+  Temp_temp p = S_look(type == T_int ? int_temp_table : float_temp_table, S_Symbol(String(r)));
+  if (p) return p; // reuse
+
   p = (Temp_temp) checked_malloc(sizeof (*p));
   p->num = name;
   p->type = type;
   if(name >= temps)
     temps = name+1;
   Temp_enter(Temp_name(), p, String(r));
-  S_enter(temp_table, S_Symbol(String(r)), p);
+  S_enter(type == T_int ? int_temp_table : float_temp_table, S_Symbol(String(r)), p);
   return p;
 }
 

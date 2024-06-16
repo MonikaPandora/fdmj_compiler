@@ -83,16 +83,18 @@ static void format(char *result, string assem,
         int n = atoi(++p);
         Temp_temp t = nthTemp(src, n);
         string s = Temp_look(m, t);
-        strcpy(result + i, s);
-        i += strlen(s);
+        strcpy(result + i, t->type == T_int ? "r" : "s");
+        strcpy(result + i + 1, s);
+        i += (strlen(s) + 1);
       }
       break;
       case 'd': {
         int n = atoi(++p);
         Temp_temp t = nthTemp(dst, n);
         string s = Temp_look(m, t);
-        strcpy(result + i, s);
-        i += strlen(s);
+        strcpy(result + i, t->type == T_int ? "r" : "s");
+        strcpy(result + i + 1, s);
+        i += (strlen(s) + 1);
       }
       break;
       case 'j':
