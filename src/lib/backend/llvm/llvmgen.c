@@ -271,15 +271,15 @@ static void munchMove(T_stm s) {
       if(s->u.MOVE.src->kind != T_CONST){
         // not directly const, need to fetch by a temp
         Temp_temp src = munchExp(s->u.MOVE.src, NULL);
-        if(src->type == T_int)emit(AS_Oper("store i64 \%`s0, i64* \%`d0, align 8", TL(t, NULL), TL(src, NULL), NULL));
-        else emit(AS_Oper("store double \%`s0, i64* \%`d0, align 8", TL(t, NULL), TL(src, NULL), NULL));
+        if(src->type == T_int)emit(AS_Oper("store i64 \%`s0, i64* \%`s1, align 8", NULL, TL(src, TL(t, NULL)), NULL));
+        else emit(AS_Oper("store double \%`s0, i64* \%`s1, align 8", NULL, TL(src, TL(t, NULL)), NULL));
       }
       else {
         // specially for const
         string assem = (string)checked_malloc(IR_MAXLEN);
-        if(s->u.MOVE.src->type == T_int)sprintf(assem, "store i64 %d, i64* %%`d0, align 8", s->u.MOVE.src->u.CONST.i);
-        else sprintf(assem, "store double %f, i64* %%`d0, align 8", s->u.MOVE.src->u.CONST.f);
-        emit(AS_Oper(assem, TL(t, NULL), NULL, NULL));
+        if(s->u.MOVE.src->type == T_int)sprintf(assem, "store i64 %d, i64* %%`s0, align 8", s->u.MOVE.src->u.CONST.i);
+        else sprintf(assem, "store double %f, i64* %%`s0, align 8", s->u.MOVE.src->u.CONST.f);
+        emit(AS_Oper(assem, NULL, TL(t, NULL), NULL));
       }
     } break;
     case T_TEMP: {

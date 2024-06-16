@@ -273,6 +273,7 @@ static Temp_defsites insert_phi_functions(G_nodeList lg, G_nodeList bg, G_table 
   Temp_defsites defsites = Temp_defsites_empty();
   G_table A_orig = G_empty();
   G_table A_phi = G_empty();
+  G_table live_in = G_empty();
   G_table live_out = G_empty();
 
   for(G_nodeList i = bg; i; i = i->tail) {
@@ -288,7 +289,9 @@ static Temp_defsites insert_phi_functions(G_nodeList lg, G_nodeList bg, G_table 
       exit(-1);
     }
 
-    G_nodeList fgnodes = lg_find_spot(lg, block->instrs->tail->head);
+    G_nodeList label_node = lg_find_spot(lg, block->instrs->head);  // label
+    G_enter(live_in, n, FG_In(label_node->head));
+    G_nodeList fgnodes = label_node->tail;
     for(AS_instrList instrs = block->instrs->tail; instrs; instrs = instrs->tail, fgnodes = fgnodes->tail) {
       if(instrs->head->kind == I_LABEL){
         fprintf(stderr, "wrong basic block\n");
@@ -302,7 +305,7 @@ static Temp_defsites insert_phi_functions(G_nodeList lg, G_nodeList bg, G_table 
       for(Temp_tempList defs = FG_def(fgnodes->head); defs; defs = defs->tail) {
         Temp_defsites_append(defsites, defs->head, n);
       }
-      
+
       // if it's the last, record the live-out
       if(instrs->tail == NULL)G_enter(live_out, n, FG_Out(fgnodes->head));
     }
@@ -329,8 +332,9 @@ static Temp_defsites insert_phi_functions(G_nodeList lg, G_nodeList bg, G_table 
         binder bind_a_phy_y = TAB_getBinder(A_phi, y);
         Temp_tempList a_phi_y = bind_a_phy_y->value;
         if(Temp_TempInTempList(a, a_phi_y))continue;
+        if(!Temp_TempInTempList(a, G_look(live_in, y)))continue;
 
-        // if a not in A_phi[Y], need to insert phi function
+        // if a not in A_phi[Y] and a in live-in of Y , need to insert phi function
 
         AS_block block = G_nodeInfo(y);
         string assem = checked_malloc(IR_MAXLEN);
