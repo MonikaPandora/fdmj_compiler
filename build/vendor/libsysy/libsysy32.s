@@ -23,12 +23,44 @@
 	.section	.rodata
 	.align	2
 .LC0:
+	.ascii	"%f\000"
+	.text
+	.align	2
+	.global	getfloat
+	.arch armv8-a
+	.arch_extension crc
+	.syntax unified
+	.arm
+	.fpu neon
+	.type	getfloat, %function
+getfloat:
+	@ args = 0, pretend = 0, frame = 8
+	@ frame_needed = 1, uses_anonymous_args = 0
+	str	fp, [sp, #-8]!
+	str	lr, [sp, #4]
+	add	fp, sp, #4
+	sub	sp, sp, #8
+	sub	r3, fp, #8
+	mov	r1, r3
+	movw	r0, #:lower16:.LC0
+	movt	r0, #:upper16:.LC0
+	bl	__isoc99_scanf
+	ldr	r3, [fp, #-8]	@ float
+	vmov	s15, r3
+	vmov.f32	s0, s15
+	sub	sp, fp, #4
+	@ sp needed
+	ldr	fp, [sp]
+	add	sp, sp, #4
+	ldr	pc, [sp], #4
+	.size	getfloat, .-getfloat
+	.section	.rodata
+	.align	2
+.LC1:
 	.ascii	"%d\000"
 	.text
 	.align	2
 	.global	getint
-	.arch armv8-a
-	.arch_extension crc
 	.syntax unified
 	.arm
 	.fpu neon
@@ -42,8 +74,8 @@ getint:
 	sub	sp, sp, #8
 	sub	r3, fp, #8
 	mov	r1, r3
-	movw	r0, #:lower16:.LC0
-	movt	r0, #:upper16:.LC0
+	movw	r0, #:lower16:.LC1
+	movt	r0, #:upper16:.LC1
 	bl	__isoc99_scanf
 	ldr	r3, [fp, #-8]
 	mov	r0, r3
@@ -55,7 +87,7 @@ getint:
 	.size	getint, .-getint
 	.section	.rodata
 	.align	2
-.LC1:
+.LC2:
 	.ascii	"%c\000"
 	.text
 	.align	2
@@ -73,8 +105,8 @@ getch:
 	sub	sp, sp, #8
 	sub	r3, fp, #5
 	mov	r1, r3
-	movw	r0, #:lower16:.LC1
-	movt	r0, #:upper16:.LC1
+	movw	r0, #:lower16:.LC2
+	movt	r0, #:upper16:.LC2
 	bl	__isoc99_scanf
 	ldrb	r3, [fp, #-5]	@ zero_extendqisi2
 	mov	r0, r3
@@ -100,13 +132,60 @@ getarray:
 	str	r0, [fp, #-16]
 	sub	r3, fp, #12
 	mov	r1, r3
-	movw	r0, #:lower16:.LC0
-	movt	r0, #:upper16:.LC0
+	movw	r0, #:lower16:.LC1
+	movt	r0, #:upper16:.LC1
 	bl	__isoc99_scanf
 	mov	r3, #0
 	str	r3, [fp, #-8]
-	b	.L6
-.L7:
+	b	.L8
+.L9:
+	ldr	r3, [fp, #-8]
+	lsl	r3, r3, #2
+	ldr	r2, [fp, #-16]
+	add	r3, r2, r3
+	mov	r1, r3
+	movw	r0, #:lower16:.LC1
+	movt	r0, #:upper16:.LC1
+	bl	__isoc99_scanf
+	ldr	r3, [fp, #-8]
+	add	r3, r3, #1
+	str	r3, [fp, #-8]
+.L8:
+	ldr	r3, [fp, #-12]
+	ldr	r2, [fp, #-8]
+	cmp	r2, r3
+	blt	.L9
+	ldr	r3, [fp, #-12]
+	mov	r0, r3
+	sub	sp, fp, #4
+	@ sp needed
+	ldr	fp, [sp]
+	add	sp, sp, #4
+	ldr	pc, [sp], #4
+	.size	getarray, .-getarray
+	.align	2
+	.global	getfarray
+	.syntax unified
+	.arm
+	.fpu neon
+	.type	getfarray, %function
+getfarray:
+	@ args = 0, pretend = 0, frame = 16
+	@ frame_needed = 1, uses_anonymous_args = 0
+	str	fp, [sp, #-8]!
+	str	lr, [sp, #4]
+	add	fp, sp, #4
+	sub	sp, sp, #16
+	str	r0, [fp, #-16]
+	sub	r3, fp, #12
+	mov	r1, r3
+	movw	r0, #:lower16:.LC1
+	movt	r0, #:upper16:.LC1
+	bl	__isoc99_scanf
+	mov	r3, #0
+	str	r3, [fp, #-8]
+	b	.L12
+.L13:
 	ldr	r3, [fp, #-8]
 	lsl	r3, r3, #2
 	ldr	r2, [fp, #-16]
@@ -118,11 +197,11 @@ getarray:
 	ldr	r3, [fp, #-8]
 	add	r3, r3, #1
 	str	r3, [fp, #-8]
-.L6:
+.L12:
 	ldr	r3, [fp, #-12]
 	ldr	r2, [fp, #-8]
 	cmp	r2, r3
-	blt	.L7
+	blt	.L13
 	ldr	r3, [fp, #-12]
 	mov	r0, r3
 	sub	sp, fp, #4
@@ -130,7 +209,7 @@ getarray:
 	ldr	fp, [sp]
 	add	sp, sp, #4
 	ldr	pc, [sp], #4
-	.size	getarray, .-getarray
+	.size	getfarray, .-getfarray
 	.align	2
 	.global	putint
 	.syntax unified
@@ -146,8 +225,8 @@ putint:
 	sub	sp, sp, #8
 	str	r0, [fp, #-8]
 	ldr	r1, [fp, #-8]
-	movw	r0, #:lower16:.LC0
-	movt	r0, #:upper16:.LC0
+	movw	r0, #:lower16:.LC1
+	movt	r0, #:upper16:.LC1
 	bl	printf
 	nop
 	sub	sp, fp, #4
@@ -179,12 +258,39 @@ putch:
 	add	sp, sp, #4
 	ldr	pc, [sp], #4
 	.size	putch, .-putch
+	.align	2
+	.global	putfloat
+	.syntax unified
+	.arm
+	.fpu neon
+	.type	putfloat, %function
+putfloat:
+	@ args = 0, pretend = 0, frame = 8
+	@ frame_needed = 1, uses_anonymous_args = 0
+	str	fp, [sp, #-8]!
+	str	lr, [sp, #4]
+	add	fp, sp, #4
+	sub	sp, sp, #8
+	vstr.32	s0, [fp, #-8]
+	vldr.32	s15, [fp, #-8]
+	vcvt.f64.f32	d16, s15
+	vmov	r2, r3, d16
+	movw	r0, #:lower16:.LC0
+	movt	r0, #:upper16:.LC0
+	bl	printf
+	nop
+	sub	sp, fp, #4
+	@ sp needed
+	ldr	fp, [sp]
+	add	sp, sp, #4
+	ldr	pc, [sp], #4
+	.size	putfloat, .-putfloat
 	.section	.rodata
 	.align	2
-.LC2:
+.LC3:
 	.ascii	"%d:\000"
 	.align	2
-.LC3:
+.LC4:
 	.ascii	" %d\000"
 	.text
 	.align	2
@@ -203,30 +309,30 @@ putarray:
 	str	r0, [fp, #-16]
 	str	r1, [fp, #-20]
 	ldr	r1, [fp, #-16]
-	movw	r0, #:lower16:.LC2
-	movt	r0, #:upper16:.LC2
+	movw	r0, #:lower16:.LC3
+	movt	r0, #:upper16:.LC3
 	bl	printf
 	mov	r3, #0
 	str	r3, [fp, #-8]
-	b	.L12
-.L13:
+	b	.L19
+.L20:
 	ldr	r3, [fp, #-8]
 	lsl	r3, r3, #2
 	ldr	r2, [fp, #-20]
 	add	r3, r2, r3
 	ldr	r3, [r3]
 	mov	r1, r3
-	movw	r0, #:lower16:.LC3
-	movt	r0, #:upper16:.LC3
+	movw	r0, #:lower16:.LC4
+	movt	r0, #:upper16:.LC4
 	bl	printf
 	ldr	r3, [fp, #-8]
 	add	r3, r3, #1
 	str	r3, [fp, #-8]
-.L12:
+.L19:
 	ldr	r2, [fp, #-8]
 	ldr	r3, [fp, #-16]
 	cmp	r2, r3
-	blt	.L13
+	blt	.L20
 	mov	r0, #10
 	bl	putchar
 	nop
@@ -236,6 +342,61 @@ putarray:
 	add	sp, sp, #4
 	ldr	pc, [sp], #4
 	.size	putarray, .-putarray
+	.section	.rodata
+	.align	2
+.LC5:
+	.ascii	" %f\000"
+	.text
+	.align	2
+	.global	putfarray
+	.syntax unified
+	.arm
+	.fpu neon
+	.type	putfarray, %function
+putfarray:
+	@ args = 0, pretend = 0, frame = 16
+	@ frame_needed = 1, uses_anonymous_args = 0
+	str	fp, [sp, #-8]!
+	str	lr, [sp, #4]
+	add	fp, sp, #4
+	sub	sp, sp, #16
+	str	r0, [fp, #-16]
+	str	r1, [fp, #-20]
+	ldr	r1, [fp, #-16]
+	movw	r0, #:lower16:.LC3
+	movt	r0, #:upper16:.LC3
+	bl	printf
+	mov	r3, #0
+	str	r3, [fp, #-8]
+	b	.L22
+.L23:
+	ldr	r3, [fp, #-8]
+	lsl	r3, r3, #2
+	ldr	r2, [fp, #-20]
+	add	r3, r2, r3
+	vldr.32	s15, [r3]
+	vcvt.f64.f32	d16, s15
+	vmov	r2, r3, d16
+	movw	r0, #:lower16:.LC5
+	movt	r0, #:upper16:.LC5
+	bl	printf
+	ldr	r3, [fp, #-8]
+	add	r3, r3, #1
+	str	r3, [fp, #-8]
+.L22:
+	ldr	r2, [fp, #-8]
+	ldr	r3, [fp, #-16]
+	cmp	r2, r3
+	blt	.L23
+	mov	r0, #10
+	bl	putchar
+	nop
+	sub	sp, fp, #4
+	@ sp needed
+	ldr	fp, [sp]
+	add	sp, sp, #4
+	ldr	pc, [sp], #4
+	.size	putfarray, .-putfarray
 	.align	2
 	.global	before_main
 	.syntax unified
@@ -251,8 +412,8 @@ before_main:
 	sub	sp, sp, #12
 	mov	r3, #0
 	str	r3, [fp, #-8]
-	b	.L15
-.L16:
+	b	.L25
+.L26:
 	movw	r3, #:lower16:_sysy_us
 	movt	r3, #:upper16:_sysy_us
 	ldr	r2, [fp, #-8]
@@ -285,10 +446,10 @@ before_main:
 	ldr	r3, [fp, #-8]
 	add	r3, r3, #1
 	str	r3, [fp, #-8]
-.L15:
+.L25:
 	ldr	r3, [fp, #-8]
 	cmp	r3, #1024
-	blt	.L16
+	blt	.L26
 	movw	r3, #:lower16:_sysy_idx
 	movt	r3, #:upper16:_sysy_idx
 	mov	r2, #1
@@ -304,7 +465,7 @@ before_main:
 	.word	before_main(target1)
 	.section	.rodata
 	.align	2
-.LC4:
+.LC6:
 	.ascii	"Timer@%04d-%04d: %dH-%dM-%dS-%dus\012\000"
 	.text
 	.align	2
@@ -323,8 +484,8 @@ after_main:
 	sub	sp, sp, #24
 	mov	r3, #1
 	str	r3, [fp, #-16]
-	b	.L18
-.L19:
+	b	.L28
+.L29:
 	movw	r3, #:lower16:stderr
 	movt	r3, #:upper16:stderr
 	ldr	lr, [r3]
@@ -358,8 +519,8 @@ after_main:
 	str	r2, [sp]
 	mov	r3, r5
 	mov	r2, r4
-	movw	r1, #:lower16:.LC4
-	movt	r1, #:upper16:.LC4
+	movw	r1, #:lower16:.LC6
+	movt	r1, #:upper16:.LC6
 	mov	r0, lr
 	bl	fprintf
 	movw	r3, #:lower16:_sysy_us
@@ -461,13 +622,13 @@ after_main:
 	ldr	r3, [fp, #-16]
 	add	r3, r3, #1
 	str	r3, [fp, #-16]
-.L18:
+.L28:
 	movw	r3, #:lower16:_sysy_idx
 	movt	r3, #:upper16:_sysy_idx
 	ldr	r3, [r3]
 	ldr	r2, [fp, #-16]
 	cmp	r2, r3
-	blt	.L19
+	blt	.L29
 	nop
 	sub	sp, fp, #12
 	@ sp needed
@@ -741,7 +902,7 @@ starttime:
 	str	fp, [sp, #-8]!
 	str	lr, [sp, #4]
 	add	fp, sp, #4
-	mov	r0, #74
+	mov	r0, #101
 	bl	_sysy_starttime
 	nop
 	sub	sp, fp, #4
@@ -762,7 +923,7 @@ stoptime:
 	str	fp, [sp, #-8]!
 	str	lr, [sp, #4]
 	add	fp, sp, #4
-	mov	r0, #75
+	mov	r0, #102
 	bl	_sysy_stoptime
 	nop
 	sub	sp, fp, #4

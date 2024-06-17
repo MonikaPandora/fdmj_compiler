@@ -22,14 +22,6 @@ static FILE *outfile;
 Temp_temp Temp_newtemp(T_type type) {
   if (!int_temp_table) int_temp_table = S_empty();
   if (!float_temp_table) float_temp_table = S_empty();
-  // char r[16];
-  // sprintf(r, "%d", temps);
-  // Temp_temp p = S_look(type == T_int ? int_temp_table : float_temp_table, S_Symbol(String(r)));
-  // if (p) {
-  //   p->type = type; // reuse
-  //   temps++;
-  //   return p;
-  // }
   char r[16];
   sprintf(r, "%d", temps);
   Temp_temp p = (Temp_temp) checked_malloc(sizeof (*p));
@@ -47,6 +39,7 @@ void Temp_resettemp() {
 Temp_temp Temp_namedtemp(int name, T_type type) {
   if (!int_temp_table) int_temp_table = S_empty();
   if (!float_temp_table) float_temp_table = S_empty();
+  if(name >= temps)temps = name + 1;
   char r[16];
   sprintf(r, "%d", name);
   Temp_temp p = S_look(type == T_int ? int_temp_table : float_temp_table, S_Symbol(String(r)));
@@ -55,8 +48,6 @@ Temp_temp Temp_namedtemp(int name, T_type type) {
   p = (Temp_temp) checked_malloc(sizeof (*p));
   p->num = name;
   p->type = type;
-  if(name >= temps)
-    temps = name+1;
   Temp_enter(Temp_name(), p, String(r));
   S_enter(type == T_int ? int_temp_table : float_temp_table, S_Symbol(String(r)), p);
   return p;

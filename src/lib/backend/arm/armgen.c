@@ -685,7 +685,40 @@ static void munchCall(AS_instr llvm_ins) {
 }
 
 static void munchSDiv(AS_instr llvm_ins) {
-    munchNamedCallImpl(NULL, llvm_ins->u.OPER.dst->head, llvm_ins->u.OPER.src, "__aeabi_idiv");
+    Temp_tempList src = llvm_ins->u.OPER.src;
+    T_type tp = llvm_ins->u.OPER.dst->head->type;
+    string assem = llvm_ins->u.OPER.assem + strlen(llvm_ins->u.OPER.assem);
+    string first_operand_start = NULL, second_operand_start = NULL;
+    while(*assem != ' ')assem--;
+    second_operand_start = (assem--) + 1;
+    while(*assem != ' ')assem--;
+    first_operand_start = assem + 1;
+
+    Temp_tempList params = NULL;
+    if(*first_operand_start == '%' && *second_operand_start == '%'){
+        // both operands are in temps
+        params = llvm_ins->u.OPER.src;
+    }
+    else if(*second_operand_start == '%'){
+        // first operand is not in a temp
+        if(tp == T_int) params = Temp_TempList(IMM_INT(atoi(first_operand_start)), llvm_ins->u.OPER.src);
+        else params = Temp_TempList(IMM_FLOAT(atof(first_operand_start)), llvm_ins->u.OPER.src);
+    }
+    else if(*first_operand_start == '%'){
+        // second operand is not in a temp
+        if(tp == T_int)params = Temp_TempList(llvm_ins->u.OPER.src->head, 
+                                              Temp_TempList(IMM_INT(atoi(second_operand_start)), NULL));
+        else params = Temp_TempList(llvm_ins->u.OPER.src->head, 
+                                    Temp_TempList(IMM_FLOAT(atof(second_operand_start)), NULL));
+    }
+    else {
+        // both are not in a temp
+        if(tp == T_int)params = Temp_TempList(IMM_INT(atoi(first_operand_start)), 
+                                              Temp_TempList(IMM_INT(atoi(second_operand_start)), NULL));
+        else params = Temp_TempList(IMM_FLOAT(atof(first_operand_start)), 
+                                              Temp_TempList(IMM_FLOAT(atof(second_operand_start)), NULL));
+    }
+    munchNamedCallImpl(NULL, llvm_ins->u.OPER.dst->head, params, "__aeabi_idiv");
 }
 
 static void munchAdd_RegReg(Temp_temp dst, Temp_temp reg1, Temp_temp reg2) {

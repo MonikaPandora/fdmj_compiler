@@ -319,8 +319,9 @@ AS_instrList build_frame(AS_instrList il) {
         *(assem + 1) = '\0';
     }
 
-    if(num_spilled_temps != 0){
+    if(num_spilled_temps != 0 || num_used_callee % 2){
         string rsfp_ir = (string)checked_malloc(IR_MAXLEN);
+        if((num_spilled_temps + num_used_callee) % 2)num_spilled_temps++;   // let the stack aligned 8 bytes
         sprintf(rsfp_ir, "sub sp, sp, #%d", num_spilled_temps * ARCH_SIZE);
         AS_instr reserve_space_for_spilled = AS_Oper(rsfp_ir, NULL, NULL, NULL);
         in_last->tail = AS_InstrList(reserve_space_for_spilled, in_last->tail);

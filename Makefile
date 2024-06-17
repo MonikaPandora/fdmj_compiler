@@ -63,6 +63,10 @@ run-rpi: rebuild
 	for file in $$(ls .); do \
 		if [ "$${file##*.}" = "fmj" ]; then \
 			echo "Run on arm for [$${file%%.*}]"; \
+			$(MAIN_EXE) "$${file%%.*}" < "$${file%%.*}".fmj; \
+			$(ARMCC) -mcpu=cortex-a72 "$${file%%.*}".8.s $(BUILD_DIR)/vendor/libsysy/libsysy32.s --static -o "$${file%%.*}".s && \
+			$(QEMU) -B 0x1000 "$${file%%.*}".s > "$${file%%.*}".output && \
+			echo $$?; \
 		fi \
 	done; \
 	cd $(CURDIR)
