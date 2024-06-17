@@ -72,8 +72,28 @@ static Temp_temp munchExp(T_exp e, Temp_temp move_ret) {
         // both are consts
         // compute result at compile time
         // this does optimize for (f)div and (f)mul
-        if(e->type == T_int)sprintf(buf, "%%`d0 = add %d, 0", e->u.BINOP.left->u.CONST.i + e->u.BINOP.right->u.CONST.i);
-        else sprintf(buf, "%%`d0 = fadd %f, 0", e->u.BINOP.left->u.CONST.f + e->u.BINOP.right->u.CONST.f);
+        if(e->type == T_int){
+          int val;
+          switch(e->u.BINOP.op) {
+            case T_plus: val = e->u.BINOP.left->u.CONST.i + e->u.BINOP.right->u.CONST.i; break;
+            case T_minus: val = e->u.BINOP.left->u.CONST.i - e->u.BINOP.right->u.CONST.i; break;
+            case T_mul: val = e->u.BINOP.left->u.CONST.i * e->u.BINOP.right->u.CONST.i; break;
+            case T_div: val = e->u.BINOP.left->u.CONST.i / e->u.BINOP.right->u.CONST.i; break;
+            default: ASSERT(0);
+          }
+          sprintf(buf, "%%`d0 = add i64 %d, 0", val);
+        }
+        else {
+          float val;
+          switch(e->u.BINOP.op) {
+            case T_plus: val = e->u.BINOP.left->u.CONST.f + e->u.BINOP.right->u.CONST.f; break;
+            case T_minus: val = e->u.BINOP.left->u.CONST.f - e->u.BINOP.right->u.CONST.f; break;
+            case T_mul: val = e->u.BINOP.left->u.CONST.f * e->u.BINOP.right->u.CONST.f; break;
+            case T_div: val = e->u.BINOP.left->u.CONST.f / e->u.BINOP.right->u.CONST.f; break;
+            default: ASSERT(0);
+          }
+          sprintf(buf, "%%`d0 = fadd double %f, 0", val);
+        }
         emit(AS_Oper(buf, TL(ret, NULL), NULL, NULL));
       }
       
