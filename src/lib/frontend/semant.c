@@ -234,11 +234,11 @@ static void check_inheritance(FILE* out, E_enventry startClassEntry){
     E_enventry off = S_look(OFFSET_ENV, S_Symbol(startClassEntry->u.cls.cd->id));
     _for_in_table(iter, startClassEntry->u.cls.mtbl){
       E_enventry mtd_entry = iter->value;
+      off->u.off.local_size += SEM_ARCH_SIZE;
       S_enter(off->u.off.local_offtbl, 
-              S_link(S_Symbol("0295"), S_Symbol(iter->key)),
+              S_link(S_Symbol("0295"), iter->key),
               // iter->key,   // this prevent method name same as varible name
               (void*)off->u.off.local_size);
-      off->u.off.local_size += SEM_ARCH_SIZE;
     }
 
     startClassEntry->u.cls.status = E_transFill;
@@ -262,12 +262,12 @@ static void check_inheritance(FILE* out, E_enventry startClassEntry){
   );
   INFO("%s inherited offset from %s\n", startClassEntry->u.cls.cd->id, parentEnrtry->u.cls.cd->id);
 
-  if(startClassEntry->u.cls.vtbl){
+  if(parentEnrtry->u.cls.vtbl){
     INFO("[%s] Inheriting varibles from [%s].\n", startClassEntry->u.cls.cd->id, parentEnrtry->u.cls.cd->id); 
     inherit_vars(out, startClassEntry->u.cls.vtbl, parentEnrtry->u.cls.vtbl);
     INFO("[All inherited].\n");
   }
-  if(startClassEntry->u.cls.mtbl){
+  if(parentEnrtry->u.cls.mtbl){
     INFO("[%s] Inheriting methods from [%s].\n", startClassEntry->u.cls.cd->id, parentEnrtry->u.cls.cd->id); 
     inherit_mtds(out, startClassEntry, parentEnrtry);
     INFO("[All inherited].\n");
@@ -275,12 +275,12 @@ static void check_inheritance(FILE* out, E_enventry startClassEntry){
 
   // add offset for local methods(that not inherit from parent)
   _for_in_table(iter, startClassEntry->u.cls.mtbl){
-    if(!S_look(parentEnrtry->u.cls.mtbl, iter->key)){
+    if(!S_look(parentEnrtry->u.cls.mtbl, iter->key)){ // if parent did not declare this method
+      off->u.off.local_size += SEM_ARCH_SIZE;
       S_enter(off->u.off.local_offtbl, 
-              S_link(S_Symbol("0295"), S_Symbol(iter->key)),
+              S_link(S_Symbol("0295"), iter->key),
               // iter->key,     // this prevent method name same as varible name
               (void*)off->u.off.local_size);
-      off->u.off.local_size += SEM_ARCH_SIZE;
     }
   }
 
@@ -317,7 +317,8 @@ static void build_cenv(FILE *out, A_classDeclList cdl){
     cur_cls = S_Symbol(cd->id);
 
     // build a offset entry for this class
-    S_enter(OFFSET_ENV, cur_cls, E_OffsetEntry(0, S_empty()));
+    E_enventry off_en = E_OffsetEntry(0, S_empty());
+    S_enter(OFFSET_ENV, cur_cls, off_en);
 
     if(cd == NULL)transError(out, A_Pos(0, 0), "Invalid syntax tree.");
     if(S_look(CENV, S_Symbol(cd->id)))transError(out, cd->pos, "Class multiple declarations.");
@@ -336,7 +337,7 @@ static void build_cenv(FILE *out, A_classDeclList cdl){
     cdl = cdl->tail;
   }
   INFO("Built class environment.\n");
-  // checking for inheritance and build up private offset table
+  // checking for inheritance and finish private offset table
   cur_cls = cur_mtd = NULL;
   while(cdl_){
     entry = S_look(CENV, S_Symbol(cdl_->head->id));
@@ -354,8 +355,8 @@ static Temp_temp insert_vtbl(FILE* out, A_varDecl vd, S_table venv){
           // for class varibles
           S_enter(venv, S_Symbol(vd->v), E_VarEntry(vd, Ty_Int(), NULL));
           E_enventry off = S_look(OFFSET_ENV, cur_cls);
-          S_enter(off->u.off.local_offtbl, S_Symbol(vd->v), (void*)off->u.off.local_size);
           off->u.off.local_size += SEM_ARCH_SIZE;
+          S_enter(off->u.off.local_offtbl, S_Symbol(vd->v), (void*)off->u.off.local_size);
         }
         else{
           // for method varibles
@@ -370,8 +371,8 @@ static Temp_temp insert_vtbl(FILE* out, A_varDecl vd, S_table venv){
           // for class varibles
           S_enter(venv, S_Symbol(vd->v), E_VarEntry(vd, Ty_Float(), NULL));
           E_enventry off = S_look(OFFSET_ENV, cur_cls);
-          S_enter(off->u.off.local_offtbl, S_Symbol(vd->v), (void*)off->u.off.local_size);
           off->u.off.local_size += SEM_ARCH_SIZE;
+          S_enter(off->u.off.local_offtbl, S_Symbol(vd->v), (void*)off->u.off.local_size);
         }
         else{
           // for method varibles
@@ -387,8 +388,8 @@ static Temp_temp insert_vtbl(FILE* out, A_varDecl vd, S_table venv){
           // for class varibles
           S_enter(venv, S_Symbol(vd->v), E_VarEntry(vd, Ty_Array(Ty_Int()), NULL));
           E_enventry off = S_look(OFFSET_ENV, cur_cls);
-          S_enter(off->u.off.local_offtbl, S_Symbol(vd->v), (void*)off->u.off.local_size);
           off->u.off.local_size += SEM_ARCH_SIZE;
+          S_enter(off->u.off.local_offtbl, S_Symbol(vd->v), (void*)off->u.off.local_size);
         }
         else {
           //for method varibles
@@ -403,8 +404,8 @@ static Temp_temp insert_vtbl(FILE* out, A_varDecl vd, S_table venv){
           // for class varibles
           S_enter(venv, S_Symbol(vd->v), E_VarEntry(vd, Ty_Array(Ty_Float()), NULL));
           E_enventry off = S_look(OFFSET_ENV, cur_cls);
-          S_enter(off->u.off.local_offtbl, S_Symbol(vd->v), (void*)off->u.off.local_size);
           off->u.off.local_size += SEM_ARCH_SIZE;
+          S_enter(off->u.off.local_offtbl, S_Symbol(vd->v), (void*)off->u.off.local_size);
         }
         else {
           //for method varibles
@@ -419,8 +420,8 @@ static Temp_temp insert_vtbl(FILE* out, A_varDecl vd, S_table venv){
           // for class varibles
           S_enter(venv, S_Symbol(vd->v), E_VarEntry(vd, Ty_Name(S_Symbol(vd->t->id)), NULL));
           E_enventry off = S_look(OFFSET_ENV, cur_cls);
-          S_enter(off->u.off.local_offtbl, S_Symbol(vd->v), (void*)off->u.off.local_size);
           off->u.off.local_size += SEM_ARCH_SIZE;
+          S_enter(off->u.off.local_offtbl, S_Symbol(vd->v), (void*)off->u.off.local_size);
         }
         else {
           // for method varibles
@@ -552,9 +553,11 @@ static expty transA_Exp(FILE *out, A_exp exp, int* has_location){
 
       E_enventry off_en = S_look(OFFSET_ENV, exp_tp->u.name);
 
+      unsigned long long end_pos = (unsigned long long)S_look(off_en->u.off.local_offtbl, S_link(S_Symbol("0295"), S_Symbol(exp->u.call.fun)));
+      
       return Expty(
         Tr_CallExp(me->u.meth.md->id, tp->tr, thiz, transA_ExpList(out, exp->u.call.el), mtd_ret_ty,
-                  (unsigned long long)S_look(off_en->u.off.local_offtbl, S_link(S_Symbol("0295"), S_Symbol(exp->u.call.fun)))),
+                  end_pos - SEM_ARCH_SIZE),
         me->u.meth.ret
       );
     }
@@ -570,7 +573,7 @@ static expty transA_Exp(FILE *out, A_exp exp, int* has_location){
 
       // translation
       E_enventry off_en = S_look(OFFSET_ENV, tp->u.name);
-      unsigned long long offset = (unsigned long long)S_look(off_en->u.off.local_offtbl, S_Symbol(exp->u.classvar.var));
+      unsigned long long offset = (unsigned long long)S_look(off_en->u.off.local_offtbl, S_Symbol(exp->u.classvar.var)) - SEM_ARCH_SIZE;
       T_type type = T_int;
       if(ve->u.var.ty->kind == Ty_float)type = T_float;
       return Expty(
@@ -779,9 +782,10 @@ static Tr_exp transA_Stm(FILE* out, A_stm stm){
 
       Tr_exp thiz = locate_obj_temp(&tp->tr);
       E_enventry off_en = S_look(OFFSET_ENV, exp_tp->u.name);
+      unsigned long long end_pos = (unsigned long long)S_look(off_en->u.off.local_offtbl, S_link(S_Symbol("0295"), S_Symbol(stm->u.call_stat.fun)));
       return Tr_CallStm(me->u.meth.md->id, tp->tr, thiz, 
                         transA_ExpList(out, stm->u.call_stat.el), mtd_ret_ty, 
-                        (unsigned long long)S_look(off_en->u.off.local_offtbl, S_Symbol(stm->u.call_stat.fun)));
+                        end_pos - SEM_ARCH_SIZE);
     }
     case A_continue: {
       INFO("[Stm] continue\n");

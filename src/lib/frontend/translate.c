@@ -591,7 +591,8 @@ Tr_exp Tr_NewObjExp(S_symbol cls_name, E_enventry offset_entry, E_enventry cls, 
   // try to init class varibles
   _for_in_table(iter, cls->u.cls.vtbl){
     E_enventry ve = iter->value;
-    T_exp offset = T_IntConst((int)(unsigned long long)S_look(offset_entry->u.off.local_offtbl, S_Symbol(ve->u.var.vd->v)));
+    unsigned long long end_pos = (unsigned long long)S_look(offset_entry->u.off.local_offtbl, S_Symbol(ve->u.var.vd->v));
+    T_exp offset = T_IntConst((int)(end_pos - SEM_ARCH_SIZE));
     T_exp addr = offset->u.CONST.i ? T_Binop(T_plus, T_Temp(t), offset) : T_Temp(t);
     A_expList init = ve->u.var.vd->elist;
     if(!init)break; // no need to init
@@ -613,7 +614,7 @@ Tr_exp Tr_NewObjExp(S_symbol cls_name, E_enventry offset_entry, E_enventry cls, 
           Temp_temp arr = Temp_newtemp(T_int);
           T_exp a = T_Temp(arr);
           T_stm mlc = T_Move(a, NULL);
-          T_stm len = T_Move(T_Mem(T_Binop(T_minus, a, T_IntConst(-SEM_ARCH_SIZE)), T_int), NULL);
+          T_stm len = T_Move(T_Mem(T_Binop(T_minus, a, T_IntConst(SEM_ARCH_SIZE)), T_int), NULL);
           seqBufPush(Tr_Nx(mlc));
           seqBufPush(Tr_Nx(len));
           unsigned count = 0;
@@ -644,7 +645,8 @@ Tr_exp Tr_NewObjExp(S_symbol cls_name, E_enventry offset_entry, E_enventry cls, 
   // init class methods
   _for_in_table(iter, cls->u.cls.mtbl){
     E_enventry me = iter->value;
-    T_exp offset = T_IntConst((int)(unsigned long long)S_look(offset_entry->u.off.local_offtbl, S_link(S_Symbol("0295"), S_Symbol(me->u.meth.md->id))));
+    unsigned long long end_pos = (unsigned long long)S_look(offset_entry->u.off.local_offtbl, S_link(S_Symbol("0295"), S_Symbol(me->u.meth.md->id)));
+    T_exp offset = T_IntConst((int)(end_pos - SEM_ARCH_SIZE));
     T_exp addr = offset->u.CONST.i ? T_Binop(T_plus, T_Temp(t), offset) : T_Temp(t);
 
     S_symbol name = S_link(cls_name, S_Symbol(me->u.meth.md->id));
@@ -652,6 +654,7 @@ Tr_exp Tr_NewObjExp(S_symbol cls_name, E_enventry offset_entry, E_enventry cls, 
       // do map
       name = S_look(method_map, name);
     }
+    
     seqBufPush(Tr_Nx(
       T_Move(
         T_Mem(addr, T_int),
