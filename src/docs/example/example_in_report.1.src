@@ -1,0 +1,53 @@
+public int main () {
+int i=0;
+int sa=1;
+int sb=2;
+int sc=3;
+int sd=4;
+int se=5;
+int st=6;
+int ss=7;
+class base b;
+class derived d;
+b=new base();
+d=new derived();
+if ((b.a==d.a))
+putnum(1);
+else
+putnum(0);
+putch(10);
+while ((i<length(d.c)))
+{
+putnum(d.c[i]);
+putnum(32);
+i=(i+1);
+}
+putch(10);
+putnum(d.b());
+putch(10);
+putnum(sa);
+putch(10);
+putnum(sb);
+putch(10);
+putnum(sc);
+putch(10);
+putnum(sd);
+putch(10);
+putnum(se);
+putch(10);
+putnum(st);
+putch(10);
+putnum(ss);
+putch(10);
+return 0;
+}
+public class base {
+int a=0;
+float b=1;
+}
+public class derived extends base {
+int[] c={1, 2, 3};
+public int b() {
+return this.c[1];
+}
+}

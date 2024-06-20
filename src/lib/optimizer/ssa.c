@@ -67,21 +67,21 @@ static bool G_nodeList_same(G_nodeList a, G_nodeList b) {
 static void compute_dominators(G_table dominators) {
   bool changed = TRUE;
   while(changed) {
-    changed = FALSE;
+    changed = FALSE;  // assume not to be change
     _for_in_table(iter, dominators) {
       G_node n = iter->key;
       G_nodeList d = iter->value;
       G_nodeList pred = G_pred(n);
-      if(!pred)continue;
+      if(!pred)continue; // no predecessors, pass
       G_nodeList nd = G_NodeList(n, NULL);
-      G_nodeList intersect = G_look(dominators, pred->head);
-      pred = pred->tail;
-      while(pred) {
+      G_nodeList intersect = G_look(dominators, pred->head);  // get the D[p] of first predecessor
+      pred = pred->tail;  // move to second predecessor
+      while(pred) { // compute the intersection part of the formula
         intersect = G_nodeList_intersect(intersect, G_look(dominators, pred->head));
         pred = pred->tail;
       }
-      nd = G_nodeList_union(nd, intersect);
-      if(!G_nodeList_same(iter->value, nd)){
+      nd = G_nodeList_union(nd, intersect); // compute the union part of the formula
+      if(!G_nodeList_same(iter->value, nd)){  // check if the result changed
         iter->value = nd;
         changed = TRUE;
       }
@@ -479,8 +479,6 @@ static void rename_temps(G_node s0, G_nodeList bg, Temp_defsites defsites, G_tab
 }
 
 AS_instrList AS_instrList_to_SSA(AS_instrList bodyil, G_nodeList lg, G_nodeList bg){
-  /* here is your implementation of translating to ssa */
-
   /* step 0: initialization */
   G_table dominators = G_empty();
   G_node s0 = get_start_node_init_tables(bg, dominators);

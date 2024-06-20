@@ -36,7 +36,7 @@ veryclean: clean
 rebuild: veryclean build
 
 compile: clean
-	@cd $(TEST_DIR); \
+	@cd $(TEST_DIR)/tmp; \
 	for file in $$(ls .); do \
 		if [ "$${file##*.}" = "fmj" ]; then \
 			echo "Compiling [$${file%%.*}]"; \

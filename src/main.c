@@ -62,6 +62,7 @@ static void run_llvm(string file_irp, string file_stm, string file_ins, string f
     T_stmList sl = C_linearize(s);
     
     freopen(file_stm, "a", stdout);
+    fprintf(stdout, "-----------For function %s------------\n", fdl->head->name);
     fprintf(stdout, "------Linearized IR Tree------\n");
     printStm_StmList(stdout, sl, 0);
     fprintf(stdout, "\n\n");
