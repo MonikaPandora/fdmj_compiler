@@ -8,21 +8,22 @@
   Move t105:int, 5:int
   Move t106:int, 6:int
   Move t107:int, 7:int
-  Move t110:int, malloc 16:int:int
+  Move t110:int, malloc 24:int:int
   Move Mem(Binop(T_plus, t110:int, 8:int):int):int, 1.000000:float
   Move Mem(t110:int):int, 0:int
+  Move Mem(Binop(T_plus, t110:int, 16:int):int):int, base$b:int
   Move t108:int, t110:int
   Move t111:int, malloc 32:int:int
   Move Mem(t111:int):int, 0:int
   Move Mem(Binop(T_plus, t111:int, 8:int):int):int, 1.000000:float
-  Move t114:int, malloc 32:int:int
-  Move t112:int, Binop(T_plus, t114:int, 8:int):int
+  Move t115:int, malloc 32:int:int
+  Move t112:int, Binop(T_plus, t115:int, 8:int):int
   Move Mem(Binop(T_minus, t112:int, 8:int):int):int, 3:int
   Move Mem(t112:int):int, 1:int
   Move Mem(Binop(T_plus, t112:int, 8:int):int):int, 2:int
   Move Mem(Binop(T_plus, t112:int, 16:int):int):int, 3:int
-  Move Mem(Binop(T_plus, t111:int, 16:int):int):int, t112:int
-  Move Mem(Binop(T_plus, t111:int, 24:int):int):int, derived$b:int
+  Move Mem(Binop(T_plus, t111:int, 24:int):int):int, t112:int
+  Move Mem(Binop(T_plus, t111:int, 16:int):int):int, derived$b:int
   Move t109:int, t111:int
   Cjump T_eq, Mem(t108:int):int, Mem(t109:int):int, L0, L1
  L0:
@@ -33,16 +34,19 @@
  L2:
   putch 10:int:int
  L3:
-  Cjump T_lt, t100:int, Mem(Binop(T_minus, Mem(Binop(T_plus, t109:int, 16:int):int):int, 8:int):int):int, L5, L4
+  Cjump T_lt, t100:int, Mem(Binop(T_minus, Mem(Binop(T_plus, t109:int, 24:int):int):int, 8:int):int):int, L5, L4
  L5:
-  putint Mem(Binop(T_plus, Mem(Binop(T_plus, t109:int, 16:int):int):int, Binop(T_mul, t100:int, 8:int):int):int):int:int
+  putint Mem(Binop(T_plus, Mem(Binop(T_plus, t109:int, 24:int):int):int, Binop(T_mul, t100:int, 8:int):int):int):int:int
   putint 32:int:int
   Move t100:int, Binop(T_plus, t100:int, 1:int):int
   Jump L3
  L4:
   putch 10:int:int
-  Move t113:int, Mem(Binop(T_plus, t109:int, 24:int):int):int.b t109:int:int
+  Move t113:int, Mem(Binop(T_plus, t108:int, 16:int):int):int.b t108:int:int
   putint t113:int:int
+  putch 10:int:int
+  Move t114:int, Mem(Binop(T_plus, t109:int, 16:int):int):int.b t109:int:int
+  putint t114:int:int
   putch 10:int:int
   putint t101:int:int
   putch 10:int:int
@@ -72,21 +76,22 @@ For Label=C7
   Move t105:int, 5:int
   Move t106:int, 6:int
   Move t107:int, 7:int
-  Move t110:int, malloc 16:int:int
+  Move t110:int, malloc 24:int:int
   Move Mem(Binop(T_plus, t110:int, 8:int):int):int, 1.000000:float
   Move Mem(t110:int):int, 0:int
+  Move Mem(Binop(T_plus, t110:int, 16:int):int):int, base$b:int
   Move t108:int, t110:int
   Move t111:int, malloc 32:int:int
   Move Mem(t111:int):int, 0:int
   Move Mem(Binop(T_plus, t111:int, 8:int):int):int, 1.000000:float
-  Move t114:int, malloc 32:int:int
-  Move t112:int, Binop(T_plus, t114:int, 8:int):int
+  Move t115:int, malloc 32:int:int
+  Move t112:int, Binop(T_plus, t115:int, 8:int):int
   Move Mem(Binop(T_minus, t112:int, 8:int):int):int, 3:int
   Move Mem(t112:int):int, 1:int
   Move Mem(Binop(T_plus, t112:int, 8:int):int):int, 2:int
   Move Mem(Binop(T_plus, t112:int, 16:int):int):int, 3:int
-  Move Mem(Binop(T_plus, t111:int, 16:int):int):int, t112:int
-  Move Mem(Binop(T_plus, t111:int, 24:int):int):int, derived$b:int
+  Move Mem(Binop(T_plus, t111:int, 24:int):int):int, t112:int
+  Move Mem(Binop(T_plus, t111:int, 16:int):int):int, derived$b:int
   Move t109:int, t111:int
   Cjump T_eq, Mem(t108:int):int, Mem(t109:int):int, L0, L1
 For Label=L0
@@ -103,18 +108,21 @@ For Label=L2
   Jump L3
 For Label=L3
  L3:
-  Cjump T_lt, t100:int, Mem(Binop(T_minus, Mem(Binop(T_plus, t109:int, 16:int):int):int, 8:int):int):int, L5, L4
+  Cjump T_lt, t100:int, Mem(Binop(T_minus, Mem(Binop(T_plus, t109:int, 24:int):int):int, 8:int):int):int, L5, L4
 For Label=L5
  L5:
-  putint Mem(Binop(T_plus, Mem(Binop(T_plus, t109:int, 16:int):int):int, Binop(T_mul, t100:int, 8:int):int):int):int:int
+  putint Mem(Binop(T_plus, Mem(Binop(T_plus, t109:int, 24:int):int):int, Binop(T_mul, t100:int, 8:int):int):int):int:int
   putint 32:int:int
   Move t100:int, Binop(T_plus, t100:int, 1:int):int
   Jump L3
 For Label=L4
  L4:
   putch 10:int:int
-  Move t113:int, Mem(Binop(T_plus, t109:int, 24:int):int):int.b t109:int:int
+  Move t113:int, Mem(Binop(T_plus, t108:int, 16:int):int):int.b t108:int:int
   putint t113:int:int
+  putch 10:int:int
+  Move t114:int, Mem(Binop(T_plus, t109:int, 16:int):int):int.b t109:int:int
+  putint t114:int:int
   putch 10:int:int
   putint t101:int:int
   putch 10:int:int
@@ -143,21 +151,22 @@ For Label=L4
   Move t105:int, 5:int
   Move t106:int, 6:int
   Move t107:int, 7:int
-  Move t110:int, malloc 16:int:int
+  Move t110:int, malloc 24:int:int
   Move Mem(Binop(T_plus, t110:int, 8:int):int):int, 1.000000:float
   Move Mem(t110:int):int, 0:int
+  Move Mem(Binop(T_plus, t110:int, 16:int):int):int, base$b:int
   Move t108:int, t110:int
   Move t111:int, malloc 32:int:int
   Move Mem(t111:int):int, 0:int
   Move Mem(Binop(T_plus, t111:int, 8:int):int):int, 1.000000:float
-  Move t114:int, malloc 32:int:int
-  Move t112:int, Binop(T_plus, t114:int, 8:int):int
+  Move t115:int, malloc 32:int:int
+  Move t112:int, Binop(T_plus, t115:int, 8:int):int
   Move Mem(Binop(T_minus, t112:int, 8:int):int):int, 3:int
   Move Mem(t112:int):int, 1:int
   Move Mem(Binop(T_plus, t112:int, 8:int):int):int, 2:int
   Move Mem(Binop(T_plus, t112:int, 16:int):int):int, 3:int
-  Move Mem(Binop(T_plus, t111:int, 16:int):int):int, t112:int
-  Move Mem(Binop(T_plus, t111:int, 24:int):int):int, derived$b:int
+  Move Mem(Binop(T_plus, t111:int, 24:int):int):int, t112:int
+  Move Mem(Binop(T_plus, t111:int, 16:int):int):int, derived$b:int
   Move t109:int, t111:int
   Cjump T_eq, Mem(t108:int):int, Mem(t109:int):int, L0, L1
  L1:
@@ -165,11 +174,14 @@ For Label=L4
  L2:
   putch 10:int:int
  L3:
-  Cjump T_lt, t100:int, Mem(Binop(T_minus, Mem(Binop(T_plus, t109:int, 16:int):int):int, 8:int):int):int, L5, L4
+  Cjump T_lt, t100:int, Mem(Binop(T_minus, Mem(Binop(T_plus, t109:int, 24:int):int):int, 8:int):int):int, L5, L4
  L4:
   putch 10:int:int
-  Move t113:int, Mem(Binop(T_plus, t109:int, 24:int):int):int.b t109:int:int
+  Move t113:int, Mem(Binop(T_plus, t108:int, 16:int):int):int.b t108:int:int
   putint t113:int:int
+  putch 10:int:int
+  Move t114:int, Mem(Binop(T_plus, t109:int, 16:int):int):int.b t109:int:int
+  putint t114:int:int
   putch 10:int:int
   putint t101:int:int
   putch 10:int:int
@@ -190,7 +202,7 @@ For Label=L4
   putint 1:int:int
   Jump L2
  L5:
-  putint Mem(Binop(T_plus, Mem(Binop(T_plus, t109:int, 16:int):int):int, Binop(T_mul, t100:int, 8:int):int):int):int:int
+  putint Mem(Binop(T_plus, Mem(Binop(T_plus, t109:int, 24:int):int):int, Binop(T_mul, t100:int, 8:int):int):int):int:int
   putint 32:int:int
   Move t100:int, Binop(T_plus, t100:int, 1:int):int
   Jump L3
@@ -200,19 +212,37 @@ For Label=L4
 
 -----------For function derived$b------------
 ------Linearized IR Tree------
-  Return Mem(Binop(T_plus, Mem(Binop(T_plus, t99:int, 16:int):int):int, 8:int):int):int
+  Return Mem(Binop(T_plus, Mem(Binop(T_plus, t99:int, 24:int):int):int, 8:int):int):int
 
 
 ------Basic Blocks------
 For Label=C10
  C10:
-  Return Mem(Binop(T_plus, Mem(Binop(T_plus, t99:int, 16:int):int):int, 8:int):int):int
+  Return Mem(Binop(T_plus, Mem(Binop(T_plus, t99:int, 24:int):int):int, 8:int):int):int
 
 
 ------Canonical IR Tree------
  C10:
-  Return Mem(Binop(T_plus, Mem(Binop(T_plus, t99:int, 16:int):int):int, 8:int):int):int
+  Return Mem(Binop(T_plus, Mem(Binop(T_plus, t99:int, 24:int):int):int, 8:int):int):int
  C9:
+  Return -1:int
+
+
+-----------For function base$b------------
+------Linearized IR Tree------
+  Return 1:int
+
+
+------Basic Blocks------
+For Label=C13
+ C13:
+  Return 1:int
+
+
+------Canonical IR Tree------
+ C13:
+  Return 1:int
+ C12:
   Return -1:int
 
 

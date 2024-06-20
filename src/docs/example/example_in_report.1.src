@@ -23,6 +23,8 @@ putnum(32);
 i=(i+1);
 }
 putch(10);
+putnum(b.b());
+putch(10);
 putnum(d.b());
 putch(10);
 putnum(sa);
@@ -44,6 +46,9 @@ return 0;
 public class base {
 int a=0;
 float b=1;
+public int b() {
+return 1;
+}
 }
 public class derived extends base {
 int[] c={1, 2, 3};

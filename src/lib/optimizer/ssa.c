@@ -11,14 +11,19 @@ static G_node get_start_node_init_tables(G_nodeList bg, G_table dominators) {
   G_nodeList all_nodes = bg;
   while(bg){
     if(!G_inDegree(bg->head)){
-      if(s0)INFO("More than one start node\n");
+      if(s0){
+        fprintf(stderr, "More than one start node\n");
+      }
       else s0 = bg->head;
       G_enter(dominators, s0, G_NodeList(s0, NULL));
     }
     else G_enter(dominators, bg->head, all_nodes);
     bg = bg->tail;
   }
-  if(!s0)INFO("Start node not found!\n");
+  if(!s0){
+    fprintf(stderr, "Start node not found!\n");
+    exit(-1);
+  }
   return s0;
 }
 

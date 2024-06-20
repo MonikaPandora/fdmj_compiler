@@ -25,6 +25,8 @@ public int main() {
     }
 
     putch(10);
+    putnum(b.b());
+    putch(10);
     putnum(d.b());
     putch(10);
 
@@ -48,6 +50,9 @@ public int main() {
 public class base {
     int a = 0;
     float b = 1.;
+    public int b() {
+        return 1;
+    }
 }
 
 public class derived extends base {

@@ -11,7 +11,7 @@ push {r6}
 push {r5}
 push {r4}
 sub sp, sp, #32
-C19:
+C22:
 mov r1, #0x0000
 movt r1, #0x0000
 mov r0, #0x0000
@@ -56,7 +56,7 @@ mov r1, #0x0000
 movt r1, #0x0000
 add r8, r0, r1
 str r8, [fp, #-40]
-mov r0, #0x0008
+mov r0, #0x000c
 movt r0, #0x0000
 mov r0, r0
 bl malloc
@@ -81,6 +81,12 @@ mov r2, #0x0000
 movt r2, #0x0000
 add r1, r1, r2
 str r1, [r0]
+mov r1, #0x0008
+movt r1, #0x0000
+add r1, r0, r1
+mov r1, r1
+ldr r2, =base$b
+str r2, [r1]
 mov r8, r0
 str r8, [fp, #-44]
 mov r0, #0x0010
@@ -157,21 +163,21 @@ mov r3, #0x0000
 movt r3, #0x0000
 add r2, r2, r3
 str r2, [r1]
-mov r1, #0x0008
+mov r1, #0x000c
 movt r1, #0x0000
 ldr r8, [fp, #-48]
 add r1, r8, r1
 mov r1, r1
 str r0, [r1]
-mov r0, #0x000c
+mov r0, #0x0008
 movt r0, #0x0000
 ldr r8, [fp, #-48]
 add r0, r8, r0
 mov r0, r0
 ldr r1, =derived$b
 str r1, [r0]
-mov r8, r9
 ldr r9, [fp, #-48]
+mov r8, r9
 str r8, [fp, #-52]
 ldr r8, [fp, #-44]
 mov r0, r8
@@ -180,23 +186,23 @@ ldr r8, [fp, #-52]
 mov r1, r8
 ldr r1, [r1]
 cmp r0, r1
-beq L12
-L13:
+beq L15
+L16:
 mov r0, #0x0000
 movt r0, #0x0000
 mov r0, r0
 bl putint
-b L14
-L14:
+b L17
+L17:
 mov r0, #0x000a
 movt r0, #0x0000
 mov r0, r0
 bl putch
 mov r8, r7
 str r8, [fp, #-56]
-b L15
-L15:
-mov r0, #0x0008
+b L18
+L18:
+mov r0, #0x000c
 movt r0, #0x0000
 ldr r8, [fp, #-52]
 add r0, r8, r0
@@ -209,13 +215,30 @@ mov r0, r0
 ldr r0, [r0]
 ldr r8, [fp, #-56]
 cmp r8, r0
-blt L17
-L16:
+blt L20
+L19:
 mov r0, #0x000a
 movt r0, #0x0000
 mov r0, r0
 bl putch
-mov r0, #0x000c
+mov r0, #0x0008
+movt r0, #0x0000
+ldr r8, [fp, #-44]
+add r0, r8, r0
+mov r0, r0
+ldr r0, [r0]
+mov r1, r0
+ldr r8, [fp, #-44]
+mov r0, r8
+blx r1
+mov r0, r0
+mov r0, r0
+bl putint
+mov r0, #0x000a
+movt r0, #0x0000
+mov r0, r0
+bl putch
+mov r0, #0x0008
 movt r0, #0x0000
 ldr r8, [fp, #-52]
 add r0, r8, r0
@@ -290,14 +313,14 @@ pop {r8}
 pop {r9}
 pop {fp, lr}
 bx lr
-L12:
+L15:
 mov r0, #0x0001
 movt r0, #0x0000
 mov r0, r0
 bl putint
-b L14
-L17:
-mov r0, #0x0008
+b L17
+L20:
+mov r0, #0x000c
 movt r0, #0x0000
 ldr r8, [fp, #-52]
 add r0, r8, r0
@@ -322,7 +345,7 @@ ldr r8, [fp, #-56]
 add r0, r8, r0
 mov r8, r0
 str r8, [fp, #-56]
-b L15
+b L18
 
 
 .text
@@ -332,8 +355,8 @@ derived$b:
 push {fp, lr}
 mov fp, sp
 mov r1, r0
-C22:
-mov r0, #0x0008
+C25:
+mov r0, #0x000c
 movt r0, #0x0000
 add r0, r1, r0
 mov r0, r0
@@ -343,6 +366,22 @@ movt r0, #0x0000
 add r0, r1, r0
 mov r0, r0
 ldr r0, [r0]
+mov r0, r0
+sub sp, fp, #0
+pop {fp, lr}
+bx lr
+
+
+.text
+.align 1
+.global base$b
+base$b:
+push {fp, lr}
+mov fp, sp
+mov r0, r0
+C28:
+mov r0, #0x0001
+movt r0, #0x0000
 mov r0, r0
 sub sp, fp, #0
 pop {fp, lr}

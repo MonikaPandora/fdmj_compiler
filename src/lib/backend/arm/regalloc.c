@@ -210,8 +210,7 @@ void color_and_actual_spill(AS_instrList il) {
 
                 AS_instr str_ins = AS_Oper(str_ir, NULL, Temp_TempList(spill_to, NULL), NULL);
                 ls_for_spill = AS_InstrList(str_ins, ls_for_spill);
-                prev = cur;
-                cur = cur->tail = AS_InstrList(str_ins, cur->tail);
+                cur->tail = AS_InstrList(str_ins, cur->tail);
                 dst->head = spill_to;
             }
             else {
@@ -235,9 +234,9 @@ void color_and_actual_spill(AS_instrList il) {
                 // actually spilled nodes
                 // load before any use
                 T_type tp = src->head->type;
-                string str_ir = (string)checked_malloc(IR_MAXLEN);
-                if(tp == T_int)sprintf(str_ir, "ldr `d0, [fp, #%d]", off);
-                else sprintf(str_ir, "vldr.f32 `d0, [fp, #%d]", off);
+                string ldr_ir = (string)checked_malloc(IR_MAXLEN);
+                if(tp == T_int)sprintf(ldr_ir, "ldr `d0, [fp, #%d]", off);
+                else sprintf(ldr_ir, "vldr.f32 `d0, [fp, #%d]", off);
 
                 int num_regs = tp == T_int ? NUM_INT_REGS : NUM_FLOAT_REGS;
                 int spill_regs_start = num_regs - NUM_FOR_SPILL;
@@ -246,9 +245,9 @@ void color_and_actual_spill(AS_instrList il) {
 
                 if(!Temp_TempInTempList(spill_to, used_callee_saved))used_callee_saved = Temp_TempList(spill_to, used_callee_saved);
 
-                AS_instr str_ins = AS_Oper(str_ir, Temp_TempList(spill_to, NULL), NULL, NULL);
-                ls_for_spill = AS_InstrList(str_ins, ls_for_spill);
-                prev = prev->tail = AS_InstrList(str_ins, cur);
+                AS_instr ldr_ins = AS_Oper(ldr_ir, Temp_TempList(spill_to, NULL), NULL, NULL);
+                ls_for_spill = AS_InstrList(ldr_ins, ls_for_spill);
+                prev = prev->tail = AS_InstrList(ldr_ins, cur);
                 src->head = spill_to;
             }
             else {
@@ -329,6 +328,28 @@ AS_instrList build_frame(AS_instrList il) {
     return head;
 }
 
+void print_simplify() {
+    _for_in_table(iter, simplify) {
+        Temp_temp t = G_nodeInfo(iter->key);
+        simplify_entry e = iter->value;
+        fprintf(stderr, "%s%d: %s\n", (t->type == T_int ? "r" : "s"), t->num, (e->kind == COLOR ? "color" : "spill"));
+    }
+}
+
+void print_color() {
+    _for_in_table(iter, color) {
+        Temp_temp o = iter->key, n = iter->value;
+        fprintf(stderr, "%s%d->%s%d\n", o->type == T_int ? "r" : "s", o->num, n->type == T_int ? "r" : "s", n->num);
+    }
+}
+
+void print_spill() {
+    _for_in_table(iter, spill) {
+        Temp_temp t = iter->key;
+        fprintf(stderr, "%s%d actual spilled to fake offset %d\n", t->type == T_int ? "r" : "s", t->num, RA_off_look(spill, t));
+    }
+}
+
 AS_instrList regalloc(AS_instrList il, G_nodeList ig_local)
 {
     if (!il)
@@ -345,9 +366,12 @@ AS_instrList regalloc(AS_instrList il, G_nodeList ig_local)
 
     /* step 2: simplify & spill */
     simplify_and_spill(ig_local);
+    // print_simplify();
 
     /* step 3: color */
     color_and_actual_spill(il);
+    // print_color();
+    // print_spill();
 
     /* step 4: build the frame and save & load for callee-saved registers */
     il = build_frame(il);
